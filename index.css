@@ -1,0 +1,124 @@
+body{
+    background-color: #f5f5f5;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 16px;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+#barre_nav{
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+}
+
+#logo{
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: 10px;
+}
+
+#logo img{
+    height: 60px;
+}
+
+#menu{
+    width: 60%;
+    margin-right: 10px;
+}
+
+#menu ul{
+    display: flex;
+    justify-content: space-between;
+}
+
+#menu ul li{
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+li{
+    list-style-type: none;
+}
+
+a{
+    text-decoration: none;
+    color: black;
+}
+
+#profil_pic{
+    width: 50px;
+    height: 50px;
+}
+
+#titre{
+    margin-top: 100px;
+    margin-bottom: 100px;
+}
+
+#titre h1{
+    text-align: center;
+}
+
+#red_text{
+    color: rgb(198, 96, 96);
+}
+
+#produits{
+    width: 90%;
+    height: 1000px;
+    background-color: #cfcfcf;
+    margin-right: auto;
+    margin-left: auto;
+    padding-top: 20px;
+    border-radius: 20px;
+}
+
+#produits_nav{
+    width: 95%;
+    height: 50px;
+    background-color: #adadad;
+    margin-right: auto;
+    margin-left: auto;
+    border-radius: 20px;
+}
+
+#produits_nav nav{
+    display: flex;
+    justify-content: space-between;
+}
+
+#produits_nav nav ul{
+    display: flex;
+    justify-content: space-between;
+    width: 50%;
+}
+
+#combinaisons{
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-right: 20px;
+}
+
+#produits h2{
+    text-align: center;
+}
+
+footer{
+    width: 100%;
+    height: 100px;
+    background-color: #adadad;
+    margin-top: 100px;
+    text-align: center;
+    padding-top : 20px;
+}
+
+footer ul{
+    display: flex;
+    justify-content: space-between;
+    width: 50%;
+    margin-right: auto;
+    margin-left: auto;
+}
+
