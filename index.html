@@ -35,10 +35,10 @@
             <nav>
                 <ul>
                     <!-- remplacer les textes par des icon par la suite -->
-                    <li><a href="index.html">Chemises</a></li>
-                    <li><a href="index.html">Vestes</a></li>
-                    <li><a href="index.html">Pantalons</a></li>
-                    <li><a href="index.html">Chaussettes</a></li>
+                    <li><a href="index.html"><img id="naav" src="img/chemise_icon.png" alt=""></a></li>
+                    <li><a href="index.html"><img src="img/veste_icon.png" alt=""></a></li>
+                    <li><a href="index.html"><img src="img/pantalon_icon.png" alt=""></a></li>
+                    <li><a href="index.html"><img src="img/chaussettes_icon.png" alt=""></a></li>
                 </ul>
                 <a id="combinaisons" href="index.html">Combinaisons</a>
             </nav>
@@ -51,7 +51,20 @@
         </div>
 
         <div id="produits_liste">
-            <!-- TO DO -->
+            
+            
+            <script>
+                longueurListe = 10;
+                for(i=0; i < longueurListe; i++){
+                    document.write('<div id="produit">');
+                    document.write('<img src="img/produit_test.jpeg" alt="">');
+                    document.write('<div class="produit_info">');
+                    document.write('<h3>Produit</h3>');
+                    document.write('<p id="price">3€50</p>');
+                    document.write('</div>');
+                    document.write('</div>');
+                }
+            </script>
         </div>
 
         
