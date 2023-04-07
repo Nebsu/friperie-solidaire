@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="http://code.jquery.com/jquery-3.3.1.js"></script>
+    <link rel="stylesheet" href="index.css" />
+    <link rel="stylesheet" href="contact.css">
+    <title>Contacts</title>
+  </head>
+  <body>
+    <div id="contenu">
+
+        <nav id="barre_nav">
+            <div id="logo">
+                <img src="../img/icon_logo.png" alt="">
+            </div>
+            <div id="menu">
+                <ul>
+                    <li><a href="index.html">Accueil</a></li>
+                    <li><a href="index.html">Produits</a></li>
+                    <li><a href="index.html">Contact</a></li>
+                    <li><a href="#panier"><img id="cart" src="../img/shopping-cart_icon.png" alt=""></a>
+                        <a id="profil" href="#contenu"><img id="profil_pic" src="../img/icon_profil.png" alt=""></a>
+                    </li>
+                    <li></li>
+                    <script>
+                        $(document).ready(function(){
+
+                            pop_up = false;
+                            $("#profil").click(function(){
+                                $("#contenu").css("filter", "blur(4px)");
+                                $("#pop_up_log").css("display", "block");
+                                pop_up = true;
+                            });
+
+                            //si la touche echap est appuyer
+                            $(document).keyup(function(e) {
+                                if (e.key === "Escape" && pop_up) { // escape key maps to keycode `27`
+                                    $("#contenu").css("filter", "blur(0px)");
+                                    $("#pop_up_log").css("display", "none");
+                                    $("#pop_up_reg").css("display", "none");
+                                    pop_up = false;
+                                }
+                            });
+                        });
+                    </script>
+                </ul>
+        </nav>
+        <div id="titre">
+            <h1>
+                LA FRIPERIE <br>
+                <span id="red_text">SOLIDAIRE</span>
+            </h1>
+        </div>
+        <div id="produits">
+            <h3 id="message">Rejoingnez nous sur nos réseaux sociaux !</h3>
+            <div id="social">
+                <ul>
+                    <li><a href=""><img id="facebook" src="../img/facebook.png" alt=""><div class="rs">Facebook</div></a></li>
+                    <li><a href=""><img id="instagram" src="../img/instagram.png" alt=""><div class="rs">Instagram</div></a></li>
+                    <li><a href=""><img id="twitter" src="../img/twitter.png" alt=""><div class="rs">Twitter</div></a></li>
+                </ul>
+            </div>  
+        </div>
+
+  </body>
+</html>
