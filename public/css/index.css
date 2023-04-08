@@ -116,6 +116,57 @@ a {
   margin-right: 20px;
 }
 
+
+
+#cont_veste, #cont_chemise, #cont_pantalon, #cont_chaussettes{
+  text-align:center;
+  position: absolute;
+}
+
+#cont_chemise{
+  top: 330px;
+  left: 7.1%;
+}
+
+#cont_veste{
+  top: 330px;
+  left: 15.5%;
+}
+
+#cont_pantalon{
+  top: 330px;
+  left: 22.8%;
+}
+
+#cont_chaussettes{
+  top: 330px;
+  left: 30%;
+}
+
+
+.bubbled{
+  text-decoration:none;
+  color:#fff;
+  background-color:#444;
+  padding:15px 30px;
+  border-radius:5px;
+  display:block;
+}
+
+.bubbled:after{
+  width:0;
+  height:0;
+  border-left:10px solid transparent;
+  border-right:10px solid transparent;
+  border-top:10px solid #444;
+  position:absolute;
+  content:'';
+   top:100%;
+  left:50%;
+  margin-left:-5px;    
+}
+
+
 /* PRODUITS LISTE */
 
 #produits h2 {
@@ -252,7 +303,7 @@ footer ul {
   font-size: 12px;
 }
 #submit {
-  position: relative;
+  /* position: relative;
   display: inline-block;
   padding: 10px 20px;
   color: #03e9f4;
@@ -262,14 +313,14 @@ footer ul {
   overflow: hidden;
   transition: 0.5s;
   margin-top: 40px;
-  letter-spacing: 4px;
+  letter-spacing: 4px; */
 }
 #submit:hover {
-  background: #03e9f4;
+  /* background: #03e9f4;
   color: #fff;
   border-radius: 5px;
   box-shadow: 0 0 5px #03e9f4, 0 0 25px #03e9f4, 0 0 50px #03e9f4,
-    0 0 100px #03e9f4;
+    0 0 100px #03e9f4; */
 }
 #submit span {
   position: absolute;

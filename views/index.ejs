@@ -138,14 +138,75 @@
                 <nav>
                     <ul>
                         <!-- remplacer les textes par des icon par la suite -->
-                        <li><a href="#"><img id="naav" src="/img/chemise_icon.png" alt=""></a></li>
-                        <li><a href="#"><img src="/img/veste_icon.png" alt=""></a></li>
-                        <li><a href="#"><img src="/img/pantalon_icon.png" alt=""></a></li>
-                        <li><a href="#"><img src="/img/chaussettes_icon.png" alt=""></a></li>
+                        <li><a href="#"><img id="chemise" src="/img/chemise_icon.png" alt=""></a></li>
+                        <li><a href="#"><img id="veste" src="/img/veste_icon.png" alt=""></a></li>
+                        <li><a href="#"><img id="pantalon" src="/img/pantalon_icon.png" alt=""></a></li>
+                        <li><a href="#"><img id="chaussettes" src="/img/chaussettes_icon.png" alt=""></a></li>
                     </ul>
                     <a id="combinaisons" href="#">Combinaisons</a>
                 </nav>
             </div>
+
+            <!-- BULLES MENU -->
+
+            <div id='cont_chemise'>
+                <a class='bubbled' href='#'>
+                    Chemise
+                </a>
+            </div>
+            <div id='cont_veste'>
+                <a class='bubbled' href='#'>
+                    Veste
+                </a>
+            </div>
+            <div id='cont_pantalon'>
+                <a class='bubbled' href='#'>
+                    Pantalon
+                </a>
+            </div>
+            <div id='cont_chaussettes'>
+                <a class='bubbled' href='#'>
+                    Chaussettes
+                </a>
+            </div>
+            <script>
+                $(document).ready(function(){
+                    $("#cont_chemise").css("display", "none");
+                    $("#cont_veste").css("display", "none");
+                    $("#cont_pantalon").css("display", "none");
+                    $("#cont_chaussettes").css("display", "none");
+
+                    $("#chemise").mouseover(function(){
+                        $("#cont_chemise").css("display", "block");
+                    });
+                    $("#chemise").mouseout(function(){
+                        $("#cont_chemise").css("display", "none");
+                    });
+
+                    $("#veste").mouseover(function(){
+                        $("#cont_veste").css("display", "block");
+                    });
+                    $("#veste").mouseout(function(){
+                        $("#cont_veste").css("display", "none");
+                    });
+
+                    $("#pantalon").mouseover(function(){
+                        $("#cont_pantalon").css("display", "block");
+                    });
+                    $("#pantalon").mouseout(function(){
+                        $("#cont_pantalon").css("display", "none");
+                    });
+
+                    $("#chaussettes").mouseover(function(){
+                        $("#cont_chaussettes").css("display", "block");
+                    });
+                    $("#chaussettes").mouseout(function(){
+                        $("#cont_chaussettes").css("display", "none");
+                    });
+
+                });
+            </script>
+
 
 
             <div id="current_type">
