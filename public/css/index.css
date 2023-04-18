@@ -226,9 +226,10 @@ footer ul {
 /* ------------------------------ POP UP LOG AND REG ------------------------------ */
 
 #close_pop_up{
-  position: fixed;
-  top: 50px;
-  left: 30%;
+  position: inherit;
+  top: 10px;
+  left: 10px;
+
 }
 
 #pop_up_log {
@@ -247,12 +248,12 @@ footer ul {
   z-index: 2;
   margin: 0;
   padding: 0;
-  margin-top: 70px;
+
 }
 
 #log_window {
   width: 500px;
-  height: 500px;
+  height: 700px;
   position: relative;
   margin-left: auto;
   margin-right: auto;
