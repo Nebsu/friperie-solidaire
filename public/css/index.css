@@ -11,7 +11,7 @@ body {
   z-index: 1;
 }
 
-/* BARRE DE NAVIGATION */
+/* ------------------------------ BARRE DE NAVIGATION ------------------------------ */
 
 #barre_nav {
   color: white;
@@ -57,7 +57,7 @@ a {
   margin-right: 10px;
 }
 
-/* TITRE */
+/* ------------------------------ TITRE ------------------------------ */
 
 #titre {
   margin-top: 100px;
@@ -70,7 +70,7 @@ a {
   color: rgb(198, 96, 96);
 }
 
-/* PRODUITS */
+/* ------------------------------ PRODUITS ------------------------------ */
 
 #produits {
   width: 90%;
@@ -81,7 +81,7 @@ a {
   border-radius: 50px;
 }
 
-/* BARRE NAV PRODUITS */
+/* ------------------------------ BARRE NAV PRODUITS ------------------------------ */
 
 #produits_nav {
   width: 95%;
@@ -167,7 +167,7 @@ a {
 }
 
 
-/* PRODUITS LISTE */
+/* ------------------------------ PRODUITS LISTE ------------------------------ */
 
 #produits h2 {
   padding-top: 20px;
@@ -205,7 +205,7 @@ a {
   margin-right: 10px;
 }
 
-/* FOOTER */
+/* ------------------------------ FOOTER ------------------------------ */
 footer {
   width: 100%;
   height: 100px;
@@ -223,7 +223,13 @@ footer ul {
   margin-left: auto;
 }
 
-/* POP UP LOG AND REG */
+/* ------------------------------ POP UP LOG AND REG ------------------------------ */
+
+#close_pop_up{
+  position: fixed;
+  top: 50px;
+  left: 30%;
+}
 
 #pop_up_log {
   width: 100%;
@@ -302,8 +308,8 @@ footer ul {
   color: #03e9f4;
   font-size: 12px;
 }
-#submit {
-  /* position: relative;
+/* #submit {
+  position: relative;
   display: inline-block;
   padding: 10px 20px;
   color: #03e9f4;
@@ -313,15 +319,15 @@ footer ul {
   overflow: hidden;
   transition: 0.5s;
   margin-top: 40px;
-  letter-spacing: 4px; */
+  letter-spacing: 4px;
 }
 #submit:hover {
-  /* background: #03e9f4;
+  background: #03e9f4;
   color: #fff;
   border-radius: 5px;
   box-shadow: 0 0 5px #03e9f4, 0 0 25px #03e9f4, 0 0 50px #03e9f4,
-    0 0 100px #03e9f4; */
-}
+    0 0 100px #03e9f4;
+} */
 #submit span {
   position: absolute;
   display: block;
@@ -355,6 +361,8 @@ footer ul {
   height: 40px;
   width: 40px;
 }
+
+/* ------------------------------ RESPONSIVE ------------------------------ */
 
 @media screen and (max-width: 1400px) {
   #produits_liste {
