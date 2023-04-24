@@ -16,7 +16,7 @@
         <div id="log_window">
             <!-- CROIX POP UP -->
             <div id="close_pop_up">
-                <a href=""><img src="/img/croix.png" alt="" width="50px" height="50px"></a>
+                <a href=""><img src="/img/croix.png" alt="" width="30px" height="30px"></a>
             </div>
             <!-- FORMULAIRE -->
             <div class="login-box">
@@ -45,7 +45,7 @@
         <div id="log_window">
             <!-- CROIX POP UP -->
             <div id="close_pop_up">
-                <a href=""><img src="/img/croix.png" alt="" width="50px" height="50px"></a>
+                <a href=""><img src="/img/croix.png" alt="" width="30px" height="30px"></a>
             </div>
             <!-- FORMULAIRE -->
             <div class="login-box">
@@ -166,10 +166,10 @@
                 <nav>
                     <ul>
                         <!-- remplacer les textes par des icon par la suite -->
-                        <li><a href="#"><img id="chemise" src="/img/chemise_icon.png" alt=""></a></li>
-                        <li><a href="#"><img id="veste" src="/img/veste_icon.png" alt=""></a></li>
-                        <li><a href="#"><img id="pantalon" src="/img/pantalon_icon.png" alt=""></a></li>
-                        <li><a href="#"><img id="chaussettes" src="/img/chaussettes_icon.png" alt=""></a></li>
+                        <li><a href="#"><div id="type_produit_txt">Chemises</div><img id="chemise" src="/img/chemise_icon.png" alt=""></a></li>
+                        <li><a href="#"><div id="type_produit_txt">Vestes</div><img id="veste" src="/img/veste_icon.png" alt=""></a></li>
+                        <li><a href="#"><div id="type_produit_txt">Pantalons</div><img id="pantalon" src="/img/pantalon_icon.png" alt=""></a></li>
+                        <li><a href="#"><div id="type_produit_txt">Chaussettes</div><img id="chaussettes" src="/img/chaussettes_icon.png" alt=""></a></li>
                     </ul>
                     <a id="combinaisons" href="#">Combinaisons</a>
                 </nav>
@@ -200,40 +200,49 @@
             </div>
             <!-- SCRIPT DES BULLES -->
             <script>
+                
+
                 $(document).ready(function(){
                     $("#cont_chemise").css("display", "none");
                     $("#cont_veste").css("display", "none");
                     $("#cont_pantalon").css("display", "none");
                     $("#cont_chaussettes").css("display", "none");
-
+        
                     $("#chemise").mouseover(function(){
-                        $("#cont_chemise").css("display", "block");
+                        if($(window).width() < 1100){
+                            $("#cont_chemise").css("display", "block");
+                        }
                     });
                     $("#chemise").mouseout(function(){
                         $("#cont_chemise").css("display", "none");
                     });
 
                     $("#veste").mouseover(function(){
-                        $("#cont_veste").css("display", "block");
+                        if($(window).width() < 1100){
+                            $("#cont_veste").css("display", "block");
+                        }
                     });
                     $("#veste").mouseout(function(){
                         $("#cont_veste").css("display", "none");
                     });
 
                     $("#pantalon").mouseover(function(){
-                        $("#cont_pantalon").css("display", "block");
+                        if($(window).width() < 1100){
+                            $("#cont_pantalon").css("display", "block");
+                        }
                     });
                     $("#pantalon").mouseout(function(){
                         $("#cont_pantalon").css("display", "none");
                     });
 
                     $("#chaussettes").mouseover(function(){
-                        $("#cont_chaussettes").css("display", "block");
+                        if($(window).width() < 1100){
+                            $("#cont_chaussettes").css("display", "block");
+                        }
                     });
                     $("#chaussettes").mouseout(function(){
                         $("#cont_chaussettes").css("display", "none");
                     });
-
                 });
             </script>
 
