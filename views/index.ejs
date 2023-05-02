@@ -10,13 +10,13 @@
 <body>
 
    
-
+    <% if(connection){ %>
     <!-- LOGIN -->
     <div id="pop_up_log">
         <div id="log_window">
             <!-- CROIX POP UP -->
             <div id="close_pop_up">
-                <a href=""><img src="/img/croix.png" alt="" width="30px" height="30px"></a>
+                <a href="http://localhost:5501/"><img src="/img/croix.png" alt="" width="30px" height="30px"></a>
             </div>
             <!-- FORMULAIRE -->
             <div class="login-box">
@@ -24,33 +24,32 @@
                 <div id="close_pop_up">
                     <a href=""><img src="/img/croix.png" alt="" width="20px" height="20px"></a>
                 </div>
-
                 <h2 id="pop_up_state">Se connecter</h2>
-                <form>
+                <form action="connection" method="POST">
                   <div class="user-box">
-                    <input type="text" name="" required="">
+                    <input type="email" name="email" required="" value="<%= email %>">
                     <label>Email</label>
                   </div>
                   <div class="user-box">
-                    <input type="password" name="" required="">
+                    <input type="password" name="password" required="">
                     <label>Mot de passe</label>
                   </div>
-                  <a id="submit" href="#">Confirmer</a>
+                  <input type="submit" id="submit" value="Confirmer"></input>
                 </form>
                 <div id="no_account">
                     <p>Pas de compte ?</p>
-                    <p id="no_account_btn">S'inscrire</p>
+                    <a id="no_account_btn" href="http://localhost:5501/inscription">S'inscrire</a>
                 </div>
             </div>
         </div>
     </div>
-
+<% } else if(inscription) { %>
     <!-- REGISTER -->
     <div id="pop_up_reg">
         <div id="log_window">
             <!-- CROIX POP UP -->
             <div id="close_pop_up">
-                <a href=""><img src="/img/croix.png" alt="" width="50px" height="50px"></a>
+                <a href="http://localhost:5501/"><img src="/img/croix.png" alt="" width="50px" height="50px"></a>
             </div>
             <!-- FORMULAIRE -->
             <div class="login-box">
@@ -61,17 +60,17 @@
                 </div>
 
                 <h2 id="pop_up_state">S'inscrire</h2>
-                <form id="register" method="post" action="http://localhost:5500/">
+                <form id="register" method="post" action="inscription">
                   <div class="user-box">
-                    <input id="nom "type="text" name="name" required="">
+                    <input id="nom" type="text" name="name" required="" value="<%= name %>">
                     <label>Nom</label>
                   </div>
                   <div class="user-box">
-                    <input id="prenom" type="text" name="surname" required="">
+                    <input id="prenom" type="text" name="surname" required="" value="<%= surname %>">
                     <label>Prénom</label>
                   </div>
                   <div class="user-box">
-                    <input id="email" type="email" name="email" required="">
+                    <input id="email" type="email" name="email" required="" value="<%= email %>">
                     <label>Email</label>
                   </div>
                   <div class="user-box">
@@ -86,33 +85,12 @@
                 </form>
                 <div id="no_account">
                     <p>Déjà un compte ?</p>
-                    <p id="no_account_btn2">Se connecter</p>
+                    <a id="no_account_btn2" href="http://localhost:5501/connection">Se connecter</a>
                 </div>
             </div>
         </div>
     </div>
-
-
-    <!-- SCRIPT DU POP UP -->
-    <script>
-         $(document).ready(function(){
-            $("#pop_up_reg").css("display", "none");
-            $("#pop_up_log").css("display", "none");
-            $("#close_pop_up").css("display", "none");
-            i=true;
-            $("#no_account_btn").click(function(){
-                    $("#pop_up_reg").css("display", "block");
-                    $("#pop_up_log").css("display", "none");
-                    $("#close_pop_up").css("display", "block");
-            });
-            $("#no_account_btn2").click(function(){
-                    $("#pop_up_reg").css("display", "none");
-                    $("#pop_up_log").css("display", "block");
-                    $("#close_pop_up").css("display", "block");
-            });
-        });
-    </script>
-
+    <% } %>
     <div id="contenu">
 
         <!-- BARRE DE NAVIGATION -->
@@ -126,9 +104,11 @@
                     <li><a href="">Produits</a></li>
                     <li><a href="">Contact</a></li>
                     <li><a href="#panier"><img id="cart" src="/img/shopping-cart_icon.png" alt=""></a>
-                        <a id="profil" href="#contenu"><img id="profil_pic" src="/img/icon_profil.png" alt=""></a>
+                        <a id="profil" href="http://localhost:5501/connection"><img id="profil_pic" src="/img/icon_profil.png" alt=""></a>
                     </li>
-                    <li></li>
+                    <li>
+                        <p class="prenom"><%= prenom %></p>
+                    </li>
                     <script>
                         $(document).ready(function(){
                             pop_up = false;
@@ -146,6 +126,7 @@
                                     $("#pop_up_log").css("display", "none");
                                     $("#pop_up_reg").css("display", "none");
                                     $("#close_pop_up").css("display", "none");
+                                    window.location.href = "http://localhost:5501/";
                                     pop_up = false;
                                 }
                             });
@@ -155,6 +136,7 @@
                                 $("#pop_up_log").css("display", "none");
                                 $("#pop_up_reg").css("display", "none");
                                 $("#close_pop_up").css("display", "none");
+                                window.location.href = "http://localhost:5501/";
                                 pop_up = false;
                             });
                         });
