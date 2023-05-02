@@ -35,7 +35,6 @@ async function CreatePool() {
   console.log(poolResult.rows[0].now);
 })();
 
-const database = [];
 class User {
   constructor(name, surname, email, password) {
     this.name = name;
@@ -57,6 +56,104 @@ async function getUser(userEmail) {
   const values = [userEmail];
   return pool.query(text, values);
 }
+
+async function getAllEmail() {
+  const result = await pool.query("SELECT email FROM utilisateurs");
+  const rows = result.rows.map((row) => row.email);
+  return rows;
+}
+
+app.post("/inscription", async (req, res) => {
+  let namefield = "";
+  let surnamefield = "";
+  let emailfield = "";
+  let inscription = false;
+  let connection = false;
+
+  let name = req.body.name;
+  let surname = req.body.surname;
+  let email = req.body.email;
+  let password = req.body.password;
+  let confirm_password = req.body.confirmpassword;
+  const database = await getAllEmail();
+  console.log("Post Inscription");
+  if (name.length < 2 || name.length > 30) {
+    // Verification nom
+    namefield = "";
+    emailfield = email;
+    surnamefield = surname;
+    pop_up = true;
+    inscription = true;
+    console.log("Nom invalide");
+  } else if (surname.length < 2 || surname.length > 30) {
+    // Verification prenom
+    surnamefield = "";
+    emailfield = email;
+    namefield = name;
+    pop_up = true;
+    inscription = true;
+    console.log("Prénom invalide");
+  } else if (database.includes(email)) {
+    // check if email is already in database
+    console.log("Email déjà utilisé");
+  } else if (password != confirm_password || password.length < 8) {
+    // Verification mot de passe
+    pop_up = true;
+    inscription = true;
+    emailfield = email;
+    namefield = name;
+    surnamefield = surname;
+    console.log("Mot de passe invalide");
+  } else {
+    // Ajout des données dans la base de données
+    const user = new User(name, surname, email, password);
+    registerUser(user);
+    connection = true;
+    pop_up = true;
+  }
+  const data = {
+    name: namefield,
+    surname: surnamefield,
+    email: emailfield,
+    prenom: "",
+    connection: connection,
+    inscription: inscription,
+  };
+  res.render("index.ejs", data);
+  return;
+});
+
+app.post("/connection", async (req, res) => {
+  let connection = false;
+  let emailfield = "";
+
+  let email = req.body.email;
+  let password = req.body.password;
+  console.log("Post Connection");
+  const user = await getUser(email);
+  if (user.rows.length == 0) {
+    connection = true;
+    console.log("Utilisateur non trouvé");
+    return;
+  } else if (user.rows[0].mot_de_passe != password) {
+    connection = true;
+    emailfield = email;
+    console.log("Mot de passe incorrect");
+  } else {
+    console.log("Connection réussie");
+  }
+  const data = {
+    name: "",
+    surname: "",
+    email: "",
+    prenom: user.rows[0].prenom,
+    connection: connection,
+    inscription: false,
+  };
+  console.log(data.prenom);
+  res.render("index.ejs", data);
+  // Partie connection
+});
 
 app.get("/connection", function (req, res) {
   const data = {
@@ -95,70 +192,6 @@ app.get("/", (req, res) => {
   };
   res.render("index.ejs", data);
   return;
-});
-
-app.post("/inscription", (req, res) => {
-  const data = {
-    name: "",
-    surname: "",
-    email: "",
-    prenom: "",
-    connection: false,
-    inscription: true,
-  };
-  let name = req.body.name;
-  let surname = req.body.surname;
-  let email = req.body.email;
-  let password = req.body.password;
-  let confirm_password = req.body.confirmpassword;
-  console.log("Post Inscription");
-  if (getAllEmail().includes(email)) {
-    // check if email is already in database
-    res.render("index.ejs", data);
-    console.log("Email déjà utilisé");
-    return;
-  } else if (password != confirm_password || password.length < 8) {
-    // Verification mot de passe
-    pop_up = true;
-    res.render("index.ejs", data);
-    console.log("Mot de passe invalide");
-    return;
-  } else {
-    // Ajout des données dans la base de données
-    res.render("index.ejs", data);
-    const user = new User(name, surname, email, password);
-    database.push(user);
-    registerUser(user);
-    console.log(database);
-  }
-});
-
-app.post("/connection", async (req, res) => {
-  const data = {
-    name: "",
-    surname: "",
-    email: "",
-    prenom: "",
-    connection: true,
-    inscription: false,
-  };
-  let email = req.body.email;
-  let password = req.body.password;
-  console.log("Post Connection");
-  const user = await getUser(email);
-  console.log(JSON.stringify(user.rows[0].email, null, " "));
-  res.render("index.ejs", data);
-  // Partie connection
-});
-app.post("/", (req, res) => {
-  let name = req.body.name;
-  let surname = req.body.surname;
-  let email = req.body.email;
-  let password = req.body.password;
-  let confirm_password = req.body.confirmpassword;
-  const database = [];
-  const data = { name: "", surname: "", email: "", prenom: "" };
-  console.log("Post");
 });
 
 app.listen(5501);

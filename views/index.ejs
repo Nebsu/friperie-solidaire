@@ -107,7 +107,9 @@
                         <a id="profil" href="http://localhost:5501/connection"><img id="profil_pic" src="/img/icon_profil.png" alt=""></a>
                     </li>
                     <li>
+                        <% if (prenom != "") { %>
                         <p class="prenom"><%= prenom %></p>
+                        <% } %>
                     </li>
                     <script>
                         $(document).ready(function(){
