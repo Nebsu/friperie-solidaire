@@ -7,7 +7,7 @@ const pool = new pg.Pool({
   host: "localhost",
   database: "postgres",
   password: "root",
-  port: 5432,
+  port: 4545,
 });
 
 app.use(express.static("public"));
@@ -17,6 +17,24 @@ app.use("/img", express.static(__dirname + "public/img"));
 app.use(express.urlencoded({ extended: true }));
 app.set("view engine", "ejs");
 
+async function CreatePool() {
+  const pool = new pg.Pool({
+    user: "postgres",
+    host: "localhost",
+    database: "postgres",
+    password: "root",
+    port: 4545,
+  });
+  const now = await pool.query("SELECT NOW()");
+  await pool.end();
+  return now;
+}
+
+(async () => {
+  const poolResult = await CreatePool();
+  console.log(poolResult.rows[0].now);
+})();
+
 const database = [];
 class User {
   constructor(name, surname, email, password) {
@@ -25,6 +43,13 @@ class User {
     this.email = email;
     this.password = password;
   }
+}
+
+async function registerUser(user) {
+  const text =
+    "INSERT INTO utilisateurs(nom, prenom, email, mot_de_passe) VALUES($1, $2, $3, $4) RETURNING *";
+  const values = [user.name, user.surname, user.email, user.password];
+  return pool.query(text, values);
 }
 
 function getAllEmail() {
@@ -114,6 +139,7 @@ app.post("/inscription", (req, res) => {
     res.render("index.ejs", data);
     const user = new User(name, surname, email, password);
     database.push(user);
+    registerUser(user);
     console.log(database);
   }
 });
