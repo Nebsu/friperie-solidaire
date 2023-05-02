@@ -52,21 +52,10 @@ async function registerUser(user) {
   return pool.query(text, values);
 }
 
-function getAllEmail() {
-  let emails = [];
-  for (let i = 0; i < database.length; i++) {
-    emails.push(database[i].email);
-  }
-  return emails;
-}
-
-function checkConnect(email, password) {
-  for (let i = 0; i < database.length; i++) {
-    if (database[i].email === email && database[i].password === password) {
-      return true;
-    }
-  }
-  return false;
+async function getUser(userEmail) {
+  const text = "SELECT * FROM utilisateurs WHERE email = $1";
+  const values = [userEmail];
+  return pool.query(text, values);
 }
 
 app.get("/connection", function (req, res) {
@@ -144,7 +133,7 @@ app.post("/inscription", (req, res) => {
   }
 });
 
-app.post("/connection", (req, res) => {
+app.post("/connection", async (req, res) => {
   const data = {
     name: "",
     surname: "",
@@ -154,13 +143,10 @@ app.post("/connection", (req, res) => {
     inscription: false,
   };
   let email = req.body.email;
-  let surname = req.body.password;
+  let password = req.body.password;
   console.log("Post Connection");
-  if (checkConnect(email, surname)) {
-    console.log("Connecté");
-  } else {
-    console.log("Erreur");
-  }
+  const user = await getUser(email);
+  console.log(JSON.stringify(user.rows[0].email, null, " "));
   res.render("index.ejs", data);
   // Partie connection
 });
