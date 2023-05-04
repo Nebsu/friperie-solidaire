@@ -16,7 +16,7 @@
         <div id="log_window">
             <!-- CROIX POP UP -->
             <div id="close_pop_up">
-                <a href="http://localhost:5501/"><img src="/img/croix.png" alt="" width="30px" height="30px"></a>
+                <a href="/"><img src="/img/croix.png" alt="" width="30px" height="30px"></a>
             </div>
             <!-- FORMULAIRE -->
             <div class="login-box">
@@ -38,7 +38,7 @@
                 </form>
                 <div id="no_account">
                     <p>Pas de compte ?</p>
-                    <a id="no_account_btn" href="http://localhost:5501/inscription">S'inscrire</a>
+                    <a id="no_account_btn" href="inscription">S'inscrire</a>
                 </div>
             </div>
         </div>
@@ -49,7 +49,7 @@
         <div id="log_window">
             <!-- CROIX POP UP -->
             <div id="close_pop_up">
-                <a href="http://localhost:5501/"><img src="/img/croix.png" alt="" width="50px" height="50px"></a>
+                <a href="/"><img src="/img/croix.png" alt="" width="50px" height="50px"></a>
             </div>
             <!-- FORMULAIRE -->
             <div class="login-box">
@@ -85,7 +85,7 @@
                 </form>
                 <div id="no_account">
                     <p>Déjà un compte ?</p>
-                    <a id="no_account_btn2" href="http://localhost:5501/connection">Se connecter</a>
+                    <a id="no_account_btn2" href="connection">Se connecter</a>
                 </div>
             </div>
         </div>
@@ -100,15 +100,18 @@
             </div>
             <div id="menu">
                 <ul>
-                    <li><a href="">Accueil</a></li>
+                    <li><a href="/">Accueil</a></li>
                     <li><a href="">Produits</a></li>
                     <li><a href="">Contact</a></li>
-                    <li><a href="#panier"><img id="cart" src="/img/shopping-cart_icon.png" alt=""></a>
-                        <a id="profil" href="http://localhost:5501/connection"><img id="profil_pic" src="/img/icon_profil.png" alt=""></a>
-                    </li>
                     <li>
-                        <% if (prenom != "") { %>
-                        <p class="prenom"><%= prenom %></p>
+                        <% if (connected) { %>
+                        <div class="profile">
+                            <a href="#panier"><img id="cart" src="/img/shopping-cart_icon.png" alt=""></a>
+                            <a id="prenom"><%= prenom %></a>
+                            <a href="deconnection">Deconnexion</a>
+                        </div>
+                        <% } else { %>
+                        <a id="profil" href="connection"><img id="profil_pic" src="/img/icon_profil.png" alt=""></a>
                         <% } %>
                     </li>
                     <script>
@@ -128,7 +131,7 @@
                                     $("#pop_up_log").css("display", "none");
                                     $("#pop_up_reg").css("display", "none");
                                     $("#close_pop_up").css("display", "none");
-                                    window.location.href = "http://localhost:5501/";
+                                    window.location.href = "/";
                                     pop_up = false;
                                 }
                             });
@@ -138,7 +141,7 @@
                                 $("#pop_up_log").css("display", "none");
                                 $("#pop_up_reg").css("display", "none");
                                 $("#close_pop_up").css("display", "none");
-                                window.location.href = "http://localhost:5501/";
+                                window.location.href = "/";
                                 pop_up = false;
                             });
                         });

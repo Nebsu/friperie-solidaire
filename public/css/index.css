@@ -57,6 +57,16 @@ a {
   margin-right: 10px;
 }
 
+#prenom {
+  color: black;
+}
+
+.profile {
+  display: flex;
+  justify-content: space-between;
+  margin-right: 20px;
+}
+
 /* ------------------------------ TITRE ------------------------------ */
 
 #titre {
@@ -106,14 +116,13 @@ a {
   display: flex;
   justify-content: space-around;
 }
-#produits_nav nav ul li a{
+#produits_nav nav ul li a {
   display: flex;
   margin-left: 20px;
 }
 #type_produit_txt {
   margin-top: auto;
   margin-bottom: auto;
-  
 }
 #produits_nav img {
   width: 40px;
@@ -131,56 +140,55 @@ a {
   margin-right: 20px;
 }
 
-
-
-#cont_veste, #cont_chemise, #cont_pantalon, #cont_chaussettes{
-  text-align:center;
+#cont_veste,
+#cont_chemise,
+#cont_pantalon,
+#cont_chaussettes {
+  text-align: center;
   position: absolute;
 }
 
-#cont_chemise{
+#cont_chemise {
   top: 330px;
   left: 7.1%;
 }
 
-#cont_veste{
+#cont_veste {
   top: 330px;
   left: 15.5%;
 }
 
-#cont_pantalon{
+#cont_pantalon {
   top: 330px;
   left: 22.8%;
 }
 
-#cont_chaussettes{
+#cont_chaussettes {
   top: 330px;
   left: 30%;
 }
 
-
-.bubbled{
-  text-decoration:none;
-  color:#fff;
-  background-color:#444;
-  padding:15px 30px;
-  border-radius:5px;
-  display:block;
+.bubbled {
+  text-decoration: none;
+  color: #fff;
+  background-color: #444;
+  padding: 15px 30px;
+  border-radius: 5px;
+  display: block;
 }
 
-.bubbled:after{
-  width:0;
-  height:0;
-  border-left:10px solid transparent;
-  border-right:10px solid transparent;
-  border-top:10px solid #444;
-  position:absolute;
-  content:'';
-   top:100%;
-  left:50%;
-  margin-left:-5px;    
+.bubbled:after {
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-top: 10px solid #444;
+  position: absolute;
+  content: "";
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
 }
-
 
 /* ------------------------------ PRODUITS LISTE ------------------------------ */
 
@@ -240,11 +248,10 @@ footer ul {
 
 /* ------------------------------ POP UP LOG AND REG ------------------------------ */
 
-#close_pop_up{
+#close_pop_up {
   position: inherit;
   top: 10px;
   left: 10px;
-
 }
 
 #pop_up_log {
@@ -263,7 +270,6 @@ footer ul {
   z-index: 2;
   margin: 0;
   padding: 0;
-
 }
 
 #log_window {
@@ -398,7 +404,7 @@ footer ul {
     margin-right: auto;
     margin-left: auto;
   }
-  #type_produit_txt{
+  #type_produit_txt {
     display: none;
   }
 }

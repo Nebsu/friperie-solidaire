@@ -13,7 +13,9 @@ CREATE TABLE produits (
   nom VARCHAR(100) NOT NULL,
   description TEXT NOT NULL,
   prix NUMERIC(10, 2) NOT NULL,
-  stock INT NOT NULL
+  stock INT NOT NULL,
+  image BYTEA,
+  category VARCHAR(50) NOT NULL,
 );
 
 -- Table "commandes"
@@ -37,15 +39,15 @@ CREATE TABLE details_commandes (
 -- Table "panier"
 CREATE TABLE panier (
   id_panier SERIAL PRIMARY KEY,
-  id_utilisateur INT NOT NULL REFERENCES utilisateurs(id_utilisateur),
-  date_creation TIMESTAMP NOT NULL DEFAULT NOW()
+  id_utilisateur INT NOT NULL REFERENCES utilisateurs(id_utilisateur), 
 );
 
 -- Table "details_panier"
 CREATE TABLE details_panier (
   id_detail_panier SERIAL PRIMARY KEY,
-  id_panier INT NOT NULL REFERENCES panier(id_panier),
+  id_panier INT NOT NULL,
   id_produit INT NOT NULL REFERENCES produits(id_produit),
   quantite INT NOT NULL,
-  prix_unitaire NUMERIC(10, 2) NOT NULL
+  prix_unitaire NUMERIC(10, 2) NOT NULL,
+  FOREIGN KEY (id_panier) REFERENCES panier(id_panier) ON DELETE CASCADE
 );
