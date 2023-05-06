@@ -285,8 +285,8 @@
             </ul>
         </footer>
     </div>
+    <script src="https://unpkg.com/scrollreveal"></script>
     <% if(!connection && !inscription && !panier){ %>
-        <script src="https://unpkg.com/scrollreveal"></script>
         <script>
 
             const sr = ScrollReveal({
@@ -299,10 +299,20 @@
             sr.reveal('#barre_nav',{delay: 200, origin:'top'});
             sr.reveal('#img_logo',{delay: 600, origin:'top'});
             sr.reveal('#produits',{delay: 900, origin:'top'});
-            sr.reveal('#pop_up_log',{delay: 1200, origin:'top'});
-
         </script>
     <% } %> 
+
+    <% if(connection){ %>
+        <script>
+            const sr2 = ScrollReveal({
+                distance : '60px',
+                duration : 2600,
+                delay : 450,
+                reset : false
+            });
+            sr2.reveal('#pop_up_log',{delay: 200, origin:'top'});
+        </script>
+    <% } %>
 
 </body>
 </html>
