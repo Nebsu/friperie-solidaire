@@ -15,7 +15,7 @@ CREATE TABLE produits (
   prix NUMERIC(10, 2) NOT NULL,
   stock INT NOT NULL,
   image BYTEA,
-  category VARCHAR(50) NOT NULL,
+  category VARCHAR(50) NOT NULL
 );
 
 -- Table "commandes"
@@ -36,16 +36,11 @@ CREATE TABLE details_commandes (
   prix_unitaire NUMERIC(10, 2) NOT NULL
 );
 
+
 -- Table "panier"
 CREATE TABLE panier (
   id_panier SERIAL PRIMARY KEY,
-  id_utilisateur INT NOT NULL REFERENCES utilisateurs(id_utilisateur), 
-);
-
--- Table "details_panier"
-CREATE TABLE details_panier (
-  id_detail_panier SERIAL PRIMARY KEY,
-  id_panier INT NOT NULL,
+  id_utilisateur INT NOT NULL,
   id_produit INT NOT NULL REFERENCES produits(id_produit),
   quantite INT NOT NULL,
   prix_unitaire NUMERIC(10, 2) NOT NULL,

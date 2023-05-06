@@ -11,28 +11,37 @@ body {
   z-index: 1;
 }
 
+a {
+  text-decoration: none;
+  color: black;
+  border-bottom: 2px solid transparent;
+}
+
 /* ------------------------------ BARRE DE NAVIGATION ------------------------------ */
 
 #barre_nav {
   color: white;
   display: flex;
   justify-content: space-between;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding: 33px 9%;
+
 }
 #logo {
   margin-top: auto;
   margin-bottom: auto;
-  margin-left: 10px;
+
 }
 #logo img {
   height: 60px;
 }
 #menu {
   width: 60%;
-  margin-right: 10px;
 }
 #menu ul {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
 }
 #menu ul li {
   margin-top: auto;
@@ -41,24 +50,25 @@ body {
 li {
   list-style-type: none;
 }
-a {
+#menu li a {
   text-decoration: none;
   color: black;
+  border-bottom: 2px solid transparent;
+  transition: all 0.3s ease-in-out;
 }
-#profil_pic {
-  width: 50px;
-  height: 50px;
+#menu li a:hover{
+  border-bottom: 2px solid rgb(207, 152, 152) ;
 }
 
-#cart {
-  width: 35px;
-  height: 35px;
-  margin-bottom: 8px;
+#cart{
   margin-right: 10px;
 }
 
-#prenom {
-  color: black;
+
+#profile_connected{
+  display: flex;
+  margin-top: auto;
+  margin-bottom: auto;
 }
 
 .profile {
@@ -69,16 +79,21 @@ a {
 
 /* ------------------------------ TITRE ------------------------------ */
 
-#titre {
-  margin-top: 100px;
-  margin-bottom: 100px;
+#logo_cadre{
+  width: 600px;
+  margin: auto;
 }
-#titre h1 {
-  text-align: center;
+
+#img_logo {
+  width:100%;
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 300px;
+  margin-bottom: 300px;
 }
-#red_text {
-  color: rgb(198, 96, 96);
-}
+
+
 
 /* ------------------------------ PRODUITS ------------------------------ */
 
@@ -249,9 +264,10 @@ footer ul {
 /* ------------------------------ POP UP LOG AND REG ------------------------------ */
 
 #close_pop_up {
-  position: inherit;
+  position: absolute;
   top: 10px;
   left: 10px;
+  z-index: 3;
 }
 
 #pop_up_log {
@@ -327,7 +343,7 @@ footer ul {
 .login-box .user-box input:valid ~ label {
   top: -20px;
   left: 0;
-  color: #03e9f4;
+  color: #ffffff;
   font-size: 12px;
 }
 /* #submit {
@@ -365,7 +381,7 @@ footer ul {
 }
 #no_account_btn:hover,
 #no_account_btn2:hover {
-  color: #03e9f4;
+  color: #ffffff;
   cursor: pointer;
 }
 
@@ -383,6 +399,77 @@ footer ul {
   height: 40px;
   width: 40px;
 }
+
+
+
+/* ------------------------------ PANIER ------------------------------ */
+
+#panier{
+  width: 100%;
+  height : 100%;
+  position: fixed;
+  z-index: 2;
+}
+
+#panier_window{
+  background-color: white;
+  width: 60%;
+  height: 700px;
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 50px;
+  border-radius: 30px;
+}
+
+#panier_title{
+  text-align: center;
+  height: 60px;
+
+}
+
+#panier_title h1{
+  position: relative;
+  top:10px
+}
+
+#panier_list{
+  display: block;
+  background-color: #ececec;
+  width: 90%;
+  height: 200px;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 30px;
+}
+
+#infos{
+  display: flex;
+  justify-content: space-around;
+  background-color: #ececec;
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 30px;
+  position: absolute;
+  bottom: 30px;
+  left: 50%; /* à 50%/50% du parent référent */
+  transform: translate(-50%);
+  
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /* ------------------------------ RESPONSIVE ------------------------------ */
 

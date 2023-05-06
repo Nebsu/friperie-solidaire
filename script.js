@@ -1,3 +1,5 @@
+
+
 const ejs = require("ejs");
 const pg = require("pg");
 const express = require("express");
@@ -199,6 +201,8 @@ app.post("/inscription", async (req, res) => {
     registerUser(user);
     connection = true;
     pop_up = true;
+    res.redirect("/connection");
+    return;
   }
   const data = {
     name: namefield,
@@ -208,6 +212,7 @@ app.post("/inscription", async (req, res) => {
     connection: connection,
     inscription: inscription,
     connected: false,
+    panier:false,
   };
   res.render("index.ejs", data);
   return;
@@ -246,6 +251,7 @@ app.post("/connection", async (req, res) => {
     connection: connection,
     inscription: false,
     connected: connected,
+    panier:false,
   };
   res.render("index.ejs", data);
 });
@@ -268,6 +274,7 @@ app.get("/connected", async (req, res) => {
     inscription: false,
     connected: true,
     products: rows,
+    panier:false,
   };
   res.render("index.ejs", data);
 });
@@ -281,6 +288,7 @@ app.get("/connection", function (req, res) {
     connection: true,
     inscription: false,
     connected: false,
+    panier:false,
   };
   res.render("index.ejs", data);
   return;
@@ -295,10 +303,27 @@ app.get("/inscription", function (req, res) {
     connection: false,
     inscription: true,
     connected: false,
+    panier:false,
   };
   res.render("index.ejs", data);
   return;
 });
+
+app.get("/panier", async (req, res) => {
+  const data = {
+    name: "",
+    surname: "",
+    email: "",
+    prenom: currentName,
+    connection: false,
+    inscription: false,
+    connected: true,
+    panier:true,
+  };
+  res.render("index.ejs", data);
+  return;
+});
+
 
 app.get("/", (req, res) => {
   const data = {
@@ -309,9 +334,12 @@ app.get("/", (req, res) => {
     connection: false,
     inscription: false,
     connected: false,
+    panier:false,
   };
   res.render("index.ejs", data);
   return;
 });
+
+
 
 app.listen(5501);
