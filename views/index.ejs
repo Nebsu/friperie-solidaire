@@ -163,6 +163,7 @@
         <!-- TITRE -->
         <div id="logo_cadre">
             <img id="img_logo" src="/img/logo.png" width="50%" alt="">
+            <img id="fly" src="/img/test.png" width='100%'alt="">
         </div>
 
         <!-- PRODUITS -->
@@ -299,6 +300,15 @@
             sr.reveal('#barre_nav',{delay: 200, origin:'top'});
             sr.reveal('#img_logo',{delay: 600, origin:'top'});
             sr.reveal('#produits',{delay: 900, origin:'top'});
+
+
+            const sr3 = ScrollReveal({
+                distance : '60px',
+                duration : 2600,
+                delay : 450,
+                reset : true
+            });
+            sr3.reveal('#fly',{delay: 900, origin:'top'});
         </script>
     <% } %> 
 
