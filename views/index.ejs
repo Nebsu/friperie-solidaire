@@ -12,7 +12,7 @@
    
     <% if(connection){ %>
     <!-- LOGIN -->
-    <div id="pop_up_log">
+    <div id="pop_up_log" style="display: none;">
         <div id="log_window">
             <!-- FORMULAIRE -->
             <div class="login-box">
@@ -117,12 +117,6 @@
     <% } 
     %>
     <div id="contenu">
-    
-
-
-
-    
-
         <!-- BARRE DE NAVIGATION -->
         <nav id="barre_nav">
             <div id="logo">
@@ -136,7 +130,7 @@
                 </ul>
             </div>
             <% if (connected) { %>
-                <div id="profile_connected">
+                <div id="profil_connected">
                     <a id="cart" href="/panier"><img id="cart_pic" src="/img/shopping-cart_icon.png" width="40px" alt="" ></a>
                     <a id="profil" href="connection"><img id="profil_pic" src="/img/icon_profil.png" width="40px" alt=""></a>
                     <!-- <a href="deconnection">Deconnexion</a> -->
@@ -149,8 +143,6 @@
                 <script>
                     $(document).ready(function(){
                             $("#contenu").css("filter", "blur(4px)");
-                            $("#pop_up_log").css("display", "block");
-                            $("#close_pop_up").css("display", "block");
                         });
                         // si on appui sur la touche echap
                         if (e.key === "Escape") { // escape key maps to keycode `27`
@@ -184,22 +176,22 @@
             <!-- BULLES MENU -->
             <div id="bulles">
 
-                <div id='cont_chemise'>
+                <div id='cont_chemise' style="display:none;">
                     <a class='bubbled' href='#'>
                         Chemise
                     </a>
                 </div>
-                <div id='cont_veste'>
+                <div id='cont_veste' style="display:none;">
                     <a class='bubbled' href='#'>
                         Veste
                     </a>
                 </div>
-                <div id='cont_pantalon'>
+                <div id='cont_pantalon' style="display:none;">
                     <a class='bubbled' href='#'>
                         Pantalon
                     </a>
                 </div>
-                <div id='cont_chaussettes'>
+                <div id='cont_chaussettes' style="display:none;">
                     <a class='bubbled' href='#'>
                         Chaussettes
                     </a>
@@ -286,6 +278,11 @@
             </ul>
         </footer>
     </div>
+
+
+
+
+
     <script src="https://unpkg.com/scrollreveal"></script>
     <% if(!connection && !inscription && !panier){ %>
         <script>
@@ -314,13 +311,20 @@
 
     <% if(connection){ %>
         <script>
+           
             const sr2 = ScrollReveal({
                 distance : '60px',
                 duration : 2600,
-                delay : 450,
+                delay : 0,
                 reset : false
             });
-            sr2.reveal('#pop_up_log',{delay: 200, origin:'top'});
+            
+            $(document).ready(function(){
+                setTimeout(function(){
+                    $("#pop_up_log").css("display", "block");
+                    sr2.reveal('#pop_up_log',{delay: 200, origin:'top'});
+                }, 400);
+            });
         </script>
     <% } %>
 

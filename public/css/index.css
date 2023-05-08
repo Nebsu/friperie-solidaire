@@ -65,17 +65,12 @@ li {
 }
 
 
-#profile_connected{
+#profil_connected{
   display: flex;
   margin-top: auto;
   margin-bottom: auto;
 }
 
-.profile {
-  display: flex;
-  justify-content: space-between;
-  margin-right: 20px;
-}
 
 /* ------------------------------ TITRE ------------------------------ */
 
