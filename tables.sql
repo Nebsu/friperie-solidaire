@@ -11,10 +11,8 @@ CREATE TABLE utilisateurs (
 CREATE TABLE produits (
   id_produit SERIAL PRIMARY KEY,
   nom VARCHAR(100) NOT NULL,
-  description TEXT NOT NULL,
   prix NUMERIC(10, 2) NOT NULL,
   stock INT NOT NULL,
-  image BYTEA,
   category VARCHAR(50) NOT NULL
 );
 

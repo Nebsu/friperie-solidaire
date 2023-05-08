@@ -1,8 +1,7 @@
-
-
 const ejs = require("ejs");
 const pg = require("pg");
 const express = require("express");
+const functions = require("./public/js/function.js");
 const app = express();
 const pool = new pg.Pool({
   user: "postgres",
@@ -21,6 +20,7 @@ app.set("view engine", "ejs");
 
 let currentUserId = NaN;
 let currentName = "";
+let connectState = false;
 
 async function CreatePool() {
   const pool = new pg.Pool({
@@ -49,112 +49,11 @@ class User {
   }
 }
 
-class Product {
-  constructor(name, description, price, quantity, image) {
-    this.name = name;
-    this.description = description;
-    this.price = price;
-    this.quantity = quantity;
-    this.image = image;
-  }
-}
+var clickHandler = function () {
+  console.log("click event");
+};
 
-async function registerUser(user) {
-  const text =
-    "INSERT INTO utilisateurs(nom, prenom, email, mot_de_passe) VALUES($1, $2, $3, $4) RETURNING *";
-  const values = [user.name, user.surname, user.email, user.password];
-  return pool.query(text, values);
-}
-
-async function getUser(userEmail) {
-  const text = "SELECT * FROM utilisateurs WHERE email = $1";
-  const values = [userEmail];
-  return pool.query(text, values);
-}
-
-async function getAllEmail() {
-  const result = await pool.query("SELECT email FROM utilisateurs");
-  const rows = result.rows.map((row) => row.email);
-  return rows;
-}
-
-async function addNewProduct(product) {
-  const text =
-    "INSERT INTO produits(nom, description, prix, stock, image) VALUES($1, $2, $3, $4, $5, $6) RETURNING *";
-  const values = [
-    product.name,
-    product.description,
-    product.price,
-    product.quantity,
-    product.image,
-    product.category,
-  ];
-  return pool.query(text, values);
-}
-
-// Ajouter un produit au panier
-async function addToCart(id, quantity, price) {
-  const text =
-    "INSERT INTO panier(id_utilisateur, id_produit, quantite, prix_unitaire) VALUES($1, $2, $3) RETURNING *";
-  const values = [currentUserId, id, quantity, price];
-  return pool.query(text, values);
-}
-
-// Supprimer un produit du panier
-async function deleteProductCart(id) {
-  const text =
-    "DELETE FROM panier WHERE id_produit = $1 AND id_utilisateur = $2";
-  const values = [id, currentUserId];
-  return pool.query(text, values);
-}
-
-async function deleteCart() {
-  const text = "DELETE FROM details_panier WHERE id_utilisateur = $1";
-  const values = [currentUserId];
-  return pool.query(text, values);
-}
-
-// Créer une commande
-async function createCommand(address) {
-  const text =
-    "INSERT INTO commandes(id_utilisateur, date_commande, adresse_livraison, etat_livraison) VALUES($1, $2, $3, $4) RETURNING *";
-  const state = "En cours de préparation";
-  const values = [currentUserId, new Date(), address, state];
-  return pool.query(text, values);
-}
-
-// Recuperer le dernier id de commande
-async function getCommandId() {
-  const text =
-    "SELECT MAX(id_commande) FROM commandes WHERE id_utilisateur = $1";
-  const values = [currentUserId];
-  const result = await pool.query(text, values);
-  const rows = result.rows;
-  return rows[0].max;
-}
-
-// Ajouter les produits du panier à la commande
-async function addCartToCommand(adress) {
-  createCommand(adress);
-  const idCommand = getCommandId();
-  const text = "SELECT * FROM panier WHERE id_utilisateur = $1";
-  const values = [currentUserId];
-  const result = await pool.query(text, values);
-  const rows = result.rows;
-  await deleteCart();
-  for (let i = 0; i < rows.length; i++) {
-    const text2 = "INSERT details_commandes VALUES($1, $2, $3, $4)";
-    const values2 = [
-      idCommand,
-      rows[i].id_produit,
-      rows[i].quantite,
-      rows[i].prix_unitaire,
-    ];
-    await pool.query(text2, values2);
-  }
-}
-
-app.post("/inscription", async (req, res) => {
+app.post("/inscription/", async (req, res) => {
   let namefield = "";
   let surnamefield = "";
   let emailfield = "";
@@ -166,7 +65,7 @@ app.post("/inscription", async (req, res) => {
   let email = req.body.email;
   let password = req.body.password;
   let confirm_password = req.body.confirmpassword;
-  const database = await getAllEmail();
+  const database = await functions.getAllEmail();
   console.log("Post Inscription");
   if (name.length < 2 || name.length > 30) {
     // Verification nom
@@ -198,21 +97,22 @@ app.post("/inscription", async (req, res) => {
   } else {
     // Ajout des données dans la base de données
     const user = new User(name, surname, email, password);
-    registerUser(user);
+    functions.registerUser(user);
     connection = true;
     pop_up = true;
     res.redirect("/connection");
     return;
   }
   const data = {
+    type_produit: "Catalogue",
     name: namefield,
     surname: surnamefield,
     email: emailfield,
     prenom: "",
     connection: connection,
     inscription: inscription,
-    connected: false,
-    panier:false,
+    connected: connectState,
+    panier: false,
   };
   res.render("index.ejs", data);
   return;
@@ -221,22 +121,20 @@ app.post("/inscription", async (req, res) => {
 app.post("/connection", async (req, res) => {
   let connection = false;
   let emailfield = "";
-  let connected = false;
   let email = req.body.email;
   let password = req.body.password;
   console.log("Post Connection");
-  const user = await getUser(email);
+  const user = await functions.getUser(email);
   if (user.rows.length == 0) {
     connection = true;
     console.log("Utilisateur non trouvé");
     return;
   } else if (user.rows[0].mot_de_passe != password) {
-    connection = true;
     emailfield = email;
     console.log("Mot de passe incorrect");
   } else {
     console.log("Connection réussie");
-    connected = true;
+    connectState = true;
     currentName = user.rows[0].prenom;
     currentUserId = user.rows[0].id_utilisateur;
     console.log(currentName + " " + currentUserId);
@@ -244,14 +142,15 @@ app.post("/connection", async (req, res) => {
     return;
   }
   const data = {
+    type_produit: "Catalogue",
     name: "",
     surname: "",
-    email: "",
+    email: emailfield,
     prenom: currentName + " ",
     connection: connection,
     inscription: false,
-    connected: connected,
-    panier:false,
+    connected: connectState,
+    panier: false,
   };
   res.render("index.ejs", data);
 });
@@ -266,29 +165,31 @@ app.get("/connected", async (req, res) => {
   const result = await pool.query("SELECT * FROM produits");
   const rows = result.rows;
   const data = {
+    type_produit: "Catalogue",
     name: "",
     surname: "",
     email: "",
     prenom: currentName,
     connection: false,
     inscription: false,
-    connected: true,
+    connected: connectState,
     products: rows,
-    panier:false,
+    panier: false,
   };
   res.render("index.ejs", data);
 });
 
 app.get("/connection", function (req, res) {
   const data = {
+    type_produit: "Catalogue",
     name: "",
     surname: "",
     email: "",
     prenom: currentName + " ",
     connection: true,
     inscription: false,
-    connected: false,
-    panier:false,
+    connected: connectState,
+    panier: false,
   };
   res.render("index.ejs", data);
   return;
@@ -296,14 +197,15 @@ app.get("/connection", function (req, res) {
 
 app.get("/inscription", function (req, res) {
   const data = {
+    type_produit: "Catalogue",
     name: "",
     surname: "",
     email: "",
     prenom: "",
     connection: false,
     inscription: true,
-    connected: false,
-    panier:false,
+    connected: connectState,
+    panier: false,
   };
   res.render("index.ejs", data);
   return;
@@ -311,35 +213,123 @@ app.get("/inscription", function (req, res) {
 
 app.get("/panier", async (req, res) => {
   const data = {
-    name: "",
-    surname: "",
-    email: "",
+    type_produit: "Catalogue",
     prenom: currentName,
     connection: false,
     inscription: false,
-    connected: true,
-    panier:true,
+    connected: connectState,
+    panier: true,
   };
   res.render("index.ejs", data);
   return;
 });
 
-
-app.get("/", (req, res) => {
+app.get("/veste", async (req, res) => {
+  const result = await pool.query(
+    "SELECT * FROM produits WHERE category = 'veste'"
+  );
+  const rows = result.rows;
   const data = {
-    name: "",
-    surname: "",
-    email: "",
-    prenom: "",
+    type_produit: "veste",
+    prenom: currentName,
     connection: false,
     inscription: false,
-    connected: false,
-    panier:false,
+    connected: connectState,
+    products: rows,
+    panier: false,
   };
   res.render("index.ejs", data);
   return;
 });
 
+app.get("/pantalon", async (req, res) => {
+  const result = await pool.query(
+    "SELECT * FROM produits WHERE category = 'pantalon'"
+  );
+  const counter = await pool.query(
+    "SELECT COUNT(*) FROM produits WHERE category = 'pantalon'"
+  );
+  const rows = result.rows;
+  const count = counter.rows[0].count;
+  const data = {
+    type_produit: "pantalon",
+    count: count,
+    prenom: currentName,
+    connection: false,
+    inscription: false,
+    connected: connectState,
+    products: rows,
+    panier: false,
+    functions: functions,
+  };
+  res.render("index.ejs", data);
+  return;
+});
 
+app.get("/chemise", async (req, res) => {
+  const result = await pool.query(
+    "SELECT * FROM produits WHERE category = 'chemise'"
+  );
+  const rows = result.rows;
+  const data = {
+    type_produit: "chemise",
+    prenom: currentName,
+    connection: false,
+    inscription: false,
+    connected: connectState,
+    products: rows,
+    panier: false,
+  };
+  res.render("index.ejs", data);
+  return;
+});
+
+app.get("/accessoire", async (req, res) => {
+  const result = await pool.query(
+    "SELECT * FROM produits WHERE category = 'accessoire'"
+  );
+  const rows = result.rows;
+  const data = {
+    type_produit: "accessoire",
+    prenom: currentName,
+    connection: false,
+    inscription: false,
+    connected: connectState,
+    products: rows,
+    panier: false,
+  };
+  res.render("index.ejs", data);
+  return;
+});
+
+app.get("/produits/:type", async (req, res) => {
+  let url = req.params.type;
+  functions.addToCart(currentUserId, 1, 1, 20.99);
+  const data = {
+    type_produit: "",
+    prenom: currentName,
+    connection: false,
+    inscription: false,
+    connected: connectState,
+    products: "",
+    panier: false,
+  };
+  res.redirect("/" + url);
+  return;
+});
+
+app.get("/", (req, res) => {
+  connectState = false;
+  const data = {
+    type_produit: "Catalogue",
+    connection: false,
+    inscription: false,
+    connected: connectState,
+    panier: false,
+  };
+  console.log(connectState);
+  res.render("index.ejs", data);
+  return;
+});
 
 app.listen(5501);
