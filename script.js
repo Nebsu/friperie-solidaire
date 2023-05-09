@@ -228,15 +228,21 @@ app.get("/veste", async (req, res) => {
   const result = await pool.query(
     "SELECT * FROM produits WHERE category = 'veste'"
   );
+  const counter = await pool.query(
+    "SELECT COUNT(*) FROM produits WHERE category = 'veste'"
+  );
   const rows = result.rows;
+  const count = counter.rows[0].count;
   const data = {
     type_produit: "veste",
+    count: count,
     prenom: currentName,
     connection: false,
     inscription: false,
     connected: connectState,
     products: rows,
     panier: false,
+    functions: functions,
   };
   res.render("index.ejs", data);
   return;
@@ -270,15 +276,21 @@ app.get("/chemise", async (req, res) => {
   const result = await pool.query(
     "SELECT * FROM produits WHERE category = 'chemise'"
   );
+  const counter = await pool.query(
+    "SELECT COUNT(*) FROM produits WHERE category = 'chemise'"
+  );
   const rows = result.rows;
+  const count = counter.rows[0].count;
   const data = {
     type_produit: "chemise",
+    count: count,
     prenom: currentName,
     connection: false,
     inscription: false,
     connected: connectState,
     products: rows,
     panier: false,
+    functions: functions,
   };
   res.render("index.ejs", data);
   return;
@@ -288,15 +300,21 @@ app.get("/accessoire", async (req, res) => {
   const result = await pool.query(
     "SELECT * FROM produits WHERE category = 'accessoire'"
   );
+  const counter = await pool.query(
+    "SELECT COUNT(*) FROM produits WHERE category = 'accessoire'"
+  );
   const rows = result.rows;
+  const count = counter.rows[0].count;
   const data = {
     type_produit: "accessoire",
+    count: count,
     prenom: currentName,
     connection: false,
     inscription: false,
     connected: connectState,
     products: rows,
     panier: false,
+    functions: functions,
   };
   res.render("index.ejs", data);
   return;

@@ -275,7 +275,56 @@
                     if (count > 0){
                         for(i=0; i < count; i++){ %>
                             <div id="produit">
-                                <img src="../img/pantalon/pantalon_<%=products[i].id_produit%>.jpg">
+                                <img src="../img/pantalon/pantalon_<%=i+1%>.jpg">
+
+                                <div class="produit_info">
+                                    <h3><%= products[i].nom %></h3>
+                                    <p id="price"><%= products[i].prix %>€</p>
+                                    <% if(connected){ %>
+                                        <a href="produits/<%=type_produit%>">Ajouter au panier</a>
+                                    <%}%>
+                                </div>
+                            </div>
+                        <% } %>
+                    <% } %>
+                <% } %>
+                <% if(type_produit === "accessoire") {
+                    if (count > 0){
+                        for(i=0; i < count; i++){ %>
+                            <div id="produit">
+                                <img src="../img/accessoire/accessoire_<%=i+1%>.jpg">
+                                <div class="produit_info">
+                                    <h3><%= products[i].nom %></h3>
+                                    <p id="price"><%= products[i].prix %>€</p>
+                                    <% if(connected){ %>
+                                        <a href="produits/<%=type_produit%>">Ajouter au panier</a>
+                                    <%}%>
+                                </div>
+                            </div>
+                        <% } %>
+                    <% } %>
+                <% } %>
+                <% if(type_produit === "chemise") {
+                    if (count > 0){
+                        for(i=0; i < count; i++){ %>
+                            <div id="produit">
+                                <img src="../img/chemise/chemise_<%=i+1%>.jpg">
+                                <div class="produit_info">
+                                    <h3><%= products[i].nom %></h3>
+                                    <p id="price"><%= products[i].prix %>€</p>
+                                    <% if(connected){ %>
+                                        <a href="produits/<%=type_produit%>">Ajouter au panier</a>
+                                    <%}%>
+                                </div>
+                            </div>
+                        <% } %>
+                    <% } %>
+                <% } %>
+                <% if(type_produit === "veste") {
+                    if (count > 0){
+                        for(i=0; i < count; i++){ %>
+                            <div id="produit">
+                                <img src="../img/veste/veste_<%=i+1%>%>.jpg">
                                 <div class="produit_info">
                                     <h3><%= products[i].nom %></h3>
                                     <p id="price"><%= products[i].prix %>€</p>
