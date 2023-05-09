@@ -320,9 +320,9 @@ app.get("/accessoire", async (req, res) => {
   return;
 });
 
-app.get("/produits/:type", async (req, res) => {
+app.get("/produits/:type/:id/:price", async (req, res) => {
   let url = req.params.type;
-  functions.addToCart(currentUserId, 1, 1, 20.99);
+  functions.addToCart(currentUserId, req.params.id, 1, req.params.price);
   const data = {
     type_produit: "",
     prenom: currentName,

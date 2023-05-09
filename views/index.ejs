@@ -175,7 +175,7 @@
                         <li><a href="chemise"><div id="type_produit_txt">Chemises</div><img id="chemise" src="/img/chemise_icon.png" alt=""></a></li>
                         <li><a href="veste"><div id="type_produit_txt">Vestes</div><img id="veste" src="/img/veste_icon.png" alt=""></a></li>
                         <li><a href="pantalon"><div id="type_produit_txt">Pantalons</div><img id="pantalon" src="/img/pantalon_icon.png" alt=""></a></li>
-                        <li><a href="accessoire"><div id="type_produit_txt">Chaussettes</div><img id="chaussettes" src="/img/chaussettes_icon.png" alt=""></a></li>
+                        <li><a href="accessoire"><div id="type_produit_txt">Accessoires</div><img id="chaussettes" src="/img/chaussettes_icon.png" alt=""></a></li>
                     </ul>
                     <a id="combinaisons" href="#">Combinaisons</a>
                 </nav>
@@ -200,7 +200,7 @@
                 </div>
                 <div id='cont_chaussettes' style="display:none;">
                     <a class='bubbled' href='#'>
-                        Chaussettes
+                        Accessoires
                     </a>
                 </div>
             </div>
@@ -281,7 +281,7 @@
                                     <h3><%= products[i].nom %></h3>
                                     <p id="price"><%= products[i].prix %>€</p>
                                     <% if(connected){ %>
-                                        <a href="produits/<%=type_produit%>">Ajouter au panier</a>
+                                        <a href="produits/<%=type_produit%>/<%=products[i].id_produit%>/<%= products[i].prix %>">Ajouter au panier</a>
                                     <%}%>
                                 </div>
                             </div>
@@ -297,7 +297,7 @@
                                     <h3><%= products[i].nom %></h3>
                                     <p id="price"><%= products[i].prix %>€</p>
                                     <% if(connected){ %>
-                                        <a href="produits/<%=type_produit%>">Ajouter au panier</a>
+                                        <a href="produits/<%=type_produit%>/<%=products[i].id_produit %>/<%= products[i].prix %>">Ajouter au panier</a>
                                     <%}%>
                                 </div>
                             </div>
@@ -313,7 +313,7 @@
                                     <h3><%= products[i].nom %></h3>
                                     <p id="price"><%= products[i].prix %>€</p>
                                     <% if(connected){ %>
-                                        <a href="produits/<%=type_produit%>">Ajouter au panier</a>
+                                        <a href="produits/<%=type_produit%>/<%=products[i].id_produit %>/<%= products[i].prix %>">Ajouter au panier</a>
                                     <%}%>
                                 </div>
                             </div>
@@ -329,7 +329,7 @@
                                     <h3><%= products[i].nom %></h3>
                                     <p id="price"><%= products[i].prix %>€</p>
                                     <% if(connected){ %>
-                                        <a href="produits/<%=type_produit%>">Ajouter au panier</a>
+                                        <a href="produits/<%=type_produit%>/<%=products[i].id_produit %>/<%= products[i].prix %>">Ajouter au panier</a>
                                     <%}%>
                                 </div>
                             </div>
