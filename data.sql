@@ -1,9 +1,9 @@
 id_produit,nom,prix,stock,category
 1,Pantalon Classique,20.99,3,pantalon
 2,Jogging bleu,15.99,2,pantalon
-4,Pantalon Slim,29.99,4,pantalon
-5,Jogging gris,19.99,3,pantalon
-3,Jogging vert,15.99,4,pantalon
+3,Pantalon Slim,29.99,4,pantalon
+4,Jogging gris,19.99,3,pantalon
+5,Jogging vert,15.99,4,pantalon
 6,Pantalon Chino,29.99,5,pantalon
 7,Jogging Gris Sport,19.99,5,pantalon
 8,Pantalon Chino Coupe fine,19.99,5,pantalon

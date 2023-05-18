@@ -12,7 +12,7 @@
    
     <% if(connection){ %>
     <!-- LOGIN -->
-    <div id="pop_up_log" style="display: none;">
+    <div id="pop_up_log" style="display: block;">
         <div id="log_window">
             <!-- FORMULAIRE -->
             <div class="login-box">
@@ -95,7 +95,7 @@
 
             <!-- liste du panier -->
             <div id="panier_list">
-                <!-- TO DO : LISTE LES ARTICLES DANS LE PANIER -->
+                
             </div>
 
 
@@ -266,70 +266,25 @@
                             Chemises
                         <%}else if(type_produit === "accessoire"){%>
                             Accessoires
-                        <%}%>
+                        <%}else{%>
+                            Sélectionnez une catégorie 
+                        <%}
+                        %>
                     </h2>
                 <% } %>
             </div>
             <div id="produits_liste">
-                <% if(type_produit === "pantalon") {
+                <% if(type_produit === "pantalon" || type_produit === "veste" || type_produit === "chemise" || type_produit === "accessoire") {
                     if (count > 0){
                         for(i=0; i < count; i++){ %>
                             <div id="produit">
-                                <img src="../img/pantalon/pantalon_<%=i+1%>.jpg">
+                                <img src="../img/<%=type_produit%>/<%=type_produit%>_<%=i+1%>.jpg">
 
                                 <div class="produit_info">
                                     <h3><%= products[i].nom %></h3>
                                     <p id="price"><%= products[i].prix %>€</p>
                                     <% if(connected){ %>
                                         <a href="produits/<%=type_produit%>/<%=products[i].id_produit%>/<%= products[i].prix %>">Ajouter au panier</a>
-                                    <%}%>
-                                </div>
-                            </div>
-                        <% } %>
-                    <% } %>
-                <% } %>
-                <% if(type_produit === "accessoire") {
-                    if (count > 0){
-                        for(i=0; i < count; i++){ %>
-                            <div id="produit">
-                                <img src="../img/accessoire/accessoire_<%=i+1%>.jpg">
-                                <div class="produit_info">
-                                    <h3><%= products[i].nom %></h3>
-                                    <p id="price"><%= products[i].prix %>€</p>
-                                    <% if(connected){ %>
-                                        <a href="produits/<%=type_produit%>/<%=products[i].id_produit %>/<%= products[i].prix %>">Ajouter au panier</a>
-                                    <%}%>
-                                </div>
-                            </div>
-                        <% } %>
-                    <% } %>
-                <% } %>
-                <% if(type_produit === "chemise") {
-                    if (count > 0){
-                        for(i=0; i < count; i++){ %>
-                            <div id="produit">
-                                <img src="../img/chemise/chemise_<%=i+1%>.jpg">
-                                <div class="produit_info">
-                                    <h3><%= products[i].nom %></h3>
-                                    <p id="price"><%= products[i].prix %>€</p>
-                                    <% if(connected){ %>
-                                        <a href="produits/<%=type_produit%>/<%=products[i].id_produit %>/<%= products[i].prix %>">Ajouter au panier</a>
-                                    <%}%>
-                                </div>
-                            </div>
-                        <% } %>
-                    <% } %>
-                <% } %>
-                <% if(type_produit === "veste") {
-                    if (count > 0){
-                        for(i=0; i < count; i++){ %>
-                            <div id="produit">
-                                <img src="../img/veste/veste_<%=i+1%>%>.jpg">
-                                <div class="produit_info">
-                                    <h3><%= products[i].nom %></h3>
-                                    <p id="price"><%= products[i].prix %>€</p>
-                                    <% if(connected){ %>
-                                        <a href="produits/<%=type_produit%>/<%=products[i].id_produit %>/<%= products[i].prix %>">Ajouter au panier</a>
                                     <%}%>
                                 </div>
                             </div>
@@ -353,7 +308,7 @@
 
 
     <script src="https://unpkg.com/scrollreveal"></script>
-    <% if(!connection && !inscription && !panier){ %>
+    <% if(!connection && !inscription && !panier && !connected){ %>
         <script>
 
             const sr = ScrollReveal({
@@ -363,37 +318,29 @@
                 reset : false
             });
 
-            sr.reveal('#barre_nav',{delay: 200, origin:'top'});
-            sr.reveal('#img_logo',{delay: 600, origin:'top'});
-            sr.reveal('#produits',{delay: 900, origin:'top'});
-
-
-            const sr3 = ScrollReveal({
-                distance : '60px',
-                duration : 2600,
-                delay : 450,
-                reset : true
-            });
-            sr3.reveal('#fly',{delay: 900, origin:'top'});
+            sr.reveal('#barre_nav',{delay: 100, origin:'top'});
+            sr.reveal('#img_logo',{delay: 100, origin:'top'});
+            sr.reveal('#produits',{delay: 100, origin:'top'});
+            sr.reveal('#fly',{delay: 400, origin:'top'});
         </script>
     <% } %> 
 
     <% if(connection){ %>
         <script>
            
-            const sr2 = ScrollReveal({
-                distance : '60px',
-                duration : 2600,
-                delay : 0,
-                reset : false
-            });
+            // const sr2 = ScrollReveal({
+            //     distance : '60px',
+            //     duration : 2600,
+            //     delay : 0,
+            //     reset : false
+            // });
             
-            $(document).ready(function(){
-                setTimeout(function(){
-                    $("#pop_up_log").css("display", "block");
-                    sr2.reveal('#pop_up_log',{delay: 200, origin:'top'});
-                }, 400);
-            });
+            // $(document).ready(function(){
+            //     setTimeout(function(){
+            //         $("#pop_up_log").css("display", "block");
+            //         sr2.reveal('#pop_up_log',{delay: 200, origin:'top'});
+            //     }, 400);
+            // });
         </script>
     <% } %>
 
