@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- BARRE DE NAVIGATION -->
+    <nav id="barre_nav">
+        <div id="logo">
+            <img src="/img/icon_logo.png" alt="">
+        </div>
+        <div id="menu">
+            <ul>
+                <li><a href="/">Accueil</a></li>
+                <li><a href="">Produits</a></li>
+                <li><a href="">Contact</a></li>
+            </ul>
+        </div>
+        <% if (connected) { %>
+            <div id="profil_connected">
+                <a id="cart" href="/panier"><img id="cart_pic" src="/img/shopping-cart_icon.png" width="40px" alt="" ></a>
+                <!-- <a id="profil" href="connection"><img id="profil_pic" src="/img/icon_profil.png" width="40px" alt=""></a> -->
+                <a id="se_deconnecter" href="deconnection">Se déconnecter</a>
+            </div>
+            <% } else { %>
+            <!-- <a id="profil" href="connection"><img id="profil_pic" src="/img/icon_profil.png" width="40px" alt=""></a> -->
+            <a id="se_connecter" href="connection">Se connecter</a>
+            <% } %>
+
+        <% if(connection || inscription || panier){ %>
+            <script>
+                $(document).ready(function(){
+                        $("#contenu").css("filter", "blur(4px)");
+                    });
+                    // si on appui sur la touche echap
+                    if (e.key === "Escape") { // escape key maps to keycode `27`
+                        window.location.href = "/";
+                    }
+            </script>
+        <% } %>
+    </nav>
+</body>
+</html>

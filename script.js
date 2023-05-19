@@ -320,9 +320,12 @@ app.get("/accessoire", async (req, res) => {
   return;
 });
 
-app.get("/produits/:type/:id/:price", async (req, res) => {
-  let url = req.params.type;
-  functions.addToCart(currentUserId, req.params.id, 1, req.params.price);
+app.get("/produits/:id", async (req, res) => {
+  const result = await pool.query(
+    "SELECT * FROM produits WHERE id_produit = " + req.params.id
+  );
+  const rows = result.rows;
+
   const data = {
     type_produit: "",
     prenom: currentName,
@@ -331,8 +334,12 @@ app.get("/produits/:type/:id/:price", async (req, res) => {
     connected: connectState,
     products: "",
     panier: false,
+    produit_id : rows[0].id_produit,
+    produit_name : rows[0].nom,
+    produit_price : rows[0].prix,
+    produit_quantity : rows[0].stock,
   };
-  res.redirect("/" + url);
+  res.render("produit.ejs",data);
   return;
 });
 
