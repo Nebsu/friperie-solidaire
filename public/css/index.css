@@ -66,6 +66,37 @@ li {
   display: flex;
   margin-top: auto;
   margin-bottom: auto;
+  margin-left: 10px;
+}
+
+#se_connecter {
+  margin-top: auto;
+  margin-bottom: auto;
+  border : solid 1px black;
+  border-radius: 20px;
+  padding: 10px;
+  transition: all 0.1s ease-in-out;
+}
+
+#se_connecter:hover{
+  background-color: rgb(46, 46, 46);
+  color: white;
+  cursor: pointer;
+}
+
+#se_deconnecter{
+  margin-top: auto;
+  margin-bottom: auto;
+  border : solid 1px black;
+  border-radius: 20px;
+  padding: 10px;
+  transition: all 0.1s ease-in-out;
+}
+
+#se_deconnecter:hover{
+  background-color: rgb(46, 46, 46);
+  color: white;
+  cursor: pointer;
 }
 
 /* ------------------------------ TITRE ------------------------------ */
@@ -163,23 +194,23 @@ li {
 }
 
 #cont_chemise {
-  top: 330px;
-  left: 7.1%;
+  top:-30px;
+  left: 7%;
 }
 
 #cont_veste {
-  top: 330px;
-  left: 15.5%;
+  top: -30px;
+  left: 24%;
 }
 
 #cont_pantalon {
-  top: 330px;
-  left: 22.8%;
+  top: -30px;
+  left: 36.5%;
 }
 
 #cont_chaussettes {
-  top: 330px;
-  left: 30%;
+  top: -30px;
+  left: 48%;
 }
 
 .bubbled {
@@ -250,6 +281,34 @@ li {
   cursor: pointer;
   outline: inherit;
   margin-left: 10px;
+  background-color: red;
+}
+
+
+#produit_info{
+  display: flex;
+  justify-content: space-between;
+}
+
+#produit_text{
+  width: 50%;
+}
+
+#priceAndPanier{
+  width: 50%;
+  text-align: center;
+}
+
+#addToPanier{
+  cursor: pointer;
+  border-radius: 17px;
+  padding: 7px;
+  background-color: rgb(128, 185, 128);
+  transition: all 0.3s ease-in-out;
+}
+
+#addToPanier:hover{
+  background-color: rgb(154, 204, 154);
 }
 
 /* ------------------------------ FOOTER ------------------------------ */
