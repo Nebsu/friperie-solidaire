@@ -1,6 +1,7 @@
 const ejs = require("ejs");
 const pg = require("pg");
 const express = require("express");
+const bcrypt = require("bcrypt");
 const functions = require("./public/js/function.js");
 const app = express();
 const pool = new pg.Pool({
@@ -49,10 +50,6 @@ class User {
   }
 }
 
-var clickHandler = function () {
-  console.log("click event");
-};
-
 app.post("/inscription/", async (req, res) => {
   let namefield = "";
   let surnamefield = "";
@@ -96,8 +93,11 @@ app.post("/inscription/", async (req, res) => {
     console.log("Mot de passe invalide");
   } else {
     // Ajout des données dans la base de données
-    const user = new User(name, surname, email, password);
-    functions.registerUser(user);
+    bcrypt.hash(password, 10, function (err, hash) {
+      const user = new User(name, surname, email, hash);
+      console.log("hash: " + hash);
+      functions.registerUser(user);
+    });
     connection = true;
     pop_up = true;
     res.redirect("/connection");
@@ -125,11 +125,13 @@ app.post("/connection", async (req, res) => {
   let password = req.body.password;
   console.log("Post Connection");
   const user = await functions.getUser(email);
+  let hashedPassword = user.rows[0].mot_de_passe;
+  const b = await bcrypt.compare(password, hashedPassword);
   if (user.rows.length == 0) {
     connection = true;
     console.log("Utilisateur non trouvé");
     return;
-  } else if (user.rows[0].mot_de_passe != password) {
+  } else if (b == false) {
     emailfield = email;
     console.log("Mot de passe incorrect");
   } else {
@@ -336,9 +338,49 @@ app.get("/produits/:type/:id/:price", async (req, res) => {
   return;
 });
 
-app.get("/", (req, res) => {
+app.get("/", async (req, res) => {
   connectState = false;
+  const counterpantalon = await pool.query(
+    "SELECT COUNT(*) FROM produits WHERE category = 'pantalon'"
+  );
+  const counterchemise = await pool.query(
+    "SELECT COUNT(*) FROM produits WHERE category = 'chemise'"
+  );
+  const counteraccessoire = await pool.query(
+    "SELECT COUNT(*) FROM produits WHERE category = 'accessoire'"
+  );
+  const counterveste = await pool.query(
+    "SELECT COUNT(*) FROM produits WHERE category = 'veste'"
+  );
+  const resultpantalon = await pool.query(
+    "SELECT * FROM produits WHERE category = 'pantalon'"
+  );
+  const resultchemise = await pool.query(
+    "SELECT * FROM produits WHERE category = 'chemise'"
+  );
+  const resultaccessoire = await pool.query(
+    "SELECT * FROM produits WHERE category = 'accessoire'"
+  );
+  const resultveste = await pool.query(
+    "SELECT * FROM produits WHERE category = 'veste'"
+  );
+  const count1 = counterpantalon.rows[0].count;
+  const count2 = counterchemise.rows[0].count;
+  const count3 = counteraccessoire.rows[0].count;
+  const count4 = counterveste.rows[0].count;
+  const rows1 = resultpantalon.rows;
+  const rows2 = resultchemise.rows;
+  const rows3 = resultaccessoire.rows;
+  const rows4 = resultveste.rows;
   const data = {
+    count_pantalon: count1,
+    count_chemise: count2,
+    count_accessoire: count3,
+    count_veste: count4,
+    products_pantalon: rows1,
+    products_chemise: rows2,
+    products_accessoire: rows3,
+    products_veste: rows4,
     type_produit: "Catalogue",
     connection: false,
     inscription: false,

@@ -268,7 +268,7 @@
                         <%}else if(type_produit === "accessoire"){%>
                             Accessoires
                         <%}else{%>
-                            Sélectionnez une catégorie 
+                            Catalogue
                         <%}
                         %>
                     </h2>
@@ -281,6 +281,42 @@
                             <div id="produit">
                                 <img src="../img/<%=type_produit%>/<%=type_produit%>_<%=i+1%>.jpg">
 
+                                <div id="produit_info">
+                                    <div id="produit_text">
+                                        <h3><%= products[i].nom %></h3>
+                                    </div>
+                                    <div id="priceAndPanier">
+                                        <p id="price"><%= products[i].prix %>€</p>
+                                        <% if(connected){ %>
+                                            <a id="addToPanier" href="produits/<%=type_produit%>/<%=products[i].id_produit%>/<%= products[i].prix %>">Ajouter au panier</a>
+                                        <%}%>
+                                    </div>
+                                </div>
+                            </div>
+                        <% } %>
+                    <% } %>
+                <% } else {
+                    for(let j=0; j<4; j++){
+                        if(j === 0){
+                            type_produit = "pantalon";
+                            count = count_pantalon;
+                            products = products_pantalon;
+                        }else if(j === 1){
+                            type_produit = "veste";
+                            count = count_veste;
+                            products = products_veste;
+                        }else if(j === 2){
+                            type_produit = "chemise";
+                            count = count_chemise;
+                            products = products_chemise;
+                        }else if(j === 3){
+                            type_produit = "accessoire";
+                            count = count_accessoire;
+                            products = products_accessoire;
+                        }
+                        for(i=0; i < count; i++){ %>
+                            <div id="produit">
+                                <img src="../img/<%=type_produit%>/<%=type_produit%>_<%=i+1%>.jpg">
                                 <div id="produit_info">
                                     <div id="produit_text">
                                         <h3><%= products[i].nom %></h3>
