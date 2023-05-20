@@ -1,6 +1,12 @@
+DROP TABLE IF EXISTS details_commandes CASCADE;
+DROP TABLE IF EXISTS commandes CASCADE;
+DROP TABLE IF EXISTS produits CASCADE;
+DROP TABLE IF EXISTS utilisateurs CASCADE;
+DROP TABLE IF EXISTS panier CASCADE;
+
 -- Table "utilisateurs"
 CREATE TABLE utilisateurs (
-  id_utilisateur SERIAL PRIMARY KEY,
+  id_utilisateur SERIAL PRIMARY KEY ON DELETE CASCADE,
   nom VARCHAR(50) NOT NULL,
   prenom VARCHAR(50) NOT NULL,
   email VARCHAR(100) NOT NULL,

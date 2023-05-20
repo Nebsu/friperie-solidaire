@@ -1,6 +1,7 @@
 const ejs = require("ejs");
 const pg = require("pg");
 const express = require("express");
+const bcrypt = require("bcrypt");
 const functions = require("./public/js/function.js");
 const app = express();
 const pool = new pg.Pool({
@@ -18,7 +19,7 @@ app.use("/img", express.static(__dirname + "public/img"));
 app.use(express.urlencoded({ extended: true }));
 app.set("view engine", "ejs");
 
-let currentUserId = NaN;
+let currentUserId = 0;
 let currentName = "";
 let connectState = false;
 
@@ -48,10 +49,6 @@ class User {
     this.password = password;
   }
 }
-
-var clickHandler = function () {
-  console.log("click event");
-};
 
 app.post("/inscription/", async (req, res) => {
   let namefield = "";
@@ -96,8 +93,11 @@ app.post("/inscription/", async (req, res) => {
     console.log("Mot de passe invalide");
   } else {
     // Ajout des données dans la base de données
-    const user = new User(name, surname, email, password);
-    functions.registerUser(user);
+    bcrypt.hash(password, 10, function (err, hash) {
+      const user = new User(name, surname, email, hash);
+      console.log("hash: " + hash);
+      functions.registerUser(user);
+    });
     connection = true;
     pop_up = true;
     res.redirect("/connection");
@@ -125,11 +125,13 @@ app.post("/connection", async (req, res) => {
   let password = req.body.password;
   console.log("Post Connection");
   const user = await functions.getUser(email);
+  let hashedPassword = user.rows[0].mot_de_passe;
+  const b = await bcrypt.compare(password, hashedPassword);
   if (user.rows.length == 0) {
     connection = true;
     console.log("Utilisateur non trouvé");
     return;
-  } else if (user.rows[0].mot_de_passe != password) {
+  } else if (b == false) {
     emailfield = email;
     console.log("Mot de passe incorrect");
   } else {
@@ -164,8 +166,36 @@ app.get("/deconnection", function (req, res) {
 app.get("/connected", async (req, res) => {
   const result = await pool.query("SELECT * FROM produits");
   const rows = result.rows;
+  const resultpantalon = await pool.query(
+    "SELECT * FROM produits WHERE category = 'pantalon'"
+  );
+  const resultchemise = await pool.query(
+    "SELECT * FROM produits WHERE category = 'chemise'"
+  );
+  const resultaccessoire = await pool.query(
+    "SELECT * FROM produits WHERE category = 'accessoire'"
+  );
+  const resultveste = await pool.query(
+    "SELECT * FROM produits WHERE category = 'veste'"
+  );
+  const count1 = resultpantalon.rows.length;
+  const count2 = resultchemise.rows.length;
+  const count3 = resultaccessoire.rows.length;
+  const count4 = resultveste.rows.length;
+  const rows1 = resultpantalon.rows;
+  const rows2 = resultchemise.rows;
+  const rows3 = resultaccessoire.rows;
+  const rows4 = resultveste.rows;
   const data = {
     type_produit: "Catalogue",
+    count_pantalon: count1,
+    count_chemise: count2,
+    count_accessoire: count3,
+    count_veste: count4,
+    products_pantalon: rows1,
+    products_chemise: rows2,
+    products_accessoire: rows3,
+    products_veste: rows4,
     name: "",
     surname: "",
     email: "",
@@ -212,6 +242,10 @@ app.get("/inscription", function (req, res) {
 });
 
 app.get("/panier", async (req, res) => {
+  const result = await pool.query(
+    "SELECT * FROM panier JOIN produits ON panier.id_produit = produits.id_produit WHERE id_utilisateur =" +
+      currentUserId
+  );
   const data = {
     type_produit: "Catalogue",
     prenom: currentName,
@@ -219,12 +253,25 @@ app.get("/panier", async (req, res) => {
     inscription: false,
     connected: connectState,
     panier: true,
+    elt_panier: result.rows,
+    elt_panier_length: result.rows.length,
   };
   res.render("index.ejs", data);
   return;
 });
 
-app.get("/produits/veste", async (req, res) => {
+app.get("/panier/:id_produit", async (req, res) => {
+  const id_produit = req.params.id_produit;
+  functions.deleteProductCart(id_produit, currentUserId);
+  const result = await pool.query(
+    "SELECT * FROM panier JOIN produits ON panier.id_produit = produits.id_produit WHERE id_utilisateur =" +
+      currentUserId
+  );
+  res.redirect("/panier");
+  return;
+});
+
+app.get("/veste", async (req, res) => {
   const result = await pool.query(
     "SELECT * FROM produits WHERE category = 'veste'"
   );
@@ -371,7 +418,35 @@ app.get("/produits", async (req, res) => {
 
 app.get("/", (req, res) => {
   connectState = false;
+  const resultpantalon = await pool.query(
+    "SELECT * FROM produits WHERE category = 'pantalon'"
+  );
+  const resultchemise = await pool.query(
+    "SELECT * FROM produits WHERE category = 'chemise'"
+  );
+  const resultaccessoire = await pool.query(
+    "SELECT * FROM produits WHERE category = 'accessoire'"
+  );
+  const resultveste = await pool.query(
+    "SELECT * FROM produits WHERE category = 'veste'"
+  );
+  const count1 = resultpantalon.rows.length;
+  const count2 = resultchemise.rows.length;
+  const count3 = resultaccessoire.rows.length;
+  const count4 = resultveste.rows.length;
+  const rows1 = resultpantalon.rows;
+  const rows2 = resultchemise.rows;
+  const rows3 = resultaccessoire.rows;
+  const rows4 = resultveste.rows;
   const data = {
+    count_pantalon: count1,
+    count_chemise: count2,
+    count_accessoire: count3,
+    count_veste: count4,
+    products_pantalon: rows1,
+    products_chemise: rows2,
+    products_accessoire: rows3,
+    products_veste: rows4,
     type_produit: "Catalogue",
     connection: false,
     inscription: false,
