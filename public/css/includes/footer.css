@@ -1,0 +1,17 @@
+/* ------------------------------ FOOTER ------------------------------ */
+footer {
+    width: 100%;
+    height: 100px;
+    background-color: #adadad;
+    margin-top: 100px;
+    text-align: center;
+    padding-top: 20px;
+  }
+  
+  footer ul {
+    display: flex;
+    justify-content: space-between;
+    width: 50%;
+    margin-right: auto;
+    margin-left: auto;
+  }

@@ -1,0 +1,331 @@
+body {
+    background-color: #f5f5f5;
+    font-family: "Open Sans", sans-serif;
+    font-size: 16px;
+    color: #333;
+    margin: 0;
+    padding: 0;
+  }
+  
+  #contenu {
+    z-index: 1;
+  }
+  
+  a {
+    text-decoration: none;
+    color: black;
+    border-bottom: 2px solid transparent;
+  }
+
+
+  /* ------------------------------ BARRE DE NAVIGATION ------------------------------ */
+
+#barre_nav {
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding: 33px 9%;
+}
+#logo {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+#logo img {
+  height: 60px;
+}
+#menu {
+  width: 60%;
+}
+#menu ul {
+  display: flex;
+  justify-content: space-around;
+}
+#menu ul li {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+li {
+  list-style-type: none;
+}
+#menu li a {
+  text-decoration: none;
+  color: black;
+  border-bottom: 2px solid transparent;
+  transition: all 0.3s ease-in-out;
+}
+#menu li a:hover {
+  border-bottom: 2px solid rgb(207, 152, 152);
+}
+
+#cart {
+  margin-right: 10px;
+}
+
+#profil_connected {
+  display: flex;
+  margin-top: auto;
+  margin-bottom: auto;
+  margin-left: 10px;
+}
+
+#se_connecter {
+  margin-top: auto;
+  margin-bottom: auto;
+  border : solid 1px black;
+  border-radius: 20px;
+  padding: 10px;
+  transition: all 0.1s ease-in-out;
+}
+
+#se_connecter:hover{
+  background-color: rgb(46, 46, 46);
+  color: white;
+  cursor: pointer;
+}
+
+#se_deconnecter{
+  margin-top: auto;
+  margin-bottom: auto;
+  border : solid 1px black;
+  border-radius: 20px;
+  padding: 10px;
+  transition: all 0.1s ease-in-out;
+}
+
+#se_deconnecter:hover{
+  background-color: rgb(46, 46, 46);
+  color: white;
+  cursor: pointer;
+
+}
+
+
+
+
+  /* -------------------- LISTE ------------------- */
+
+  /* ------------------------------ PRODUITS ------------------------------ */
+
+#produits {
+    width: 90%;
+    background-color: #cfcfcf;
+    margin-right: auto;
+    margin-left: auto;
+    padding-top: 20px;
+    border-radius: 50px;
+  }
+  
+  /* ------------------------------ BARRE NAV PRODUITS ------------------------------ */
+  
+  #produits_nav {
+    width: 95%;
+    height: 60px;
+    background-color: #adadad;
+    margin-right: auto;
+    margin-left: auto;
+    border-radius: 50px;
+  }
+  #produits_nav nav {
+    display: flex;
+    justify-content: space-between;
+    height: 100%;
+  }
+  #produits_nav nav ul {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 0px;
+    height: 100%;
+  }
+  #produits_nav nav ul li {
+    display: flex;
+    justify-content: space-around;
+  }
+  #produits_nav nav ul li a {
+    display: flex;
+    margin-left: 20px;
+  }
+  #type_produit_txt {
+    margin-top: auto;
+    margin-bottom: auto;
+  }
+  #produits_nav img {
+    width: 40px;
+    height: 40px;
+    margin-left: 5px;
+    margin-top: auto;
+    margin-bottom: auto;
+  }
+  #naav:hover {
+    box-shadow: 0px 0px 5px 3px #ffffff;
+  }
+  #combinaisons {
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-right: 20px;
+  }
+  
+  #cont_veste,
+  #cont_chemise,
+  #cont_pantalon,
+  #cont_chaussettes {
+    text-align: center;
+    position: absolute;
+  }
+  
+  #cont_chemise {
+    top:-30px;
+    left: 7%;
+  }
+  
+  #cont_veste {
+    top: -30px;
+    left: 24%;
+  }
+  
+  #cont_pantalon {
+    top: -30px;
+    left: 36.5%;
+  }
+  
+  #cont_chaussettes {
+    top: -30px;
+    left: 48%;
+  }
+  
+  .bubbled {
+    text-decoration: none;
+    color: #fff;
+    background-color: #444;
+    padding: 15px 30px;
+    border-radius: 5px;
+    display: block;
+  }
+  
+  .bubbled:after {
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 10px solid #444;
+    position: absolute;
+    content: "";
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+  }
+  
+  /* ------------------------------ PRODUITS LISTE ------------------------------ */
+  
+  #produits h2 {
+    padding-top: 20px;
+    text-align: center;
+  }
+  #produits_liste {
+    padding-top: 25px;
+    width: 1250px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    margin-right: auto;
+    margin-left: auto;
+  }
+  #container {
+    background-color: rgb(188, 118, 118);
+  }
+  #produit {
+    background-color: #e8e8e8;
+    width: 300px;
+    height: 450px;
+    margin-bottom: 20px;
+    margin-right: auto;
+    margin-left: auto;
+  }
+  #produit img {
+    width: 100%;
+    height: 350px;
+  }
+  #produit h3 {
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+  #price {
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+  
+  #add-cart {
+    background: none;
+    /* border: none; */
+    padding: 0;
+    font: inherit;
+    cursor: pointer;
+    outline: inherit;
+    margin-left: 10px;
+    background-color: red;
+  }
+  
+  
+  #produit_info{
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  #produit_text{
+    width: 50%;
+  }
+  
+  #priceAndPanier{
+    width: 50%;
+    text-align: center;
+  }
+  
+  #addToPanier{
+    cursor: pointer;
+    border-radius: 17px;
+    padding: 7px;
+    background-color: rgb(128, 185, 128);
+    transition: all 0.3s ease-in-out;
+  }
+  
+  #addToPanier:hover{
+    background-color: rgb(154, 204, 154);
+  }
+
+
+
+  /* ------------------------------ RESPONSIVE ------------------------------ */
+  
+  @media screen and (max-width: 1400px) {
+    #produits_liste {
+      width: 930px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      margin-right: auto;
+      margin-left: auto;
+    }
+  }
+  
+  @media screen and (max-width: 1100px) {
+    #produits_liste {
+      width: 650px;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      margin-right: auto;
+      margin-left: auto;
+    }
+    #type_produit_txt {
+      display: none;
+    }
+  }
+  
+  @media screen and (max-width: 750px) {
+    #produits_liste {
+      width: 300px;
+      display: grid;
+      grid-template-columns: repeat(1, 1fr);
+      margin-right: auto;
+      margin-left: auto;
+    }
+  }
+  

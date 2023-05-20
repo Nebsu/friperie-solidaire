@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/liste_produits.css">
+    <title>Document</title>
+</head>
+<body>
+    <%- include('includes/barre_nav.ejs'); %>
+
+    <!-- PRODUITS -->
+    <div id="produits">
+        <!-- BARRE DE NAVIGATION DES PRODUITS -->
+        <div id="produits_nav">
+            <nav>
+                <ul>
+                    <!-- remplacer les textes par des icon par la suite -->
+                    <li><a href="/produits/chemise"><div id="type_produit_txt">Chemises</div><img id="chemise" src="/img/chemise_icon.png" alt=""></a></li>
+                    <li><a href="/produits/veste"><div id="type_produit_txt">Vestes</div><img id="veste" src="/img/veste_icon.png" alt=""></a></li>
+                    <li><a href="/produits/pantalon"><div id="type_produit_txt">Pantalons</div><img id="pantalon" src="/img/pantalon_icon.png" alt=""></a></li>
+                    <li><a href="/produits/accessoire"><div id="type_produit_txt">Accessoires</div><img id="chaussettes" src="/img/chaussettes_icon.png" alt=""></a></li>
+                </ul>
+                <a id="combinaisons" href="#">Combinaisons</a>
+            </nav>
+        </div>
+    
+        <div id="current_type">
+            <!-- rentre dynamique en fonction de la catégorie selectionnée -->
+            <% if(!inscription && !connection) {%>
+                <h2>
+                    <% if(type_produit === "pantalon") { %>
+                        Pantalons
+                    <%}else if(type_produit === "veste"){%>
+                        Vestes
+                    <%}else if(type_produit === "chemise"){%>
+                        Chemises
+                    <%}else if(type_produit === "accessoire"){%>
+                        Accessoires
+                    <%}else{%>
+                        Sélectionnez une catégorie 
+                    <%}
+                    %>
+                </h2>
+            <% } %>
+        </div>
+        <div id="produits_liste">
+            <% if(type_produit === "pantalon" || type_produit === "veste" || type_produit === "chemise" || type_produit === "accessoire") {
+                if (count > 0){
+                    for(i=0; i < count; i++){ %>
+                        <div id="produit">
+                            <img src="../img/<%=type_produit%>/<%=type_produit%>_<%=i+1%>.jpg">
+
+                            <div id="produit_info">
+                                <div id="produit_text">
+                                    <h3><%= products[i].nom %></h3>
+                                </div>
+                                <div id="priceAndPanier">
+                                    <p id="price"><%= products[i].prix %>€</p>
+                                    <% if(connected){ %>
+                                        <a id="addToPanier" href="<%=products[i].id_produit%>">Ajouter au panier</a>
+                                    <%}%>
+                                </div>
+                            </div>
+                        </div>
+                    <% } %>
+                <% } %>
+            <% } %>
+        </div>   
+    </div>
+</body>
+</html>

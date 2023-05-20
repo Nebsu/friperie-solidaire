@@ -291,11 +291,11 @@ app.get("/veste", async (req, res) => {
     panier: false,
     functions: functions,
   };
-  res.render("index.ejs", data);
+  res.render("liste_produits.ejs", data);
   return;
 });
 
-app.get("/pantalon", async (req, res) => {
+app.get("/produits/pantalon", async (req, res) => {
   const result = await pool.query(
     "SELECT * FROM produits WHERE category = 'pantalon'"
   );
@@ -315,11 +315,11 @@ app.get("/pantalon", async (req, res) => {
     panier: false,
     functions: functions,
   };
-  res.render("index.ejs", data);
+  res.render("liste_produits.ejs", data);
   return;
 });
 
-app.get("/chemise", async (req, res) => {
+app.get("/produits/chemise", async (req, res) => {
   const result = await pool.query(
     "SELECT * FROM produits WHERE category = 'chemise'"
   );
@@ -339,11 +339,11 @@ app.get("/chemise", async (req, res) => {
     panier: false,
     functions: functions,
   };
-  res.render("index.ejs", data);
+  res.render("liste_produits.ejs", data);
   return;
 });
 
-app.get("/accessoire", async (req, res) => {
+app.get("/produits/accessoire", async (req, res) => {
   const result = await pool.query(
     "SELECT * FROM produits WHERE category = 'accessoire'"
   );
@@ -363,13 +363,16 @@ app.get("/accessoire", async (req, res) => {
     panier: false,
     functions: functions,
   };
-  res.render("index.ejs", data);
+  res.render("liste_produits.ejs", data);
   return;
 });
 
-app.get("/produits/:type/:id/:price", async (req, res) => {
-  let url = req.params.type;
-  functions.addToCart(currentUserId, req.params.id, 1, req.params.price);
+app.get("/produits/:id", async (req, res) => {
+  const result = await pool.query(
+    "SELECT * FROM produits WHERE id_produit = " + req.params.id
+  );
+  const rows = result.rows;
+
   const data = {
     type_produit: "",
     prenom: currentName,
@@ -378,12 +381,42 @@ app.get("/produits/:type/:id/:price", async (req, res) => {
     connected: connectState,
     products: "",
     panier: false,
+    produit_id : rows[0].id_produit,
+    produit_name : rows[0].nom,
+    produit_price : rows[0].prix,
+    produit_quantity : rows[0].stock,
+    produit_type : rows[0].category,
   };
-  res.redirect("/" + url);
+  res.render("produit.ejs",data);
   return;
 });
 
-app.get("/", async (req, res) => {
+
+app.get("/produits", async (req, res) => {
+  const result = await pool.query(
+    "SELECT * FROM produits"
+  );
+  const rows = result.rows;
+  const data = {
+    type_produit: "",
+    prenom: currentName,
+    connection: false,
+    inscription: false,
+    connected: connectState,
+    products: "",
+    panier: false,
+    produit_id : rows[0].id_produit,
+    produit_name : rows[0].nom,
+    produit_price : rows[0].prix,
+    produit_quantity : rows[0].stock,
+    produit_type : rows[0].category,
+  };
+  res.render("liste_produits.ejs",data);
+  return;
+});
+
+
+app.get("/", (req, res) => {
   connectState = false;
   const resultpantalon = await pool.query(
     "SELECT * FROM produits WHERE category = 'pantalon'"

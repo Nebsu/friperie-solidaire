@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="http://code.jquery.com/jquery-3.3.1.js"></script>
+    <link rel="stylesheet" href="/css/produit.css">
+    <title>Document</title>
+</head>
+<body>
+    <!-- BARRE DE NAVIGATION -->
+    <%- include('includes/barre_nav.ejs'); %>
+
+    <!-- PRODUIT -->
+
+    <div id="produit">
+        <div id="produit_left">
+            <img src="../img/veste/veste_1.jpg" alt="" width="300px">
+        </div>
+        <div id="produit_right">
+            <div id="type"><p><%=produit_type%></p></div>
+            <h1><%=produit_name%></h1>
+            <p><%=produit_price%>€</p>
+            <p>Il en reste <%=produit_quantity%></p>
+
+            <!-- menu deroulant des tailles -->
+            <form action="#">
+                <div class="select-box">
+                    <label for="select-box1" class="label select-box1"><span class="label-desc">Taille</span> </label>
+                    <select id="select-box1" class="select">
+                        <option value="Choice 1">XL</option>
+                        <option value="Choice 2">L</option>
+                        <option value="Choice 3">M</option>
+                        <option value="Choice 4">S</option>
+                    </select>
+                </div>    
+            </form>  
+
+            <form id="quant">
+                <div class="value-button" id="decrease" onclick="decreaseValue()" value="Decrease Value">-</div>
+                <input type="number" id="number" value="0" />
+                <div class="value-button" id="increase" onclick="increaseValue()" value="Increase Value">+</div>
+            </form>
+
+            <a id="buy" href="">Ajouter au panier</a>
+        </div>
+    </div>
+
+    <!-- selectionner des accesoires aleatoirement -->
+    <h2>Accessoires possibles</h2><br>
+    <div id="accessoires">
+        <%for(var i = 0; i < 4; i++){%>
+            <div class="accessoire">
+                <img src="../img/accessoire/accessoire_<%=i+1%>.jpg" alt="" width="200px">
+                <h3>Accessoire <%=i%></h3>
+                <p>5€</p>
+            </div>
+        <%}%>
+
+    </div>
+    
+
+
+    <script>
+        $("select").on("click" , function() {
+            $(this).parent(".select-box").toggleClass("open");
+        });
+
+        $(document).mouseup(function (e){
+            var container = $(".select-box");
+            if (container.has(e.target).length === 0){
+                container.removeClass("open");
+            }
+        });
+
+        $("select").on("change" , function() {
+            var selection = $(this).find("option:selected").text(),
+            labelFor = $(this).attr("id"),
+            label = $("[for='" + labelFor + "']");
+            label.find(".label-desc").html(selection);
+        });
+
+
+        function increaseValue() {
+            var value = parseInt(document.getElementById('number').value, 10);
+            value = isNaN(value) ? 0 : value;
+            value++;
+            document.getElementById('number').value = value;
+        }
+
+        function decreaseValue() {
+            var value = parseInt(document.getElementById('number').value, 10);
+            value = isNaN(value) ? 0 : value;
+            value < 1 ? value = 1 : '';
+            value--;
+            document.getElementById('number').value = value;
+        }
+    </script>
+
+    
+</body>
+</html>
