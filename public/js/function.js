@@ -65,21 +65,47 @@ async function addNewProduct(product) {
 
 // Ajouter un produit au panier
 async function addToCart(currentUser, id, quantity, price) {
-  const text =
-    "INSERT INTO panier(id_utilisateur, id_produit, quantite, prix_unitaire) VALUES($1, $2, $3, $4) RETURNING *";
-  const values = [currentUser, id, quantity, price];
-  return pool.query(text, values);
+  // check if product already in cart
+  const text2 =
+    "SELECT * FROM panier WHERE id_produit = $1 AND id_utilisateur = $2";
+  const values2 = [id, currentUser];
+  const result = await pool.query(text2, values2);
+  const rows = result.rows;
+  if (rows.length > 0) {
+    const text3 =
+      "UPDATE panier SET quantite = quantite + $1 WHERE id_produit = $2 AND id_utilisateur = $3";
+    const values3 = [quantity, id, currentUser];
+    return pool.query(text3, values3);
+  } else {
+    const text =
+      "INSERT INTO panier(id_utilisateur, id_produit, quantite, prix_unitaire) VALUES($1, $2, $3, $4) RETURNING *";
+    const values = [currentUser, id, quantity, price];
+    return pool.query(text, values);
+  }
 }
 
 // Supprimer un produit du panier
-async function deleteProductCart(id) {
-  const text =
-    "DELETE FROM panier WHERE id_produit = $1 AND id_utilisateur = $2";
-  const values = [id, currentUserId];
-  return pool.query(text, values);
+async function deleteProductCart(id, currentUserId) {
+  const text2 = "SELECT * FROM panier WHERE id = $1 AND id_utilisateur = $2";
+  console.log("productid: " + id);
+  console.log("currentUserId: " + currentUserId);
+  const values2 = [id, currentUserId];
+  const result = await pool.query(text2, values2);
+  const rows = result.rows;
+  console.log(rows);
+  if (rows[0].quantite > 1) {
+    const text3 =
+      "UPDATE panier SET quantite = quantite - 1 WHERE id = $1 AND id_utilisateur = $2";
+    const values3 = [id, currentUserId];
+    return pool.query(text3, values3);
+  } else {
+    const text = "DELETE FROM panier WHERE id = $1 AND id_utilisateur = $2";
+    const values = [id, currentUserId];
+    return pool.query(text, values);
+  }
 }
 
-async function deleteCart() {
+async function deleteCart(currentUserId) {
   const text = "DELETE FROM details_panier WHERE id_utilisateur = $1";
   const values = [currentUserId];
   return pool.query(text, values);
@@ -125,6 +151,12 @@ async function addCartToCommand(adress) {
   }
 }
 
+async function getCart(currentUserId) {
+  const text = "SELECT * FROM panier WHERE id_utilisateur = $1";
+  const values = [currentUserId];
+  return pool.query(text, values);
+}
+
 module.exports = {
   registerUser,
   getUser,
@@ -137,4 +169,5 @@ module.exports = {
   getCommandId,
   addCartToCommand,
   clickHandler,
+  getCart,
 };

@@ -95,7 +95,22 @@
 
             <!-- liste du panier -->
             <div id="panier_list">
-                
+                <!-- Affiche chaque element de elt_panier dans une liste -->
+                <ul>
+                <% for(let i=0; i < elt_panier_length; i++){ 
+                    let nom = elt_panier[i].nom;
+                    let prix = elt_panier[i].prix;
+                    let quantite = elt_panier[i].quantite;
+                    let id = elt_panier[i].id;
+                    %>
+
+                    <li>
+                        <%= nom %> - <%= prix %>€ - <%= quantite %> unité(s)
+                        <a href="/panier/<%=id %>">Retirer</a>
+                    </li>
+                <% } %>
+                </ul>
+
             </div>
 
 
@@ -296,6 +311,7 @@
                         <% } %>
                     <% } %>
                 <% } else {
+                    if (!connection && !inscription && !panier)
                     for(let j=0; j<4; j++){
                         if(j === 0){
                             type_produit = "pantalon";

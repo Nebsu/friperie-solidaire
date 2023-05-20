@@ -19,7 +19,7 @@ app.use("/img", express.static(__dirname + "public/img"));
 app.use(express.urlencoded({ extended: true }));
 app.set("view engine", "ejs");
 
-let currentUserId = NaN;
+let currentUserId = 0;
 let currentName = "";
 let connectState = false;
 
@@ -166,8 +166,36 @@ app.get("/deconnection", function (req, res) {
 app.get("/connected", async (req, res) => {
   const result = await pool.query("SELECT * FROM produits");
   const rows = result.rows;
+  const resultpantalon = await pool.query(
+    "SELECT * FROM produits WHERE category = 'pantalon'"
+  );
+  const resultchemise = await pool.query(
+    "SELECT * FROM produits WHERE category = 'chemise'"
+  );
+  const resultaccessoire = await pool.query(
+    "SELECT * FROM produits WHERE category = 'accessoire'"
+  );
+  const resultveste = await pool.query(
+    "SELECT * FROM produits WHERE category = 'veste'"
+  );
+  const count1 = resultpantalon.rows.length;
+  const count2 = resultchemise.rows.length;
+  const count3 = resultaccessoire.rows.length;
+  const count4 = resultveste.rows.length;
+  const rows1 = resultpantalon.rows;
+  const rows2 = resultchemise.rows;
+  const rows3 = resultaccessoire.rows;
+  const rows4 = resultveste.rows;
   const data = {
     type_produit: "Catalogue",
+    count_pantalon: count1,
+    count_chemise: count2,
+    count_accessoire: count3,
+    count_veste: count4,
+    products_pantalon: rows1,
+    products_chemise: rows2,
+    products_accessoire: rows3,
+    products_veste: rows4,
     name: "",
     surname: "",
     email: "",
@@ -214,6 +242,10 @@ app.get("/inscription", function (req, res) {
 });
 
 app.get("/panier", async (req, res) => {
+  const result = await pool.query(
+    "SELECT * FROM panier JOIN produits ON panier.id_produit = produits.id_produit WHERE id_utilisateur =" +
+      currentUserId
+  );
   const data = {
     type_produit: "Catalogue",
     prenom: currentName,
@@ -221,8 +253,21 @@ app.get("/panier", async (req, res) => {
     inscription: false,
     connected: connectState,
     panier: true,
+    elt_panier: result.rows,
+    elt_panier_length: result.rows.length,
   };
   res.render("index.ejs", data);
+  return;
+});
+
+app.get("/panier/:id_produit", async (req, res) => {
+  const id_produit = req.params.id_produit;
+  functions.deleteProductCart(id_produit, currentUserId);
+  const result = await pool.query(
+    "SELECT * FROM panier JOIN produits ON panier.id_produit = produits.id_produit WHERE id_utilisateur =" +
+      currentUserId
+  );
+  res.redirect("/panier");
   return;
 });
 
@@ -340,18 +385,6 @@ app.get("/produits/:type/:id/:price", async (req, res) => {
 
 app.get("/", async (req, res) => {
   connectState = false;
-  const counterpantalon = await pool.query(
-    "SELECT COUNT(*) FROM produits WHERE category = 'pantalon'"
-  );
-  const counterchemise = await pool.query(
-    "SELECT COUNT(*) FROM produits WHERE category = 'chemise'"
-  );
-  const counteraccessoire = await pool.query(
-    "SELECT COUNT(*) FROM produits WHERE category = 'accessoire'"
-  );
-  const counterveste = await pool.query(
-    "SELECT COUNT(*) FROM produits WHERE category = 'veste'"
-  );
   const resultpantalon = await pool.query(
     "SELECT * FROM produits WHERE category = 'pantalon'"
   );
@@ -364,10 +397,10 @@ app.get("/", async (req, res) => {
   const resultveste = await pool.query(
     "SELECT * FROM produits WHERE category = 'veste'"
   );
-  const count1 = counterpantalon.rows[0].count;
-  const count2 = counterchemise.rows[0].count;
-  const count3 = counteraccessoire.rows[0].count;
-  const count4 = counterveste.rows[0].count;
+  const count1 = resultpantalon.rows.length;
+  const count2 = resultchemise.rows.length;
+  const count3 = resultaccessoire.rows.length;
+  const count4 = resultveste.rows.length;
   const rows1 = resultpantalon.rows;
   const rows2 = resultchemise.rows;
   const rows3 = resultaccessoire.rows;
