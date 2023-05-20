@@ -14,9 +14,16 @@
         </div>
         <div id="menu">
             <ul>
-                <li><a href="/">Accueil</a></li>
-                <li><a href="">Produits</a></li>
-                <li><a href="">Contact</a></li>
+                <%if(!connected){%>
+                    <li><a href="/">Accueil</a></li>
+                    <li><a href="/produits">Produits</a></li>
+                    <li><a href="connection">Contact</a></li>
+                
+                <%} else {%>
+                    <li><a href="/connected">Accueil</a></li>
+                    <li><a href="/produits">Produits</a></li>
+                    <li><a href="contact">Contact</a></li>
+                <%}%>
             </ul>
         </div>
         <% if (connected) { %>
@@ -27,7 +34,7 @@
             </div>
             <% } else { %>
             <!-- <a id="profil" href="connection"><img id="profil_pic" src="/img/icon_profil.png" width="40px" alt=""></a> -->
-            <a id="se_connecter" href="connection">Se connecter</a>
+            <a id="se_connecter" href="/connection">Se connecter</a>
             <% } %>
 
         <% if(connection || inscription || panier){ %>

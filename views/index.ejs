@@ -8,150 +8,21 @@
     <title>Document</title>
 </head>
 <body>
-
-   
     <% if(connection){ %>
     <!-- LOGIN -->
-    <div id="pop_up_log" style="display: block;">
-        <div id="log_window">
-            <!-- FORMULAIRE -->
-            <div class="login-box">
-                <!-- CROIX POP UP -->
-                <div id="close_pop_up">
-                    <a href="/"><img src="/img/croix.png" alt="" width="20px" height="20px"></a>
-                </div>
-                <h2 id="pop_up_state">Se connecter</h2>
-                <form action="connection" method="POST">
-                  <div class="user-box">
-                    <input type="email" name="email" required="" value="<%= email %>">
-                    <label>Email</label>
-                  </div>
-                  <div class="user-box">
-                    <input type="password" name="password" required="">
-                    <label>Mot de passe</label>
-                  </div>
-                  <input type="submit" id="submit" value="Confirmer"></input>
-                </form>
-                <div id="no_account">
-                    <p>Pas de compte ?</p>
-                    <a id="no_account_btn" href="inscription">S'inscrire</a>
-                </div>
-            </div>
-        </div>
-    </div>
+        <%- include('includes/login.ejs'); %>
     <% } else if(inscription) { %>
     <!-- REGISTER -->
-    <div id="pop_up_reg">
-        <div id="log_window">
-            <!-- FORMULAIRE -->
-            <div class="login-box">
-                <!-- CROIX POP UP -->
-                <div id="close_pop_up">
-                    <a href="/"><img src="/img/croix.png" alt="" width="20px" height="20px"></a>
-                </div>
-
-                <h2 id="pop_up_state">S'inscrire</h2>
-                <form id="register" method="post" action="inscription">
-                  <div class="user-box">
-                    <input id="nom" type="text" name="name" required="" value="<%= name %>">
-                    <label>Nom</label>
-                  </div>
-                  <div class="user-box">
-                    <input id="prenom" type="text" name="surname" required="" value="<%= surname %>">
-                    <label>Prénom</label>
-                  </div>
-                  <div class="user-box">
-                    <input id="email" type="email" name="email" required="" value="<%= email %>">
-                    <label>Email</label>
-                  </div>
-                  <div class="user-box">
-                    <input id="password" type="password" name="password" required="">
-                    <label>Mot de passe</label>
-                  </div>
-                  <div class="user-box">
-                    <input id="confirm-password" type="password" name="confirmpassword" required="">
-                    <label>Confirmer mot de passe</label>
-                  </div>
-                  <input type="submit" id="submit" value="Confirmer"></input>
-                </form>
-                <div id="no_account">
-                    <p>Déjà un compte ?</p>
-                    <a id="no_account_btn2" href="connection">Se connecter</a>
-                </div>
-            </div>
-        </div>
-    </div>
-    <% } else if(panier) { %>
+        <%- include('includes/register.ejs'); %>
+    <% } else if(panier) { %>   
     <!-- PANIER -->
-    <div id="panier">
-        <div id="panier_window">
-            <!-- CROIX POP UP -->
-            <div id="close_pop_up">
-                <a href="/connected"><img src="/img/croix.png" alt="" width="20px" height="20px"></a>
-            </div>
-            <div id="panier_title">
-                <h1>Votre panier</h1>
-            </div>
-
-            <!-- liste du panier -->
-            <div id="panier_list">
-                
-            </div>
-
-
-            <div id="infos">
-                <div id="infos_left">
-                    <p id="total">Total : <span id="total_price"></span></p>
-                    <p id="total">Frais de port : <span id="total_price">5€</span></p>
-                    <p id="total">Total à payer : <span id="total_price"></span></p>
-                </div>
-                <div id="infos_right">
-                    <p id="total">Adresse de livraison : <span id="total_price"></span></p>
-                    <p id="total">Mode de paiement : <span id="total_price"></span></p>
-                </div>
-            </div>
-
-        </div>
-    </div>
-
+        <%- include('includes/panier.ejs'); %>
     <% } 
     %>
+
     <div id="contenu">
         <!-- BARRE DE NAVIGATION -->
-        <nav id="barre_nav">
-            <div id="logo">
-                <img src="/img/icon_logo.png" alt="">
-            </div>
-            <div id="menu">
-                <ul>
-                    <li><a href="/">Accueil</a></li>
-                    <li><a href="">Produits</a></li>
-                    <li><a href="">Contact</a></li>
-                </ul>
-            </div>
-            <% if (connected) { %>
-                <div id="profil_connected">
-                    <a id="cart" href="/panier"><img id="cart_pic" src="/img/shopping-cart_icon.png" width="40px" alt="" ></a>
-                    <!-- <a id="profil" href="connection"><img id="profil_pic" src="/img/icon_profil.png" width="40px" alt=""></a> -->
-                    <a id="se_deconnecter" href="deconnection">Se déconnecter</a>
-                </div>
-                <% } else { %>
-                <!-- <a id="profil" href="connection"><img id="profil_pic" src="/img/icon_profil.png" width="40px" alt=""></a> -->
-                <a id="se_connecter" href="connection">Se connecter</a>
-                <% } %>
-
-            <% if(connection || inscription || panier){ %>
-                <script>
-                    $(document).ready(function(){
-                            $("#contenu").css("filter", "blur(4px)");
-                        });
-                        // si on appui sur la touche echap
-                        if (e.key === "Escape") { // escape key maps to keycode `27`
-                            window.location.href = "/";
-                        }
-                </script>
-            <% } %>
-        </nav>
+        <%- include('includes/barre_nav.ejs'); %>
 
         <!-- TITRE -->
         <% if (!connected){ %>
@@ -160,198 +31,33 @@
                 <img id="fly" src="/img/test.png" alt="">
             </div>
         <% } else { %>
-            <!-- <div id="logo_cadre">
+            <div id="logo_cadre">
                 <img id="img_logo" src="/img/logo.png" alt="">
                 <img id="fly" src="/img/test.png" alt="">
-            </div> -->
+            </div>
         <% } %>
 
-        <!-- PRODUITS -->
-        <div id="produits">
-            <!-- BARRE DE NAVIGATION DES PRODUITS -->
-            <div id="produits_nav">
-                <nav>
-                    <ul>
-                        <!-- remplacer les textes par des icon par la suite -->
-                        <li><a href="chemise"><div id="type_produit_txt">Chemises</div><img id="chemise" src="/img/chemise_icon.png" alt=""></a></li>
-                        <li><a href="veste"><div id="type_produit_txt">Vestes</div><img id="veste" src="/img/veste_icon.png" alt=""></a></li>
-                        <li><a href="pantalon"><div id="type_produit_txt">Pantalons</div><img id="pantalon" src="/img/pantalon_icon.png" alt=""></a></li>
-                        <li><a href="accessoire"><div id="type_produit_txt">Accessoires</div><img id="chaussettes" src="/img/chaussettes_icon.png" alt=""></a></li>
-                    </ul>
-                    <a id="combinaisons" href="#">Combinaisons</a>
-                </nav>
-            </div>
-            <!-- BULLES MENU -->
-            <!-- <div id="bulles">
-
-                <div id='cont_chemise' style="display:none;">
-                    <a class='bubbled' href='#'>
-                        Chemise
-                    </a>
-                </div>
-                <div id='cont_veste' style="display:none;">
-                    <a class='bubbled' href='#'>
-                        Veste
-                    </a>
-                </div>
-                <div id='cont_pantalon' style="display:none;">
-                    <a class='bubbled' href='#'>
-                        Pantalon
-                    </a>
-                </div>
-                <div id='cont_chaussettes' style="display:none;">
-                    <a class='bubbled' href='#'>
-                        Accessoires
-                    </a>
-                </div>
-            </div> -->
-            <!-- SCRIPT DES BULLES -->
-            <!-- <script>
-                
-
-                $(document).ready(function(){
-                    $("#cont_chemise").css("display", "none");
-                    $("#cont_veste").css("display", "none");
-                    $("#cont_pantalon").css("display", "none");
-                    $("#cont_chaussettes").css("display", "none");
-        
-                    $("#chemise").mouseover(function(){
-                        if($(window).width() < 1100){
-                            $("#cont_chemise").css("display", "block");
-                        }
-                    });
-                    $("#chemise").mouseout(function(){
-                        $("#cont_chemise").css("display", "none");
-                    });
-
-                    $("#veste").mouseover(function(){
-                        if($(window).width() < 1100){
-                            $("#cont_veste").css("display", "block");
-                        }
-                    });
-                    $("#veste").mouseout(function(){
-                        $("#cont_veste").css("display", "none");
-                    });
-
-                    $("#pantalon").mouseover(function(){
-                        if($(window).width() < 1100){
-                            $("#cont_pantalon").css("display", "block");
-                        }
-                    });
-                    $("#pantalon").mouseout(function(){
-                        $("#cont_pantalon").css("display", "none");
-                    });
-
-                    $("#chaussettes").mouseover(function(){
-                        if($(window).width() < 1100){
-                            $("#cont_chaussettes").css("display", "block");
-                        }
-                    });
-                    $("#chaussettes").mouseout(function(){
-                        $("#cont_chaussettes").css("display", "none");
-                    });
-                });
-            </script> -->
 
 
-
-            <div id="current_type">
-                <!-- rentre dynamique en fonction de la catégorie selectionnée -->
-                <% if(!inscription && !connection) {%>
-                    <h2>
-                        <% if(type_produit === "pantalon") { %>
-                            Pantalons
-                        <%}else if(type_produit === "veste"){%>
-                            Vestes
-                        <%}else if(type_produit === "chemise"){%>
-                            Chemises
-                        <%}else if(type_produit === "accessoire"){%>
-                            Accessoires
-                        <%}else{%>
-                            Sélectionnez une catégorie 
-                        <%}
-                        %>
-                    </h2>
-                <% } %>
-            </div>
-            <div id="produits_liste">
-                <% if(type_produit === "pantalon" || type_produit === "veste" || type_produit === "chemise" || type_produit === "accessoire") {
-                    if (count > 0){
-                        for(i=0; i < count; i++){ %>
-                            <div id="produit">
-                                <img src="../img/<%=type_produit%>/<%=type_produit%>_<%=i+1%>.jpg">
-
-                                <div id="produit_info">
-                                    <div id="produit_text">
-                                        <h3><%= products[i].nom %></h3>
-                                    </div>
-                                    <div id="priceAndPanier">
-                                        <p id="price"><%= products[i].prix %>€</p>
-                                        <% if(connected){ %>
-                                            <a id="addToPanier" href="produits/<%=products[i].id_produit%>">Ajouter au panier</a>
-                                        <%}%>
-                                    </div>
-                                </div>
-                            </div>
-                        <% } %>
-                    <% } %>
-                <% } %>
-            </div>   
-        </div>
-        
-        <footer>
-            <ul>
-                <li><a href="#"><img src="/img/facebook.png" alt="" id="facebook"></a></li>
-                <li><a href="#"><img src="/img/instagram.png" alt="" id="instagram"></a></li>
-                <li><a href="#"><img src="/img/twitter.png" alt="" id="twitter"></a></li>
-            </ul>
-        </footer>
+        <!-- FOOTER -->
+        <%- include('includes/footer.ejs'); %>
     </div>
 
-
-
-
-
     <script src="https://unpkg.com/scrollreveal"></script>
-
-
-
-
     <% if(!connection && !inscription && !panier && !connected){ %>
         <script>
-
             const sr = ScrollReveal({
                 distance : '60px',
                 duration : 2600,
                 delay : 450,
                 reset : false
             });
-
             sr.reveal('#barre_nav',{delay: 100, origin:'top'});
             sr.reveal('#img_logo',{delay: 100, origin:'top'});
             sr.reveal('#produits',{delay: 100, origin:'top'});
             sr.reveal('#fly',{delay: 400, origin:'top'});
         </script>
     <% } %> 
-
-    <% if(connection){ %>
-        <script>
-           
-            // const sr2 = ScrollReveal({
-            //     distance : '60px',
-            //     duration : 2600,
-            //     delay : 0,
-            //     reset : false
-            // });
-            
-            // $(document).ready(function(){
-            //     setTimeout(function(){
-            //         $("#pop_up_log").css("display", "block");
-            //         sr2.reveal('#pop_up_log',{delay: 200, origin:'top'});
-            //     }, 400);
-            // });
-        </script>
-    <% } %>
 
 </body>
 </html>
