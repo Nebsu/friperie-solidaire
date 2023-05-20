@@ -10,7 +10,7 @@ CREATE TABLE utilisateurs (
   nom VARCHAR(50) NOT NULL,
   prenom VARCHAR(50) NOT NULL,
   email VARCHAR(100) NOT NULL,
-  mot_de_passe VARCHAR(255) NOT NULL
+  mot_de_passe VARCHAR(255) NOT NULL,
 );
 
 -- Table "produits"
@@ -18,8 +18,17 @@ CREATE TABLE produits (
   id_produit SERIAL PRIMARY KEY,
   nom VARCHAR(100) NOT NULL,
   prix NUMERIC(10, 2) NOT NULL,
-  stock INT NOT NULL,
-  category VARCHAR(50) NOT NULL
+  category VARCHAR(50) NOT NULL,
+  image TEXT DEFAULT NULL
+);
+
+CREATE TABLE stock_products (
+  id_stock_product SERIAL PRIMARY KEY,
+  id_produit INT NOT NULL REFERENCES produits(id_produit),
+  taille_s INT NOT NULL,
+  taille_m INT NOT NULL,
+  taille_l INT NOT NULL,
+  taille_xl INT NOT NULL
 );
 
 -- Table "commandes"
@@ -37,6 +46,7 @@ CREATE TABLE details_commandes (
   id_commande INT NOT NULL REFERENCES commandes(id_commande),
   id_produit INT NOT NULL REFERENCES produits(id_produit),
   quantite INT NOT NULL,
+  taille VARCHAR(2) NOT NULL,
   prix_unitaire NUMERIC(10, 2) NOT NULL
 );
 
@@ -47,6 +57,7 @@ CREATE TABLE panier (
   id_utilisateur INT NOT NULL,
   id_produit INT NOT NULL REFERENCES produits(id_produit),
   quantite INT NOT NULL,
+  taille VARCHAR(2) NOT NULL,
   prix_unitaire NUMERIC(10, 2) NOT NULL,
   FOREIGN KEY (id_panier) REFERENCES panier(id_panier) ON DELETE CASCADE
 );
