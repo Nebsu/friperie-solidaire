@@ -16,7 +16,7 @@
 
     <div id="produit">
         <div id="produit_left">
-            <img src="../img/veste/veste_1.jpg" alt="" width="300px">
+            <img src="<%=produit_image%>" alt="" width="300px">
         </div>
         <div id="produit_right">
             <div id="type"><p><%=produit_type%></p></div>
@@ -25,25 +25,27 @@
             <p>Il en reste <%=produit_quantity%></p>
 
             <!-- menu deroulant des tailles -->
-            <form action="#">
+            <form method="post" action="<%=produit_id%>">
                 <div class="select-box">
                     <label for="select-box1" class="label select-box1"><span class="label-desc">Taille</span> </label>
-                    <select id="select-box1" class="select">
-                        <option value="Choice 1">XL</option>
-                        <option value="Choice 2">L</option>
-                        <option value="Choice 3">M</option>
-                        <option value="Choice 4">S</option>
+                    <select id="select-box1" class="select" name="size" required="">
+                        <option value="S">S</option>
+                        <option value="M">M</option>
+                        <option value="L">L</option>
+                        <option value="XL">XL</option>
                     </select>
-                </div>    
+                </div>   
+                <div id="quant">
+                    <div class="value-button" id="decrease" onclick="decreaseValue()" value="Decrease Value">-</div>
+                    <input type="number" id="number" value="0" name="quantity">
+                    <div class="value-button" id="increase" onclick="increaseValue()" value="Increase Value">+</div>
+                    <br>
+                    <br>
+                    <input type="submit" id="buy" value="Ajouter au panier"></input>
+                </div>
             </form>  
 
-            <form id="quant">
-                <div class="value-button" id="decrease" onclick="decreaseValue()" value="Decrease Value">-</div>
-                <input type="number" id="number" value="0" />
-                <div class="value-button" id="increase" onclick="increaseValue()" value="Increase Value">+</div>
-            </form>
 
-            <a id="buy" href="">Ajouter au panier</a>
         </div>
     </div>
 
@@ -52,9 +54,9 @@
     <div id="accessoires">
         <%for(var i = 0; i < 4; i++){%>
             <div class="accessoire">
-                <img src="../img/accessoire/accessoire_<%=i+1%>.jpg" alt="" width="200px">
-                <h3>Accessoire <%=i%></h3>
-                <p>5€</p>
+                <img src="<%=products[i].image%>" alt="" width="200px">
+                <h3><%=products[i].nom%></h3>
+                <p><%=products[i].prix%>€</p>
             </div>
         <%}%>
 

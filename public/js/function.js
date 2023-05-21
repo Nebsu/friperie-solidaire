@@ -26,10 +26,6 @@ class Product {
   }
 }
 
-function clickHandler() {
-  console.log("click event");
-}
-
 async function registerUser(user) {
   const text =
     "INSERT INTO utilisateurs(nom, prenom, email, mot_de_passe) VALUES($1, $2, $3, $4) RETURNING *";

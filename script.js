@@ -157,6 +157,12 @@ app.post("/connection", async (req, res) => {
   res.render("index.ejs", data);
 });
 
+app.post("/produits/:id", (req, res) => {
+  let size = req.body.size;
+  let quantity = req.body.quantity;
+  console.log("size: " + size + " quantity: " + quantity);
+});
+
 app.get("/deconnection", function (req, res) {
   currentName = "";
   currentUserId = "";
@@ -271,7 +277,7 @@ app.get("/panier/:id_produit", async (req, res) => {
   return;
 });
 
-app.get("/veste", async (req, res) => {
+app.get("/produits/veste", async (req, res) => {
   const result = await pool.query(
     "SELECT * FROM produits WHERE category = 'veste'"
   );
@@ -372,6 +378,10 @@ app.get("/produits/:id", async (req, res) => {
     "SELECT * FROM produits WHERE id_produit = " + req.params.id
   );
   const rows = result.rows;
+  const result2 = await pool.query(
+    "SELECT * FROM produits WHERE category = 'accessoire'"
+  );
+  const rows2 = result2.rows;
 
   const data = {
     type_produit: "",
@@ -379,13 +389,14 @@ app.get("/produits/:id", async (req, res) => {
     connection: false,
     inscription: false,
     connected: connectState,
-    products: "",
+    products: rows2,
     panier: false,
     produit_id: rows[0].id_produit,
     produit_name: rows[0].nom,
     produit_price: rows[0].prix,
     produit_quantity: rows[0].stock,
     produit_type: rows[0].category,
+    produit_image: rows[0].image,
   };
   res.render("produit.ejs", data);
   return;
@@ -400,7 +411,7 @@ app.get("/produits", async (req, res) => {
     connection: false,
     inscription: false,
     connected: connectState,
-    products: "",
+    products: rows,
     panier: false,
     produit_id: rows[0].id_produit,
     produit_name: rows[0].nom,
@@ -414,35 +425,7 @@ app.get("/produits", async (req, res) => {
 
 app.get("/", async (req, res) => {
   connectState = false;
-  const resultpantalon = await pool.query(
-    "SELECT * FROM produits WHERE category = 'pantalon'"
-  );
-  const resultchemise = await pool.query(
-    "SELECT * FROM produits WHERE category = 'chemise'"
-  );
-  const resultaccessoire = await pool.query(
-    "SELECT * FROM produits WHERE category = 'accessoire'"
-  );
-  const resultveste = await pool.query(
-    "SELECT * FROM produits WHERE category = 'veste'"
-  );
-  const count1 = resultpantalon.rows.length;
-  const count2 = resultchemise.rows.length;
-  const count3 = resultaccessoire.rows.length;
-  const count4 = resultveste.rows.length;
-  const rows1 = resultpantalon.rows;
-  const rows2 = resultchemise.rows;
-  const rows3 = resultaccessoire.rows;
-  const rows4 = resultveste.rows;
   const data = {
-    count_pantalon: count1,
-    count_chemise: count2,
-    count_accessoire: count3,
-    count_veste: count4,
-    products_pantalon: rows1,
-    products_chemise: rows2,
-    products_accessoire: rows3,
-    products_veste: rows4,
     type_produit: "Catalogue",
     connection: false,
     inscription: false,
