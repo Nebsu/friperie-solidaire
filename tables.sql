@@ -6,11 +6,11 @@ DROP TABLE IF EXISTS panier CASCADE;
 
 -- Table "utilisateurs"
 CREATE TABLE utilisateurs (
-  id_utilisateur SERIAL PRIMARY KEY ON DELETE CASCADE,
+  id_utilisateur SERIAL PRIMARY KEY,
   nom VARCHAR(50) NOT NULL,
   prenom VARCHAR(50) NOT NULL,
   email VARCHAR(100) NOT NULL,
-  mot_de_passe VARCHAR(255) NOT NULL,
+  mot_de_passe VARCHAR(255) NOT NULL
 );
 
 -- Table "produits"
