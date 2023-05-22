@@ -500,7 +500,7 @@ app.get("/gerant_commandes/:id", async (req, res) => {
   const rows = result.rows;
   const result2 = await pool.query("SELECT * FROM stock_products");
   const rows2 = result2.rows;
-  const result3 = await pool.query("SELECT * FROM commandes");
+  const result3 = await pool.query("SELECT * FROM commandes WHERE id_commande = " + req.params.id);
   const rows3 = result3.rows;
   const data = {
     type_produit: "Catalogue",
