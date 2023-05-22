@@ -14,7 +14,7 @@
     <div id="stock">
         <div id="title_gerant">
             <a href="/gerant"><img src="/img/back_icon.png" alt=""></a>
-            <h1><%= products[id-1].nom %></h1>
+            <h1><%= products[0].nom %></h1>
         </div>
         <div class="table">
             <div class="table-header">
@@ -25,41 +25,39 @@
             </div>
             <form id="add" action=""></form>
             <div class="table-content">	
-                <% for(var i = 0; i < products.length; i++){ 
-                    if(i == id-1){%>
-                        <div class="table-row">		
-                            <% for(var j = 0; j < stock_products.length; j++){
-                                if(stock_products[j].id_produit === products[i].id_produit){ %>
-                                    <div class="table-data"><%= stock_products[j].taille_s %></div>
-                                    <div class="table-data"><%= stock_products[j].taille_m %></div>
-                                    <div class="table-data"><%= stock_products[j].taille_l %></div>
-                                    <div class="table-data"><%= stock_products[j].taille_xl %></div>
-                                <%}
-                            }%>
-                        </div>
-                        <div class="table-row">		
-                            <% for(var j = 0; j < stock_products.length; j++){
-                                if(stock_products[j].id_produit === products[i].id_produit){ %>
-                                    
-                                    <div class="table-data">
-                                        <input  type="number" name="" id="addS" value="0">    
-                                    </div>
-                                    <div class="table-data">
-                                        <input  type="number" name="" id="addM" value="0">    
-                                    </div>
-                                    <div class="table-data">
-                                        <input  type="number" name="" id="addL" value="0">    
-                                    </div>
-                                    <div class="table-data">
-                                        <input  type="number" name="" id="addXL" value="0">    
-                                    </div>
+                <% for(var i = 0; i < products.length; i++){ %>
+                    <div class="table-row">		
+                        <% for(var j = 0; j < stock_products.length; j++){
+                            if(stock_products[j].id_produit === products[i].id_produit){ %>
+                                <div class="table-data"><%= stock_products[j].taille_s %></div>
+                                <div class="table-data"><%= stock_products[j].taille_m %></div>
+                                <div class="table-data"><%= stock_products[j].taille_l %></div>
+                                <div class="table-data"><%= stock_products[j].taille_xl %></div>
+                            <%}
+                        }%>
+                    </div>
+                    <div class="table-row">		
+                        <% for(var j = 0; j < stock_products.length; j++){
+                            if(stock_products[j].id_produit === products[i].id_produit){ %>
+                                
+                                <div class="table-data">
+                                    <input  type="number" name="" id="addS" value="0">    
+                                </div>
+                                <div class="table-data">
+                                    <input  type="number" name="" id="addM" value="0">    
+                                </div>
+                                <div class="table-data">
+                                    <input  type="number" name="" id="addL" value="0">    
+                                </div>
+                                <div class="table-data">
+                                    <input  type="number" name="" id="addXL" value="0">    
+                                </div>
 
-                                <%}
-                            }%>
-                            </div>
+                            <%}
+                        }%>
                         </div>
-                    <%}
-                } %>
+                    </div>
+               <%}%>
             </div>	
             <div id="ab">
                 <input id="add_button" type="submit" value="Ajouter" >

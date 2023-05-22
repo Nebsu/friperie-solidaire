@@ -475,9 +475,9 @@ app.get("/gerant", async (req, res) => {
 
 // créer une page gerant_stock
 app.get("/gerant_stock/:id", async (req, res) => {
-  const result = await pool.query("SELECT * FROM produits");
+  const result = await pool.query("SELECT * FROM produits WHERE id_produit = " + req.params.id);
   const rows = result.rows;
-  const result2 = await pool.query("SELECT * FROM stock_products");
+  const result2 = await pool.query("SELECT * FROM stock_products WHERE id_produit = " + req.params.id);
   const rows2 = result2.rows;
   const data = {
     type_produit: "Catalogue",
@@ -487,7 +487,6 @@ app.get("/gerant_stock/:id", async (req, res) => {
     panier: false,
     products: rows,
     stock_products: rows2,
-    id: req.params.id,
   };
   res.render("gerant_stock.ejs", data);
   return;
@@ -510,7 +509,6 @@ app.get("/gerant_commandes/:id", async (req, res) => {
     panier: false,
     products: rows,
     stock_products: rows2,
-    id: req.params.id,
     commandes: rows3,
   };
   res.render("gerant_commandes.ejs", data);
