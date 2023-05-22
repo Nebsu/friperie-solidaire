@@ -19,22 +19,39 @@
 
             <!-- liste du panier -->
             <div id="panier_list">
-                
+                <%if(elt_panier_length > 0){%>
+                <ul>
+                    <% for(let i=0; i < elt_panier_length; i++){ 
+                        let nom = elt_panier[i].nom;
+                        let prix = elt_panier[i].prix;
+                        let taille = elt_panier[i].taille;
+                        let quantite = elt_panier[i].quantite;
+                        let id = elt_panier[i].id_produit;
+                    %>
+                        <li>
+                        <%= nom %> <%= taille %> - <%= prix %>€ - <%= quantite %> unité(s)
+                        <a href="/panier/<%=id %>/<%=taille%>">Retirer</a>
+                        </li>
+                    <%}%>
+                </ul>
+                <%} else {%>
+                    <p>Votre panier est vide</p>
+                <%}%>
             </div>
 
 
             <div id="infos">
                 <div id="infos_left">
-                    <p id="total">Total : <span id="total_price"></span></p>
-                    <p id="total">Frais de port : <span id="total_price">5€</span></p>
-                    <p id="total">Total à payer : <span id="total_price"></span></p>
+                    <p id="total">Total : <span id="total_price"><%=sommetotale%>€</span></p>
+                    <p id="total">Frais de port : <span id="total_price">Gratuit</span></p>
+                    <p id="total">Total à payer : <span id="total_price"><%=sommetotale%>€</span></p>
                 </div>
                 <div id="infos_right">
                     <p id="total">Adresse de livraison : <span id="total_price"></span></p>
                     <p id="total">Mode de paiement : <span id="total_price"></span></p>
                 </div>
             </div>
-
+            <a href="/panier/commande"><button id="valider">Valider la commande</button></a>
         </div>
     </div>
 </body>

@@ -101,7 +101,6 @@ app.post("/inscription/", async (req, res) => {
     connection = true;
     pop_up = true;
     res.redirect("/connection");
-    return;
   }
   const data = {
     type_produit: "Catalogue",
@@ -155,18 +154,26 @@ app.post("/connection", async (req, res) => {
     panier: false,
   };
   res.render("index.ejs", data);
+  return;
 });
 
-app.post("/produits/:id", (req, res) => {
+app.post("/produits/:id", async (req, res) => {
+  let id = req.params.id;
   let size = req.body.size;
   let quantity = req.body.quantity;
-  console.log("size: " + size + " quantity: " + quantity);
+  let result = await pool.query("SELECT * FROM produits WHERE id_produit = "+id);
+  let rows = result.rows;
+  let price = rows[0].prix;
+  functions.addToCart(currentUserId, id, quantity, price, size);
+  res.redirect("/produits");
+  return;
 });
 
 app.get("/deconnection", function (req, res) {
   currentName = "";
   currentUserId = "";
   res.redirect("/");
+  return;
 });
 
 app.get("/connected", async (req, res) => {
@@ -213,6 +220,7 @@ app.get("/connected", async (req, res) => {
     panier: false,
   };
   res.render("index.ejs", data);
+  return;
 });
 
 app.get("/connection", function (req, res) {
@@ -252,6 +260,7 @@ app.get("/panier", async (req, res) => {
     "SELECT * FROM panier JOIN produits ON panier.id_produit = produits.id_produit WHERE id_utilisateur =" +
       currentUserId
   );
+  const result2 = await pool.query("SELECT SUM(prix_unitaire * quantite) FROM panier WHERE id_utilisateur = " + currentUserId);
   const data = {
     type_produit: "Catalogue",
     prenom: currentName,
@@ -261,21 +270,26 @@ app.get("/panier", async (req, res) => {
     panier: true,
     elt_panier: result.rows,
     elt_panier_length: result.rows.length,
+    sommetotale: result2.rows[0].sum,
   };
   res.render("index.ejs", data);
   return;
 });
 
-app.get("/panier/:id_produit", async (req, res) => {
+app.get("/panier/:id_produit/:taille", async (req, res) => {
   const id_produit = req.params.id_produit;
-  functions.deleteProductCart(id_produit, currentUserId);
-  const result = await pool.query(
-    "SELECT * FROM panier JOIN produits ON panier.id_produit = produits.id_produit WHERE id_utilisateur =" +
-      currentUserId
-  );
+  const taille = req.params.taille;
+  await functions.deleteProductCart(id_produit, currentUserId, taille);
   res.redirect("/panier");
   return;
 });
+
+app.get("/panier/commande", async (req, res) => {
+  await functions.addCartToCommand("12 rue de la Paix",currentUserId);
+  res.redirect("/produits");
+  return;
+});
+
 
 app.get("/produits/veste", async (req, res) => {
   const result = await pool.query(

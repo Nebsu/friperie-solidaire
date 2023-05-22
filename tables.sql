@@ -24,7 +24,7 @@ CREATE TABLE produits (
 
 CREATE TABLE stock_products (
   id_stock_product SERIAL PRIMARY KEY,
-  id_produit INT NOT NULL REFERENCES produits(id_produit),
+  id_produit INT NOT NULL REFERENCES produits(id_produit) ON DELETE CASCADE,
   taille_s INT NOT NULL,
   taille_m INT NOT NULL,
   taille_l INT NOT NULL,
@@ -36,15 +36,15 @@ CREATE TABLE commandes (
   id_commande SERIAL PRIMARY KEY,
   id_utilisateur INT NOT NULL REFERENCES utilisateurs(id_utilisateur),
   date_commande TIMESTAMP NOT NULL DEFAULT NOW(),
-  adresse_livraison VARCHAR(255) NOT NULL,
-  etat_livraison VARCHAR(20) NOT NULL
+  adresse_livraison TEXT NOT NULL,
+  etat_livraison TEXT NOT NULL
 );
 
 -- Table "details_commandes"
 CREATE TABLE details_commandes (
   id_detail_commande SERIAL PRIMARY KEY,
-  id_commande INT NOT NULL REFERENCES commandes(id_commande),
-  id_produit INT NOT NULL REFERENCES produits(id_produit),
+  id_commande INT NOT NULL REFERENCES commandes(id_commande) ON DELETE CASCADE,
+  id_produit INT NOT NULL REFERENCES produits(id_produit) ON DELETE CASCADE,
   quantite INT NOT NULL,
   taille VARCHAR(2) NOT NULL,
   prix_unitaire NUMERIC(10, 2) NOT NULL
@@ -58,6 +58,5 @@ CREATE TABLE panier (
   id_produit INT NOT NULL REFERENCES produits(id_produit),
   quantite INT NOT NULL,
   taille VARCHAR(2) NOT NULL,
-  prix_unitaire NUMERIC(10, 2) NOT NULL,
-  FOREIGN KEY (id_panier) REFERENCES panier(id_panier) ON DELETE CASCADE
+  prix_unitaire NUMERIC(10, 2) NOT NULL
 );
