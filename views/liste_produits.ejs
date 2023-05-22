@@ -49,40 +49,12 @@
             <% if(type_produit === "pantalon" || type_produit === "veste" || type_produit === "chemise" || type_produit === "accessoire") {
                 if (count > 0){
                     for(i=0; i < count; i++){ %>
-                        <div id="produit">
-                            <img src="<%=products[i].image%>">
-
-                            <div id="produit_info">
-                                <div id="produit_text">
-                                    <h3><%= products[i].nom %></h3>
-                                </div>
-                                <div id="priceAndPanier">
-                                    <p id="price"><%= products[i].prix %>€</p>
-                                    <% if(connected){ %>
-                                        <a id="addToPanier" href="<%=products[i].id_produit%>">Ajouter au panier</a>
-                                    <%}%>
-                                </div>
-                            </div>
-                        </div>
+                        <%- include('includes/cadre_produit.ejs'); %>
                     <% } %>
                 <% } %>
             <% } else {
                 for(i=0; i < products.length; i++){ %>
-                        <div id="produit">
-                            <img src="<%=products[i].image%>">
-
-                            <div id="produit_info">
-                                <div id="produit_text">
-                                    <h3><%= products[i].nom %></h3>
-                                </div>
-                                <div id="priceAndPanier">
-                                    <p id="price"><%= products[i].prix %>€</p>
-                                    <% if(connected){ %>
-                                        <a id="addToPanier" href="<%=products[i].id_produit%>">Ajouter au panier</a>
-                                    <%}%>
-                                </div>
-                            </div>
-                        </div>
+                    <%- include('includes/cadre_produit.ejs'); %>
                     <% } %>
             <% } %>
         </div>   

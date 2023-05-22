@@ -1,0 +1,84 @@
+/* ------------------------------ BARRE DE NAVIGATION ------------------------------ */
+
+#barre_nav {
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 33px 9%;
+  }
+  #logo {
+    margin-top: auto;
+    margin-bottom: auto;
+  }
+  #logo img {
+    height: 60px;
+  }
+  #menu {
+    width: 60%;
+  }
+  #menu ul {
+    display: flex;
+    justify-content: space-around;
+  }
+  #menu ul li {
+    margin-top: auto;
+    margin-bottom: auto;
+  }
+  li {
+    list-style-type: none;
+  }
+  #menu li a {
+    text-decoration: none;
+    color: black;
+    border-bottom: 2px solid transparent;
+    transition: all 0.3s ease-in-out;
+  }
+  #menu li a:hover {
+    border-bottom: 2px solid rgb(207, 152, 152);
+  }
+  
+  #cart {
+    margin-right: 10px;
+  }
+  
+  #profil_connected {
+    display: flex;
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: 10px;
+  }
+  
+  #se_connecter {
+    margin-top: auto;
+    margin-bottom: auto;
+    border : solid 1px black;
+    border-radius: 20px;
+    padding: 10px;
+    transition: all 0.1s ease-in-out;
+  }
+  
+  #se_connecter:hover{
+    background-color: rgb(46, 46, 46);
+    color: white;
+    cursor: pointer;
+  }
+  
+  #se_deconnecter{
+    margin-top: auto;
+    margin-bottom: auto;
+    border : solid 1px black;
+    border-radius: 20px;
+    padding: 10px;
+    transition: all 0.1s ease-in-out;
+  }
+  
+  #se_deconnecter:hover{
+    background-color: rgb(46, 46, 46);
+    color: white;
+    cursor: pointer;
+  
+  }
+  
+  

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="produit">
+        <div id="<%= products[i].nom %>">
+            <img src="<%=products[i].image%>">
+            <div id="produit_info">
+                <h3><%= products[i].nom %></h3>
+                <p id="price"><%= products[i].prix %>€</p>
+            </div>
+        </div>
+    </div>
+
+    <script>      
+        var produit = document.getElementById("<%= products[i].nom %>");
+        // quand je passe dessus
+        produit.addEventListener("mouseover", function(){
+            this.style.cursor = "pointer";
+        });
+        produit.addEventListener("click", function(){
+            window.location.href = "/produits/<%=products[i].id_produit%>";
+        });
+
+    </script>
+
+    <!-- </div>
+            <div id="priceAndPanier">
+                <p id="price"><%= products[i].prix %>€</p>
+                <% if(connected){ %>
+                    <a id="addToPanier" href="produits/<%=products[i].id_produit%>">Ajouter au panier</a>
+                <%}%>
+    </div> -->
+    
+</body>
+</html>

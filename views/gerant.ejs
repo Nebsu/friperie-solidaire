@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="http://code.jquery.com/jquery-3.3.1.js"></script>
+    <link rel="stylesheet" href="/css/gerant.css">
+    <title>Document</title>
+</head>
+<body>
+    <%- include('includes/barre_nav.ejs'); %>
+
+
+    <div id="box_choice">
+        <div id="box_stocks">
+            <h2>Stocks</h2>
+        </div>
+    
+        <div id="box_commandes">
+            <h2>Commandes</h2>
+        </div>
+    </div>
+
+    <div id="stock">
+        <h1>Stocks</h1>
+        <div class="table">
+            <div class="table-header">
+                <div class="header__item"><a id="name" class="filter__link" href="#">Produit</a></div>
+                <div class="header__item"><a id="wins" class="filter__link filter__link--number" href="#">S</a></div>
+                <div class="header__item"><a id="draws" class="filter__link filter__link--number" href="#">M</a></div>
+                <div class="header__item"><a id="losses" class="filter__link filter__link--number" href="#">L</a></div>
+                <div class="header__item"><a id="total" class="filter__link filter__link--number" href="#">XL</a></div>
+            </div>
+            <div class="table-content">	
+                <% for(var i = 0; i < products.length; i++){ %>
+                    <div class="table-row">		
+                        <div class="table-data"><%= products[i].nom %></div>
+                        <% for(var j = 0; j < stock_products.length; j++){
+                            if(stock_products[j].id_produit === products[i].id_produit){ %>
+                                <div class="table-data"><%= stock_products[j].taille_s %></div>
+                                <div class="table-data"><%= stock_products[j].taille_m %></div>
+                                <div class="table-data"><%= stock_products[j].taille_l %></div>
+                                <div class="table-data"><%= stock_products[j].taille_xl %></div>
+                            <%}
+                        }%>
+                    </div>
+                <% } %>
+            </div>	
+        </div>
+    </div>
+
+    <div id="commandes">
+        <h1>Commandes</h1>
+        <div class="table">
+            <div class="table-header">
+                <div class="header__item"><a id="name" class="filter__link" href="#">Commande</a></div>
+                <div class="header__item"><a id="wins" class="filter__link filter__link--number" href="#">Client</a></div>
+                <div class="header__item"><a id="draws" class="filter__link filter__link--number" href="#">Prix</a></div>
+                <div class="header__item"><a id="losses" class="filter__link filter__link--number" href="#">Adresse</a></div>
+                <div class="header__item"><a id="total" class="filter__link filter__link--number" href="#">Etat</a></div>
+            </div>
+            <div class="table-content">	
+                <% for(var i = 0; i < products.length; i++){ %>
+                    <div class="table-row">		
+                        <div class="table-data"><%= products[i].nom %></div>
+                        <% for(var j = 0; j < stock_products.length; j++){
+                            if(stock_products[j].id_produit === products[i].id_produit){ %>
+                                <div class="table-data"><%= stock_products[j].taille_s %></div>
+                                <div class="table-data"><%= stock_products[j].taille_m %></div>
+                                <div class="table-data"><%= stock_products[j].taille_l %></div>
+                                <div class="table-data"><%= stock_products[j].taille_xl %></div>
+                            <%}
+                        }%>
+                    </div>
+                <% } %>
+            </div>	
+        </div>
+    </div>
+
+
+    <script>
+        var box_stocks = document.getElementById("box_stocks");
+        var box_commandes = document.getElementById("box_commandes");
+        var stock = document.getElementById("stock");
+        var commandes = document.getElementById("commandes");
+
+        commandes.style.display = "none";
+        stock.style.display = "none";
+
+        box_stocks.addEventListener("click", function(){
+            stock.style.display = "block";
+            commandes.style.display = "none";
+        });
+
+        box_commandes.addEventListener("click", function(){
+            stock.style.display = "none";
+            commandes.style.display = "block";
+        });
+
+        box_stocks.addEventListener("mouseover", function(){
+            box_stocks.style.cursor = "pointer";
+        });
+        box_commandes.addEventListener("mouseover", function(){
+            box_commandes.style.cursor = "pointer";
+        });
+
+
+    </script>
+
+    
+</body>
+</html>

@@ -437,4 +437,23 @@ app.get("/", async (req, res) => {
   return;
 });
 
+//créer une page gerant
+app.get("/gerant", async (req, res) => {
+  const result = await pool.query("SELECT * FROM produits");
+  const rows = result.rows;
+  const result2 = await pool.query("SELECT * FROM stock_products");
+  const rows2 = result2.rows;
+  const data = {
+    type_produit: "Catalogue",
+    connection: false,
+    inscription: false,
+    connected: connectState,
+    panier: false,
+    products: rows,
+    stock_products: rows2,
+  };
+  res.render("gerant.ejs", data);
+  return;
+});
+
 app.listen(5501);
