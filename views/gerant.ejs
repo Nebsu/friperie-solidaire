@@ -14,11 +14,17 @@
 
     <div id="box_choice">
         <div id="box_stocks">
-            <h2>Stocks</h2>
+            <div id="box_content">
+                <h2>Stocks</h2>
+                <img src="/img/stocks_icon.png" alt="">
+            </div>
         </div>
     
         <div id="box_commandes">
-            <h2>Commandes</h2>
+            <div id="box_content">
+                <h2>Commandes</h2>
+                <img src="/img/commandes_icon.png" alt="">
+            </div>
         </div>
     </div>
 
@@ -31,6 +37,7 @@
                 <div class="header__item"><a id="draws" class="filter__link filter__link--number" href="#">M</a></div>
                 <div class="header__item"><a id="losses" class="filter__link filter__link--number" href="#">L</a></div>
                 <div class="header__item"><a id="total" class="filter__link filter__link--number" href="#">XL</a></div>
+                <div class="header__item"><a id="total" class="filter__link filter__link--number" href="#"><img src="img/edit_icon.png" alt=""></a></div>
             </div>
             <div class="table-content">	
                 <% for(var i = 0; i < products.length; i++){ %>
@@ -42,6 +49,7 @@
                                 <div class="table-data"><%= stock_products[j].taille_m %></div>
                                 <div class="table-data"><%= stock_products[j].taille_l %></div>
                                 <div class="table-data"><%= stock_products[j].taille_xl %></div>
+                                <div class="table-data"><a id="edit_button" href="/gerant_stock/<%= products[i].id_produit %>">Modifier</a></div>
                             <%}
                         }%>
                     </div>
@@ -56,22 +64,20 @@
             <div class="table-header">
                 <div class="header__item"><a id="name" class="filter__link" href="#">Commande</a></div>
                 <div class="header__item"><a id="wins" class="filter__link filter__link--number" href="#">Client</a></div>
-                <div class="header__item"><a id="draws" class="filter__link filter__link--number" href="#">Prix</a></div>
+                <div class="header__item"><a id="draws" class="filter__link filter__link--number" href="#">Date</a></div>
                 <div class="header__item"><a id="losses" class="filter__link filter__link--number" href="#">Adresse</a></div>
                 <div class="header__item"><a id="total" class="filter__link filter__link--number" href="#">Etat</a></div>
+                <div class="header__item"><a id="total" class="filter__link filter__link--number" href=""><img src="img/edit_icon.png" alt=""></a></div>
             </div>
             <div class="table-content">	
-                <% for(var i = 0; i < products.length; i++){ %>
+                <% for(var i = 0; i < commandes.length; i++){ %>
                     <div class="table-row">		
-                        <div class="table-data"><%= products[i].nom %></div>
-                        <% for(var j = 0; j < stock_products.length; j++){
-                            if(stock_products[j].id_produit === products[i].id_produit){ %>
-                                <div class="table-data"><%= stock_products[j].taille_s %></div>
-                                <div class="table-data"><%= stock_products[j].taille_m %></div>
-                                <div class="table-data"><%= stock_products[j].taille_l %></div>
-                                <div class="table-data"><%= stock_products[j].taille_xl %></div>
-                            <%}
-                        }%>
+                        <div class="table-data"><%= commandes[i].id_commande %></div>
+                        <div class="table-data"><%= commandes[i].id_utilisateur %></div>
+                        <div class="table-data"><%= commandes[i].date_commande %></div>
+                        <div class="table-data"><%= commandes[i].adresse_livraison %></div>
+                        <div class="table-data"><%= commandes[i].etat_livraison %></div>
+                        <div class="table-data"><a id="edit_button" href="/gerant_commandes/<%= commandes[i].id_commande %>">Modifier</a></div>
                     </div>
                 <% } %>
             </div>	

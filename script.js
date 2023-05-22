@@ -457,6 +457,8 @@ app.get("/gerant", async (req, res) => {
   const rows = result.rows;
   const result2 = await pool.query("SELECT * FROM stock_products");
   const rows2 = result2.rows;
+  const result3 = await pool.query("SELECT * FROM commandes");
+  const rows3 = result3.rows;
   const data = {
     type_produit: "Catalogue",
     connection: false,
@@ -465,8 +467,53 @@ app.get("/gerant", async (req, res) => {
     panier: false,
     products: rows,
     stock_products: rows2,
+    commandes: rows3,
   };
   res.render("gerant.ejs", data);
+  return;
+});
+
+// créer une page gerant_stock
+app.get("/gerant_stock/:id", async (req, res) => {
+  const result = await pool.query("SELECT * FROM produits");
+  const rows = result.rows;
+  const result2 = await pool.query("SELECT * FROM stock_products");
+  const rows2 = result2.rows;
+  const data = {
+    type_produit: "Catalogue",
+    connection: false,
+    inscription: false,
+    connected: connectState,
+    panier: false,
+    products: rows,
+    stock_products: rows2,
+    id: req.params.id,
+  };
+  res.render("gerant_stock.ejs", data);
+  return;
+});
+
+
+// créer une page gerant_commandes
+app.get("/gerant_commandes/:id", async (req, res) => {
+  const result = await pool.query("SELECT * FROM produits");
+  const rows = result.rows;
+  const result2 = await pool.query("SELECT * FROM stock_products");
+  const rows2 = result2.rows;
+  const result3 = await pool.query("SELECT * FROM commandes");
+  const rows3 = result3.rows;
+  const data = {
+    type_produit: "Catalogue",
+    connection: false,
+    inscription: false,
+    connected: connectState,
+    panier: false,
+    products: rows,
+    stock_products: rows2,
+    id: req.params.id,
+    commandes: rows3,
+  };
+  res.render("gerant_commandes.ejs", data);
   return;
 });
 

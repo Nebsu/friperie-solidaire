@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="http://code.jquery.com/jquery-3.3.1.js"></script>
+    <link rel="stylesheet" href="/css/gerant.css">
+    <title>Document</title>
+</head>
+<body>
+    <%- include('includes/barre_nav.ejs'); %>
+
+    <div id="commandes">
+        <div id="title_gerant">
+            <a href="/gerant"><img src="/img/back_icon.png" alt=""></a>
+            <h1>Commande <%= commandes[id-1].id_commande %></h1>
+        </div>
+        <div class="table">
+            <div class="table-header">
+                <div class="header__item"><a id="name" class="filter__link" href="#">ID</a></div>
+                <div class="header__item"><a id="wins" class="filter__link filter__link--number" href="#">Client</a></div>
+                <div class="header__item"><a id="draws" class="filter__link filter__link--number" href="#">Date</a></div>
+                <div class="header__item"><a id="losses" class="filter__link filter__link--number" href="#">Adresse</a></div>
+                <div class="header__item"><a id="total" class="filter__link filter__link--number" href="#">Etat</a></div>
+            </div>
+            <div class="table-content">	
+                <% for(var i = 0; i < commandes.length; i++){
+                    if(i == id-1){%>
+                        <div class="table-row">		
+                            <div class="table-data"><%= commandes[i].id_commande %></div>
+                            <div class="table-data"><%= commandes[i].id_utilisateur %></div>
+                            <div class="table-data"><%= commandes[i].date_commande %></div>
+                            <div class="table-data"><%= commandes[i].adresse_livraison %></div>
+                            <div class="table-data"><%= commandes[i].etat_livraison %></div>
+                        </div>
+                    <%} %> 
+                <% } %>
+            </div>
+        </div>
+    </div>
+
+    
+    <a id="commande_livree" href="">
+        <div id="commande_livree_content"> 
+            <p>Commande livrée</p>
+            <img src="/img/check_icon.png" alt="">
+        </div>
+    </a>
+
+    
+</body>
+</html>
