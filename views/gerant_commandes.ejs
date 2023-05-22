@@ -25,23 +25,21 @@
                 <div class="header__item"><a id="total" class="filter__link filter__link--number" href="#">Etat</a></div>
             </div>
             <div class="table-content">	
-                <% for(var i = 0; i < commandes.length; i++){
-                    if(i == id-1){%>
-                        <div class="table-row">		
-                            <div class="table-data"><%= commandes[i].id_commande %></div>
-                            <div class="table-data"><%= commandes[i].id_utilisateur %></div>
-                            <div class="table-data"><%= commandes[i].date_commande %></div>
-                            <div class="table-data"><%= commandes[i].adresse_livraison %></div>
-                            <div class="table-data"><%= commandes[i].etat_livraison %></div>
-                        </div>
-                    <%} %> 
+                <% for(var i = 0; i < commandes.length; i++){ %>
+                    <div class="table-row">		
+                        <div class="table-data"><%= commandes[i].id_commande %></div>
+                        <div class="table-data"><%= commandes[i].id_utilisateur %></div>
+                        <div class="table-data"><%= commandes[i].date_commande %></div>
+                        <div class="table-data"><%= commandes[i].adresse_livraison %></div>
+                        <div class="table-data"><%= commandes[i].etat_livraison %></div>
+                    </div>
                 <% } %>
             </div>
         </div>
     </div>
 
     
-    <a id="commande_livree" href="">
+    <a id="commande_livree" href="c/<%= commandes[0].id_commande%>">
         <div id="commande_livree_content"> 
             <p>Commande livrée</p>
             <img src="/img/check_icon.png" alt="">

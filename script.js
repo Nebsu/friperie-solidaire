@@ -124,24 +124,27 @@ app.post("/connection", async (req, res) => {
   let password = req.body.password;
   console.log("Post Connection");
   const user = await functions.getUser(email);
-  let hashedPassword = user.rows[0].mot_de_passe;
-  const b = await bcrypt.compare(password, hashedPassword);
   if (user.rows.length == 0) {
     connection = true;
     console.log("Utilisateur non trouvé");
-    return;
-  } else if (b == false) {
-    emailfield = email;
-    console.log("Mot de passe incorrect");
-  } else {
-    console.log("Connection réussie");
-    connectState = true;
-    currentName = user.rows[0].prenom;
-    currentUserId = user.rows[0].id_utilisateur;
-    console.log(currentName + " " + currentUserId);
-    res.redirect("/connected");
-    return;
+  }else{
+    let hashedPassword = user.rows[0].mot_de_passe;
+    const b = await bcrypt.compare(password, hashedPassword);
+    if (b == false) {
+      emailfield = email;
+      console.log("Mot de passe incorrect");
+    } else {
+      console.log("Connection réussie");
+      connectState = true;
+      currentName = user.rows[0].prenom;
+      currentUserId = user.rows[0].id_utilisateur;
+      console.log(currentName + " " + currentUserId);
+      res.redirect("/connected");
+      return;
+    }
   }
+
+
   const data = {
     type_produit: "Catalogue",
     name: "",
@@ -457,7 +460,7 @@ app.get("/gerant", async (req, res) => {
   const rows = result.rows;
   const result2 = await pool.query("SELECT * FROM stock_products");
   const rows2 = result2.rows;
-  const result3 = await pool.query("SELECT * FROM commandes");
+  const result3 = await pool.query("SELECT * FROM commandes WHERE etat_livraison <> 'Terminée'");
   const rows3 = result3.rows;
   const data = {
     type_produit: "Catalogue",
@@ -487,6 +490,7 @@ app.get("/gerant_stock/:id", async (req, res) => {
     panier: false,
     products: rows,
     stock_products: rows2,
+    id : req.params.id,
   };
   res.render("gerant_stock.ejs", data);
   return;
@@ -510,9 +514,29 @@ app.get("/gerant_commandes/:id", async (req, res) => {
     products: rows,
     stock_products: rows2,
     commandes: rows3,
+    id : req.params.id,
   };
   res.render("gerant_commandes.ejs", data);
   return;
+});
+
+app.post("/gerant_stock/:id", async (req, res) => {
+  console.log(req.params.id);
+  let qtS = req.body.addS;
+  await functions.modifyStock(req.params.id, "S", qtS);
+  let qtM = req.body.addM;
+  await functions.modifyStock(req.params.id, "M", qtM);
+  let qtL = req.body.addL;
+  await functions.modifyStock(req.params.id, "L", qtL);
+  let qtXL = req.body.addXL;
+  await functions.modifyStock(req.params.id, "XL", qtXL);
+  console.log(qtL, qtXL, qtM, qtS);
+  res.redirect("/gerant_stock/" + req.params.id);
+});
+
+app.get('/gerant_commandes/c/:id', async (req, res) => {
+  await functions.updateCommande(req.params.id, "c");
+  res.redirect("/gerant");
 });
 
 app.listen(5501);

@@ -23,7 +23,7 @@
                 <div class="header__item"><a id="losses" class="filter__link filter__link--number" href="#">L</a></div>
                 <div class="header__item"><a id="total" class="filter__link filter__link--number" href="#">XL</a></div>
             </div>
-            <form id="add" action=""></form>
+            <form id="add" method="post" action="<%=id%>">
             <div class="table-content">	
                 <% for(var i = 0; i < products.length; i++){ %>
                     <div class="table-row">		
@@ -41,16 +41,16 @@
                             if(stock_products[j].id_produit === products[i].id_produit){ %>
                                 
                                 <div class="table-data">
-                                    <input  type="number" name="" id="addS" value="0">    
+                                    <input  type="number" name="addS" id="addS" value="0">    
                                 </div>
                                 <div class="table-data">
-                                    <input  type="number" name="" id="addM" value="0">    
+                                    <input  type="number" name="addM" id="addM" value="0">    
                                 </div>
                                 <div class="table-data">
-                                    <input  type="number" name="" id="addL" value="0">    
+                                    <input  type="number" name="addL" id="addL" value="0">    
                                 </div>
                                 <div class="table-data">
-                                    <input  type="number" name="" id="addXL" value="0">    
+                                    <input  type="number" name="addXL" id="addXL" value="0">    
                                 </div>
 
                             <%}

@@ -212,6 +212,50 @@ async function getTotalPrice(currentUserId) {
   return rows[0].sum;
 }
 
+async function modifyStock(id, taille, quantite) {
+  // verifier si le stock est suffisant
+  const text = "SELECT taille_" + taille + " FROM stock_products WHERE id_produit = $1";
+  const values = [id];
+  const result = await pool.query(text, values);
+  const rows = result.rows;
+  if(taille == "S"){
+    if(Number(rows[0].taille_s) + Number(quantite) < 0){
+      return false;
+    }
+    const text2 = "UPDATE stock_products SET taille_s = taille_s + $1 WHERE id_produit = $2";
+    const values2 = [quantite, id];
+    return pool.query(text2, values2);
+  } else if(taille == "M"){
+    if(Number(rows[0].taille_m) + Number(quantite) < 0){
+      return false;
+    }
+    const text2 = "UPDATE stock_products SET taille_m = taille_m + $1 WHERE id_produit = $2";
+    const values2 = [quantite, id];
+    return pool.query(text2, values2);
+  } else if(taille == "L"){
+    if(Number(rows[0].taille_l) + Number(quantite) < 0){
+      return false;
+    }
+    const text2 = "UPDATE stock_products SET taille_l = taille_l + $1 WHERE id_produit = $2";
+    const values2 = [quantite, id];
+    return pool.query(text2, values2);
+  } else if(taille == "XL"){
+    if(Number(rows[0].taille_xl) + Number(quantite) < 0){
+      return false;
+    }
+    const text2 = "UPDATE stock_products SET taille_xl = taille_xl + $1 WHERE id_produit = $2";
+    const values2 = [quantite, id];
+    return pool.query(text2, values2);
+  }
+  return true;
+}
+
+async function updateCommande(id) {
+  const text = "UPDATE commandes SET etat_livraison = 'Terminée' WHERE id_commande = $1";
+  const values = [id];
+  return pool.query(text, values);z
+}
+
 module.exports = {
   registerUser,
   getUser,
@@ -225,4 +269,6 @@ module.exports = {
   changeCommandState,
   getUserInfoFromCommand,
   getTotalPrice,
+  modifyStock,
+  updateCommande,
 };
