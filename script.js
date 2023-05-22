@@ -275,7 +275,7 @@ app.get("/panier", async (req, res) => {
     elt_panier_length: result.rows.length,
     sommetotale: result2.rows[0].sum,
   };
-  res.render("index.ejs", data);
+  res.render("panier.ejs", data);
   return;
 });
 

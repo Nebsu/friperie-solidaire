@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/panier.css">
+    <title>Document</title>
+</head>
+<body>
+
+    <%- include('includes/barre_nav.ejs'); %>
+
+
+    <div id="panier">
+        <div id="panier_title">
+            <h1>Votre panier</h1>
+        </div>
+
+        <div id="panier_content">
+            <!-- liste du panier -->
+            <div id="panier_list">
+                <%if(elt_panier_length > 0){%>
+                    <% for(let i=0; i < elt_panier_length; i++){ 
+                        let nom = elt_panier[i].nom;
+                        let prix = elt_panier[i].prix;
+                        let taille = elt_panier[i].taille;
+                        let quantite = elt_panier[i].quantite;
+                        let id = elt_panier[i].id_produit;
+                        let image = elt_panier[i].image;
+                    %>
+                    <div id="produit_preview">
+                        <div id="produit_preview_content">
+                            <img id="produit_preview_img" src="<%= image %>" alt="">
+                            <div id="produit_preview_text">
+                                <h3><%= nom %></h3>  <%= taille %> <br> <%= quantite %> unité(s) <br> <%= prix %>€
+                            </div>
+                        </div>
+                        <a id="cancel" href="/panier/<%=id %>/<%=taille%>"><img id="img_cancel" src="/img/croix.png" alt="" width="10px"></a>
+                    </div>
+                    <% }
+                } else {%>
+                    <p>Votre panier est vide</p>
+                <%}%>
+            </div>
+    
+    
+            <div id="infos">
+                <h3 id="total">Total : <span id="total_price"><%=sommetotale%>€</span></h3>
+                <p id="frais">Frais de port : <span id="frais_price">Gratuit</span></p>
+                <p id="to_pay">Total à payer : <span id="to_pay_price"><%=sommetotale%>€</span></p>
+                <p id="total">Adresse de livraison : <span id="total_price"></span></p>
+                <%if(elt_panier_length === 0){%>
+                    <a href="/"><button id="valider" disabled>Valider la commande</button></a>
+                    <script>
+                        document.getElementById("valider").style.backgroundColor = "grey";
+                    </script>
+                <%} else {%>
+                <a href="/panier/commande"><button id="valider">Valider la commande</button></a>
+                <%}%>
+            </div>
+        </div>
+    </div>
+
+    <%- include('includes/footer.ejs'); %>
+
+
+</body>
+</html>
