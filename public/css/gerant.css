@@ -3,24 +3,25 @@
 
 
 #box_choice{
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
+  width: 300px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 50px;
 }
 
 #box_stocks{
-  width: 400px;
-  height: 400px;
+  width: 300px;
+  height: 50px;
   background-color: rgb(231, 231, 231);
   border-radius: 50px;
+  display: flex;
 }
 
-#box_stocks h2{
-  text-align: center;
-  font-size: 50px;
-}
+#box_content img{
+  width: 30px;
+  margin-left: 20px;
+} 
+
 
 #box_stocks:hover{
   transition: 0.5s;
@@ -29,23 +30,23 @@
 }
 
 #box_commandes{
-  width: 400px;
-  height: 400px;
+  width: 300px;
+  height: 50px;
   background-color: rgb(231, 231, 231);
   border-radius: 50px;
+  display: flex;
+  margin-top: 20px;
 }
-
-#box_commandes h2{
-  text-align: center;
-  font-size: 50px;
-}
-
 
 #box_commandes:hover{
   transition: 0.5s;
   background-color: rgb(196, 196, 196);
 }
 
+#box_content{
+  display: flex;
+  margin: auto;
+}
 
 
 
@@ -136,4 +137,108 @@ h6 {
 }
 .filter__link.asc::after {
   content: "(asc)";
+}
+
+#edit_button{
+  border : solid 1px black;
+  border-radius: 20px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+  color: black;
+  background-color: rgb(230, 230, 230);
+  transition: all 0.1s ease-in-out;
+}
+
+#edit_button:hover{
+  border : solid 1px rgb(46, 46, 46);
+  background-color: black;
+  color: white;
+  cursor: pointer;
+}
+
+
+#title_gerant{
+  display: flex;
+}
+
+#title_gerant a{
+  margin-top: auto;
+  margin-bottom: auto;
+  margin-right: 30px;
+}
+
+
+#title_gerant img{
+  width: 40px;
+}
+
+#addS{
+  width: 50px;
+}
+
+#addM{
+  width: 50px;
+}
+
+#addL{
+  width: 50px;
+}
+
+#addXL{
+  width: 50px;
+}
+
+
+#add_button{
+  width: 100px;
+  border: solid 1px rgb(121, 182, 121);
+  background-color: rgb(121, 182, 121);
+  border-radius: 5px;
+  padding: 5px;
+  position : absolute;
+  top :400px;
+  left: 50%;
+  transform: translate(-50%);
+}
+
+#add_button:hover{
+  background-color: rgb(152, 209, 152);
+  cursor: pointer;
+  border : solid 1px rgb(152, 209, 152);
+}
+
+
+#commande_livree{
+  width: 200px;
+  border: solid 1px rgb(121, 182, 121);
+  background-color: rgb(121, 182, 121);
+  border-radius: 5px;
+  padding: 5px;
+  position : absolute;
+  top :400px;
+  left: 50%;
+  transform: translate(-50%);
+  text-decoration: none;
+}
+
+#commande_livree:hover{
+  background-color: rgb(152, 209, 152);
+  cursor: pointer;
+  border : solid 1px rgb(152, 209, 152);
+}
+
+#commande_livree_content{
+  display: flex;
+  margin: auto;
+  width: 150px;
+  color: white;
+}
+
+#commande_livree_content img{
+  margin-bottom: auto;
+  margin-top: auto;
+  width: 30px;
+  height: 30px;
 }
