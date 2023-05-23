@@ -23,7 +23,7 @@
                     <li><a href="/produits/pantalon"><div id="type_produit_txt">Pantalons</div><img id="pantalon" src="/img/pantalon_icon.png" alt=""></a></li>
                     <li><a href="/produits/accessoire"><div id="type_produit_txt">Accessoires</div><img id="chaussettes" src="/img/chaussettes_icon.png" alt=""></a></li>
                 </ul>
-                <a id="combinaisons" href="/combinaisons">Combinaisons</a>
+                <a id="combinaisons" href="#">Combinaisons</a>
             </nav>
         </div>
     
@@ -31,35 +31,12 @@
             <!-- rentre dynamique en fonction de la catégorie selectionnée -->
             <% if(!inscription && !connection) {%>
                 <h2>
-                    <% if(type_produit === "pantalon") { %>
-                        Pantalons
-                    <%}else if(type_produit === "veste"){%>
-                        Vestes
-                    <%}else if(type_produit === "chemise"){%>
-                        Chemises
-                    <%}else if(type_produit === "accessoire"){%>
-                        Accessoires
-                    <%}else{%>
-                        Sélectionnez une catégorie 
-                    <%}
-                    %>
+                    Combinaisons
                 </h2>
             <% } %>
         </div>
-        <div id="produits_liste">
-            <% if(type_produit === "pantalon" || type_produit === "veste" || type_produit === "chemise" || type_produit === "accessoire") {
-                if (count > 0){
-                    for(i=0; i < count; i++){ %>
-                        <%- include('includes/cadre_produit.ejs'); %>
-                    <% } %>
-                <% } %>
-            <% } else {
-                for(i=0; i < products.length; i++){ %>
+        <%- include('includes/cadre_combi.ejs'); %>
 
-                <%- include('includes/cadre_produit.ejs'); %>
-                <% } %>
-            <% } %>
-        </div>   
     </div>
 </body>
 </html>

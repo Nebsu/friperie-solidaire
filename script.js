@@ -199,6 +199,9 @@ app.get("/connected", async (req, res) => {
   const resultveste = await pool.query(
     "SELECT * FROM produits WHERE category = 'veste'"
   );
+  const counter = await pool.query(
+    "SELECT COUNT(*) FROM produits WHERE category = 'veste'"
+  );
   const total_price = await functions.getTotalPrice(currentUserId);
   const count1 = resultpantalon.rows.length;
   const count2 = resultchemise.rows.length;
@@ -228,6 +231,7 @@ app.get("/connected", async (req, res) => {
     products: rows,
     panier: false,
     user_id: currentUserId,
+    total_price: total_price,
   };
   res.render("index.ejs", data);
   return;
@@ -275,6 +279,10 @@ app.get("/panier", async (req, res) => {
   );
   const result2 = 
   await pool.query("SELECT SUM(prix_unitaire * quantite) FROM panier WHERE id_utilisateur = " + currentUserId);
+  const counter = await pool.query(
+    "SELECT COUNT(*) FROM produits WHERE category = 'veste'"
+  );
+  const total_price = await functions.getTotalPrice(currentUserId);
   const data = {
     type_produit: "Catalogue",
     prenom: currentName,
@@ -286,6 +294,7 @@ app.get("/panier", async (req, res) => {
     elt_panier_length: result.rows.length,
     sommetotale: result2.rows[0].sum,
     user_id: currentUserId,
+    total_price: total_price,
   };
   res.render("panier.ejs", data);
   return;
@@ -332,6 +341,7 @@ app.get("/produits/veste", async (req, res) => {
     panier: false,
     functions: functions,
     user_id: currentUserId,
+    total_price: total_price,
   };
   res.render("liste_produits.ejs", data);
   return;
@@ -359,6 +369,7 @@ app.get("/produits/pantalon", async (req, res) => {
     panier: false,
     functions: functions,
     user_id: currentUserId,
+    total_price: total_price,
   };
   res.render("liste_produits.ejs", data);
   return;
@@ -386,6 +397,7 @@ app.get("/produits/chemise", async (req, res) => {
     panier: false,
     functions: functions,
     user_id: currentUserId,
+    total_price: total_price,
   };
   res.render("liste_produits.ejs", data);
   return;
@@ -413,6 +425,7 @@ app.get("/produits/accessoire", async (req, res) => {
     panier: false,
     functions: functions,
     user_id: currentUserId,
+    total_price: total_price,
   };
   res.render("liste_produits.ejs", data);
   return;
@@ -444,6 +457,7 @@ app.get("/produits/:id", async (req, res) => {
     produit_type: rows[0].category,
     produit_image: rows[0].image,
     user_id: currentUserId,
+    total_price: total_price,
   };
   res.render("produit.ejs", data);
   return;
@@ -453,7 +467,7 @@ app.get("/produits/:id", async (req, res) => {
 app.get("/produits", async (req, res) => {
   const result = await pool.query("SELECT * FROM produits");
   const rows = result.rows;
-  const totalPrice = await functions.getTotalPrice(currentUserId);
+  const total_price = await functions.getTotalPrice(currentUserId);
   const data = {
     type_produit: "",
     prenom: currentName,
@@ -468,6 +482,7 @@ app.get("/produits", async (req, res) => {
     produit_quantity: rows[0].stock,
     produit_type: rows[0].category,
     user_id: currentUserId,
+    total_price: total_price,
   };
   res.render("liste_produits.ejs", data);
   return;
@@ -477,6 +492,10 @@ app.get("/produits", async (req, res) => {
 //Page d'accueil
 app.get("/", async (req, res) => {
   connectState = false;
+  const counter = await pool.query(
+    "SELECT COUNT(*) FROM produits WHERE category = 'veste'"
+  );
+  const total_price = await functions.getTotalPrice(currentUserId);
   const data = {
     type_produit: "Catalogue",
     connection: false,
@@ -484,6 +503,7 @@ app.get("/", async (req, res) => {
     connected: connectState,
     panier: false,
     user_id: currentUserId,
+    total_price: total_price,
   };
   console.log(connectState);
   res.render("index.ejs", data);
@@ -501,6 +521,7 @@ app.get("/gerant", async (req, res) => {
   const result3 = 
   await pool.query("SELECT * FROM commandes WHERE etat_livraison <> 'Terminée'");
   const rows3 = result3.rows;
+  const total_price = await functions.getTotalPrice(currentUserId);
   const data = {
     type_produit: "Catalogue",
     connection: false,
@@ -511,6 +532,7 @@ app.get("/gerant", async (req, res) => {
     stock_products: rows2,
     commandes: rows3,
     user_id: currentUserId,
+    total_price: total_price,
   };
   res.render("gerant.ejs", data);
   return;
@@ -524,6 +546,7 @@ app.get("/gerant_stock/:id", async (req, res) => {
   const result2 = 
   await pool.query("SELECT * FROM stock_products WHERE id_produit = " + req.params.id);
   const rows2 = result2.rows;
+  const total_price = await functions.getTotalPrice(currentUserId);
   const data = {
     type_produit: "Catalogue",
     connection: false,
@@ -534,6 +557,7 @@ app.get("/gerant_stock/:id", async (req, res) => {
     stock_products: rows2,
     id : req.params.id,
     user_id: currentUserId,
+    total_price: total_price,
   };
   res.render("gerant_stock.ejs", data);
   return;
@@ -551,6 +575,7 @@ app.get("/gerant_commandes/:id", async (req, res) => {
   const result3 = 
   await pool.query("SELECT * FROM commandes WHERE id_commande = " + req.params.id);
   const rows3 = result3.rows;
+  const total_price = await functions.getTotalPrice(currentUserId);
   const data = {
     type_produit: "Catalogue",
     connection: false,
@@ -562,6 +587,7 @@ app.get("/gerant_commandes/:id", async (req, res) => {
     commandes: rows3,
     id : req.params.id,
     user_id: currentUserId,
+    total_price: total_price,
   };
   res.render("gerant_commandes.ejs", data);
   return;
@@ -586,5 +612,32 @@ app.get('/gerant_commandes/c/:id', async (req, res) => {
   await functions.updateCommande(req.params.id, "c");
   res.redirect("/gerant");
 });
+
+//creer une page combinaisons
+app.get("/combinaisons", async (req, res) => {
+  const result = await pool.query("SELECT * FROM combinaison");
+  const rows = result.rows;
+  const result2 = await pool.query("SELECT * FROM combinaison_produit");
+  const rows2 = result2.rows;
+  const result3 = await pool.query("SELECT * FROM produits");
+  const rows3 = result3.rows;
+  const total_price = await functions.getTotalPrice(currentUserId);
+  const data = {
+    type_produit: "Catalogue",
+    connection: false,
+    inscription: false,
+    connected: connectState,
+    panier: false,
+    combinaisons: rows,
+    combinaison_produit: rows2,
+    prod: rows3,
+    user_id: currentUserId,
+    
+    total_price: total_price,
+  };
+  res.render("combinaison.ejs", data);
+  return;
+});
+
 
 app.listen(5501);

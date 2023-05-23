@@ -1,0 +1,30 @@
+#combi_liste{
+    margin: 20px;
+}
+
+#combi_info{
+    display: flex;
+}
+#buy{
+    border : solid 1px white;
+    border-radius: 20px;
+    padding: 10px;
+    color: white;
+    background-color: rgb(207, 152, 152);
+    transition: all 0.1s ease-in-out;
+    margin-top: 10px;
+    margin-bottom: 20px;
+  }
+
+#buy:hover{
+    background-color: rgb(231, 176, 176);
+    color: white;
+    cursor: pointer;
+}
+
+
+
+#prod_info{
+    width: 150px;
+    margin-right: 10px;
+}

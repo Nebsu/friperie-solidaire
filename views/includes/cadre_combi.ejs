@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/includes/cadre_combi.css">
+    <title>Document</title>
+</head>
+<body>
+
+    <div id="combi_liste">
+        <% for(i=0; i < combinaisons.length; i++){ %>
+            <div id="<%= combinaisons[i].nom %>">
+                <h3><%= combinaisons[i].nom %></h3>
+                <div id="combi_info">
+                    <% for(y=0; y < combinaison_produit.length; y++){ %>
+                        <% if(combinaison_produit[y].id_combinaison === combinaisons[i].id){ %>
+                            <% for(z=0; z < prod.length; z++){ %>
+                                <% if(combinaison_produit[y].id_produit === prod[z].id_produit){ %>
+                                    <div id="prod_info">
+                                        <img id="prod_img" src="<%= prod[z].image %>" width="150px">
+                                        <p><%= prod[z].nom %></p>
+                                    </div>
+                                <% } %>
+                            <% } %>
+                             <!-- <p> <%= combinaison_produit[y].id_produit %></p>  <br> -->
+                        <% } %>
+                    <% } %>
+                </div>
+                <form action="">
+                    <input type="submit" id="buy" value="Ajouter au panier"></input>
+                </form>
+            </div>
+        <% } %>
+    </div>   
+    
+</body>
+</html>
