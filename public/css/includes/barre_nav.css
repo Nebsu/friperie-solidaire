@@ -39,6 +39,11 @@
     border-bottom: 2px solid rgb(207, 152, 152);
   }
   
+  #prix_permanent {
+    margin-right: 10px ;
+    color : black;
+  }
+
   #cart {
     margin-right: 10px;
   }

@@ -28,8 +28,8 @@ class Product {
 
 async function registerUser(user) {
   const text =
-    "INSERT INTO utilisateurs(nom, prenom, email, mot_de_passe) VALUES($1, $2, $3, $4) RETURNING *";
-  const values = [user.name, user.surname, user.email, user.password];
+    "INSERT INTO utilisateurs(nom, prenom, email, adresse, mot_de_passe) VALUES($1, $2, $3, $4, $5) RETURNING *";
+  const values = [user.name, user.surname, user.email, user.address, user.password];
   return pool.query(text, values);
 }
 
@@ -256,6 +256,30 @@ async function updateCommande(id) {
   return pool.query(text, values);z
 }
 
+async function getCombiPrice(idCombi) {
+  const text = "SELECT SUM(prix) FROM combinaison_produit C JOIN produits P ON C.id_produit = P.id_produit WHERE id_combinaison = $1";
+  const values = [idCombi];
+  const result = await pool.query(text, values);
+  const rows = result.rows;
+  return rows[0].sum;
+}
+
+async function getProductsCombi(idCombi) {
+  const text = "SELECT * FROM combinaison_produit C JOIN produits P ON C.id_produit = P.id_produit WHERE id_combinaison = $1";
+  const values = [idCombi];
+  return pool.query(text, values);
+}
+
+async function addCombiToCart(idCombi, currentUserId) {
+  const text = "SELECT * FROM combinaison_produit WHERE id_combinaison = $1";
+  const values = [idCombi];
+  const result = await pool.query(text, values);
+  const rows = result.rows;
+  for (let i = 0; i < rows.length; i++) {
+    await addToCart(currentUserId, rows[i].id_produit, 1, rows[i].prix, rows[i].taille);
+  }
+}
+
 module.exports = {
   registerUser,
   getUser,
@@ -271,4 +295,7 @@ module.exports = {
   getTotalPrice,
   modifyStock,
   updateCommande,
+  getCombiPrice,
+  getProductsCombi,
+  addCombiToCart,
 };

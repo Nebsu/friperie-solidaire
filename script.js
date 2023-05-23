@@ -42,14 +42,16 @@ async function CreatePool() {
 })();
 
 class User {
-  constructor(name, surname, email, password) {
+  constructor(name, surname, email, adress, password) {
     this.name = name;
     this.surname = surname;
     this.email = email;
+    this.address = adress;
     this.password = password;
   }
 }
 
+//Gestion du formulaire d'inscription
 app.post("/inscription/", async (req, res) => {
   let namefield = "";
   let surnamefield = "";
@@ -62,6 +64,7 @@ app.post("/inscription/", async (req, res) => {
   let email = req.body.email;
   let password = req.body.password;
   let confirm_password = req.body.confirmpassword;
+  let address = req.body.address;
   const database = await functions.getAllEmail();
   console.log("Post Inscription");
   if (name.length < 2 || name.length > 30) {
@@ -94,8 +97,8 @@ app.post("/inscription/", async (req, res) => {
   } else {
     // Ajout des données dans la base de données
     bcrypt.hash(password, 10, function (err, hash) {
-      const user = new User(name, surname, email, hash);
-      console.log("hash: " + hash);
+      const user = new User(name, surname, email, address, hash);
+      console.log(user);
       functions.registerUser(user);
     });
     connection = true;
@@ -117,6 +120,7 @@ app.post("/inscription/", async (req, res) => {
   return;
 });
 
+//Gestion du formulaire de connexion
 app.post("/connection", async (req, res) => {
   let connection = false;
   let emailfield = "";
@@ -143,8 +147,6 @@ app.post("/connection", async (req, res) => {
       return;
     }
   }
-
-
   const data = {
     type_produit: "Catalogue",
     name: "",
@@ -160,11 +162,13 @@ app.post("/connection", async (req, res) => {
   return;
 });
 
+//Gestion d'un ajout au panier
 app.post("/produits/:id", async (req, res) => {
   let id = req.params.id;
   let size = req.body.size;
   let quantity = req.body.quantity;
-  let result = await pool.query("SELECT * FROM produits WHERE id_produit = "+id);
+  let result = 
+    await pool.query("SELECT * FROM produits WHERE id_produit = "+id);
   let rows = result.rows;
   let price = rows[0].prix;
   functions.addToCart(currentUserId, id, quantity, price, size);
@@ -179,6 +183,7 @@ app.get("/deconnection", function (req, res) {
   return;
 });
 
+//Page apres connexion
 app.get("/connected", async (req, res) => {
   const result = await pool.query("SELECT * FROM produits");
   const rows = result.rows;
@@ -228,6 +233,7 @@ app.get("/connected", async (req, res) => {
   return;
 });
 
+//Page de connexion
 app.get("/connection", function (req, res) {
   const data = {
     type_produit: "Catalogue",
@@ -244,6 +250,7 @@ app.get("/connection", function (req, res) {
   return;
 });
 
+//Page d'inscription
 app.get("/inscription", function (req, res) {
   const data = {
     type_produit: "Catalogue",
@@ -260,12 +267,14 @@ app.get("/inscription", function (req, res) {
   return;
 });
 
+//Page du panier
 app.get("/panier", async (req, res) => {
   const result = await pool.query(
     "SELECT * FROM panier JOIN produits ON panier.id_produit = produits.id_produit WHERE id_utilisateur =" +
       currentUserId
   );
-  const result2 = await pool.query("SELECT SUM(prix_unitaire * quantite) FROM panier WHERE id_utilisateur = " + currentUserId);
+  const result2 = 
+  await pool.query("SELECT SUM(prix_unitaire * quantite) FROM panier WHERE id_utilisateur = " + currentUserId);
   const data = {
     type_produit: "Catalogue",
     prenom: currentName,
@@ -282,6 +291,7 @@ app.get("/panier", async (req, res) => {
   return;
 });
 
+//Suppression d'un produit du panier
 app.get("/panier/:id_produit/:taille", async (req, res) => {
   const id_produit = req.params.id_produit;
   const taille = req.params.taille;
@@ -290,13 +300,17 @@ app.get("/panier/:id_produit/:taille", async (req, res) => {
   return;
 });
 
+//Ajout de tous les produits du panier à la table commande
 app.get("/panier/commande", async (req, res) => {
-  await functions.addCartToCommand("12 rue de la Paix",currentUserId);
+  const result = await pool.query(
+    "SELECT adresse FROM utilisateurs WHERE id_utilisateur = " + currentUserId);
+  const adresse = result.rows[0].adresse;
+  await functions.addCartToCommand(String(adresse),currentUserId);
   res.redirect("/produits");
   return;
 });
 
-
+//Page pantalon
 app.get("/produits/veste", async (req, res) => {
   const result = await pool.query(
     "SELECT * FROM produits WHERE category = 'veste'"
@@ -323,6 +337,7 @@ app.get("/produits/veste", async (req, res) => {
   return;
 });
 
+// Page pantalon
 app.get("/produits/pantalon", async (req, res) => {
   const result = await pool.query(
     "SELECT * FROM produits WHERE category = 'pantalon'"
@@ -349,6 +364,7 @@ app.get("/produits/pantalon", async (req, res) => {
   return;
 });
 
+//Page chemises
 app.get("/produits/chemise", async (req, res) => {
   const result = await pool.query(
     "SELECT * FROM produits WHERE category = 'chemise'"
@@ -375,6 +391,7 @@ app.get("/produits/chemise", async (req, res) => {
   return;
 });
 
+//Page accessoires
 app.get("/produits/accessoire", async (req, res) => {
   const result = await pool.query(
     "SELECT * FROM produits WHERE category = 'accessoire'"
@@ -401,6 +418,7 @@ app.get("/produits/accessoire", async (req, res) => {
   return;
 });
 
+//Page produit individuel
 app.get("/produits/:id", async (req, res) => {
   const result = await pool.query(
     "SELECT * FROM produits WHERE id_produit = " + req.params.id
@@ -431,6 +449,7 @@ app.get("/produits/:id", async (req, res) => {
   return;
 });
 
+//Page de la liste des produits
 app.get("/produits", async (req, res) => {
   const result = await pool.query("SELECT * FROM produits");
   const rows = result.rows;
@@ -454,6 +473,8 @@ app.get("/produits", async (req, res) => {
   return;
 });
 
+
+//Page d'accueil
 app.get("/", async (req, res) => {
   connectState = false;
   const data = {
@@ -470,11 +491,14 @@ app.get("/", async (req, res) => {
 
 //créer une page gerant
 app.get("/gerant", async (req, res) => {
-  const result = await pool.query("SELECT * FROM produits");
+  const result = 
+  await pool.query("SELECT * FROM produits");
   const rows = result.rows;
-  const result2 = await pool.query("SELECT * FROM stock_products");
+  const result2 = 
+  await pool.query("SELECT * FROM stock_products");
   const rows2 = result2.rows;
-  const result3 = await pool.query("SELECT * FROM commandes WHERE etat_livraison <> 'Terminée'");
+  const result3 = 
+  await pool.query("SELECT * FROM commandes WHERE etat_livraison <> 'Terminée'");
   const rows3 = result3.rows;
   const data = {
     type_produit: "Catalogue",
@@ -492,9 +516,11 @@ app.get("/gerant", async (req, res) => {
 
 // créer une page gerant_stock
 app.get("/gerant_stock/:id", async (req, res) => {
-  const result = await pool.query("SELECT * FROM produits WHERE id_produit = " + req.params.id);
+  const result = 
+  await pool.query("SELECT * FROM produits WHERE id_produit = " + req.params.id);
   const rows = result.rows;
-  const result2 = await pool.query("SELECT * FROM stock_products WHERE id_produit = " + req.params.id);
+  const result2 = 
+  await pool.query("SELECT * FROM stock_products WHERE id_produit = " + req.params.id);
   const rows2 = result2.rows;
   const data = {
     type_produit: "Catalogue",
@@ -513,11 +539,14 @@ app.get("/gerant_stock/:id", async (req, res) => {
 
 // créer une page gerant_commandes
 app.get("/gerant_commandes/:id", async (req, res) => {
-  const result = await pool.query("SELECT * FROM produits");
+  const result = 
+  await pool.query("SELECT * FROM produits");
   const rows = result.rows;
-  const result2 = await pool.query("SELECT * FROM stock_products");
+  const result2 = 
+  await pool.query("SELECT * FROM stock_products");
   const rows2 = result2.rows;
-  const result3 = await pool.query("SELECT * FROM commandes WHERE id_commande = " + req.params.id);
+  const result3 = 
+  await pool.query("SELECT * FROM commandes WHERE id_commande = " + req.params.id);
   const rows3 = result3.rows;
   const data = {
     type_produit: "Catalogue",
@@ -534,6 +563,7 @@ app.get("/gerant_commandes/:id", async (req, res) => {
   return;
 });
 
+// Gestion de la modification du stock
 app.post("/gerant_stock/:id", async (req, res) => {
   console.log(req.params.id);
   let qtS = req.body.addS;
