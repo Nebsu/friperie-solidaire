@@ -1,7 +1,6 @@
 /* ------------------------------ BARRE DE NAVIGATION ------------------------------ */
 
 #barre_nav {
-    color: white;
     display: flex;
     justify-content: space-between;
     margin-top: 10px;
@@ -38,6 +37,10 @@
   #menu li a:hover {
     border-bottom: 2px solid rgb(207, 152, 152);
   }
+
+  #admin{
+    width: 45px;
+  }
   
   #prix_permanent {
     margin-right: 10px ;
@@ -48,6 +51,7 @@
     margin-right: 10px;
   }
   
+
   #profil_connected {
     display: flex;
     margin-top: auto;
@@ -133,6 +137,9 @@
   }
   #cart{
     display: none;
+  }
+  #admin{
+    margin-right: 50px;
   }
 }
   

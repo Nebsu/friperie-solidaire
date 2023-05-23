@@ -227,7 +227,7 @@ app.get("/connected", async (req, res) => {
     connected: connectState,
     products: rows,
     panier: false,
-    total_price: total_price,
+    user_id: currentUserId,
   };
   res.render("index.ejs", data);
   return;
@@ -246,7 +246,7 @@ app.get("/connection", function (req, res) {
     connected: connectState,
     panier: false,
   };
-  res.render("index.ejs", data);
+  res.render("connection.ejs", data);
   return;
 });
 
@@ -263,7 +263,7 @@ app.get("/inscription", function (req, res) {
     connected: connectState,
     panier: false,
   };
-  res.render("index.ejs", data);
+  res.render("connection.ejs", data);
   return;
 });
 
@@ -285,7 +285,7 @@ app.get("/panier", async (req, res) => {
     elt_panier: result.rows,
     elt_panier_length: result.rows.length,
     sommetotale: result2.rows[0].sum,
-    total_price: await functions.getTotalPrice(currentUserId),
+    user_id: currentUserId,
   };
   res.render("panier.ejs", data);
   return;
@@ -331,7 +331,7 @@ app.get("/produits/veste", async (req, res) => {
     products: rows,
     panier: false,
     functions: functions,
-    total_price: total_price,
+    user_id: currentUserId,
   };
   res.render("liste_produits.ejs", data);
   return;
@@ -358,7 +358,7 @@ app.get("/produits/pantalon", async (req, res) => {
     products: rows,
     panier: false,
     functions: functions,
-    total_price: total_price,
+    user_id: currentUserId,
   };
   res.render("liste_produits.ejs", data);
   return;
@@ -385,7 +385,7 @@ app.get("/produits/chemise", async (req, res) => {
     products: rows,
     panier: false,
     functions: functions,
-    total_price: total_price,
+    user_id: currentUserId,
   };
   res.render("liste_produits.ejs", data);
   return;
@@ -412,7 +412,7 @@ app.get("/produits/accessoire", async (req, res) => {
     products: rows,
     panier: false,
     functions: functions,
-    total_price: total_price,
+    user_id: currentUserId,
   };
   res.render("liste_produits.ejs", data);
   return;
@@ -443,7 +443,7 @@ app.get("/produits/:id", async (req, res) => {
     produit_quantity: rows[0].stock,
     produit_type: rows[0].category,
     produit_image: rows[0].image,
-    total_price: total_price,
+    user_id: currentUserId,
   };
   res.render("produit.ejs", data);
   return;
@@ -467,7 +467,7 @@ app.get("/produits", async (req, res) => {
     produit_price: rows[0].prix,
     produit_quantity: rows[0].stock,
     produit_type: rows[0].category,
-    total_price: totalPrice,
+    user_id: currentUserId,
   };
   res.render("liste_produits.ejs", data);
   return;
@@ -483,6 +483,7 @@ app.get("/", async (req, res) => {
     inscription: false,
     connected: connectState,
     panier: false,
+    user_id: currentUserId,
   };
   console.log(connectState);
   res.render("index.ejs", data);
@@ -509,6 +510,7 @@ app.get("/gerant", async (req, res) => {
     products: rows,
     stock_products: rows2,
     commandes: rows3,
+    user_id: currentUserId,
   };
   res.render("gerant.ejs", data);
   return;
@@ -531,6 +533,7 @@ app.get("/gerant_stock/:id", async (req, res) => {
     products: rows,
     stock_products: rows2,
     id : req.params.id,
+    user_id: currentUserId,
   };
   res.render("gerant_stock.ejs", data);
   return;
@@ -558,6 +561,7 @@ app.get("/gerant_commandes/:id", async (req, res) => {
     stock_products: rows2,
     commandes: rows3,
     id : req.params.id,
+    user_id: currentUserId,
   };
   res.render("gerant_commandes.ejs", data);
   return;
