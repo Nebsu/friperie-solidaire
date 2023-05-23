@@ -238,7 +238,7 @@ app.get("/connection", function (req, res) {
     connected: connectState,
     panier: false,
   };
-  res.render("index.ejs", data);
+  res.render("connection.ejs", data);
   return;
 });
 
@@ -254,7 +254,7 @@ app.get("/inscription", function (req, res) {
     connected: connectState,
     panier: false,
   };
-  res.render("index.ejs", data);
+  res.render("connection.ejs", data);
   return;
 });
 
