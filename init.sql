@@ -1,8 +1,4 @@
-DROP TABLE IF EXISTS details_commandes CASCADE;
-DROP TABLE IF EXISTS commandes CASCADE;
-DROP TABLE IF EXISTS produits CASCADE;
-DROP TABLE IF EXISTS utilisateurs CASCADE;
-DROP TABLE IF EXISTS panier CASCADE;
+
 
 -- Table "utilisateurs"
 CREATE TABLE utilisateurs (

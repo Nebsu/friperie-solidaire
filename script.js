@@ -194,6 +194,7 @@ app.get("/connected", async (req, res) => {
   const resultveste = await pool.query(
     "SELECT * FROM produits WHERE category = 'veste'"
   );
+  const total_price = await functions.getTotalPrice(currentUserId);
   const count1 = resultpantalon.rows.length;
   const count2 = resultchemise.rows.length;
   const count3 = resultaccessoire.rows.length;
@@ -221,6 +222,7 @@ app.get("/connected", async (req, res) => {
     connected: connectState,
     products: rows,
     panier: false,
+    total_price: total_price,
   };
   res.render("index.ejs", data);
   return;
@@ -274,6 +276,7 @@ app.get("/panier", async (req, res) => {
     elt_panier: result.rows,
     elt_panier_length: result.rows.length,
     sommetotale: result2.rows[0].sum,
+    total_price: await functions.getTotalPrice(currentUserId),
   };
   res.render("panier.ejs", data);
   return;
@@ -301,6 +304,7 @@ app.get("/produits/veste", async (req, res) => {
   const counter = await pool.query(
     "SELECT COUNT(*) FROM produits WHERE category = 'veste'"
   );
+  const total_price = await functions.getTotalPrice(currentUserId);
   const rows = result.rows;
   const count = counter.rows[0].count;
   const data = {
@@ -313,6 +317,7 @@ app.get("/produits/veste", async (req, res) => {
     products: rows,
     panier: false,
     functions: functions,
+    total_price: total_price,
   };
   res.render("liste_produits.ejs", data);
   return;
@@ -327,6 +332,7 @@ app.get("/produits/pantalon", async (req, res) => {
   );
   const rows = result.rows;
   const count = counter.rows[0].count;
+  total_price = await functions.getTotalPrice(currentUserId);
   const data = {
     type_produit: "pantalon",
     count: count,
@@ -337,6 +343,7 @@ app.get("/produits/pantalon", async (req, res) => {
     products: rows,
     panier: false,
     functions: functions,
+    total_price: total_price,
   };
   res.render("liste_produits.ejs", data);
   return;
@@ -351,6 +358,7 @@ app.get("/produits/chemise", async (req, res) => {
   );
   const rows = result.rows;
   const count = counter.rows[0].count;
+  total_price = await functions.getTotalPrice(currentUserId);
   const data = {
     type_produit: "chemise",
     count: count,
@@ -361,6 +369,7 @@ app.get("/produits/chemise", async (req, res) => {
     products: rows,
     panier: false,
     functions: functions,
+    total_price: total_price,
   };
   res.render("liste_produits.ejs", data);
   return;
@@ -375,6 +384,7 @@ app.get("/produits/accessoire", async (req, res) => {
   );
   const rows = result.rows;
   const count = counter.rows[0].count;
+  const total_price = await functions.getTotalPrice(currentUserId);
   const data = {
     type_produit: "accessoire",
     count: count,
@@ -385,6 +395,7 @@ app.get("/produits/accessoire", async (req, res) => {
     products: rows,
     panier: false,
     functions: functions,
+    total_price: total_price,
   };
   res.render("liste_produits.ejs", data);
   return;
@@ -399,7 +410,7 @@ app.get("/produits/:id", async (req, res) => {
     "SELECT * FROM produits WHERE category = 'accessoire'"
   );
   const rows2 = result2.rows;
-
+  const total_price = await functions.getTotalPrice(currentUserId);
   const data = {
     type_produit: "",
     prenom: currentName,
@@ -414,6 +425,7 @@ app.get("/produits/:id", async (req, res) => {
     produit_quantity: rows[0].stock,
     produit_type: rows[0].category,
     produit_image: rows[0].image,
+    total_price: total_price,
   };
   res.render("produit.ejs", data);
   return;
@@ -422,6 +434,7 @@ app.get("/produits/:id", async (req, res) => {
 app.get("/produits", async (req, res) => {
   const result = await pool.query("SELECT * FROM produits");
   const rows = result.rows;
+  const totalPrice = await functions.getTotalPrice(currentUserId);
   const data = {
     type_produit: "",
     prenom: currentName,
@@ -435,6 +448,7 @@ app.get("/produits", async (req, res) => {
     produit_price: rows[0].prix,
     produit_quantity: rows[0].stock,
     produit_type: rows[0].category,
+    total_price: totalPrice,
   };
   res.render("liste_produits.ejs", data);
   return;
