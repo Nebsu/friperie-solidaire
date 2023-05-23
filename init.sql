@@ -1,8 +1,4 @@
-DROP TABLE IF EXISTS details_commandes CASCADE;
-DROP TABLE IF EXISTS commandes CASCADE;
-DROP TABLE IF EXISTS produits CASCADE;
-DROP TABLE IF EXISTS utilisateurs CASCADE;
-DROP TABLE IF EXISTS panier CASCADE;
+
 
 -- Table "utilisateurs"
 CREATE TABLE utilisateurs (
@@ -10,6 +6,7 @@ CREATE TABLE utilisateurs (
   nom VARCHAR(50) NOT NULL,
   prenom VARCHAR(50) NOT NULL,
   email VARCHAR(100) NOT NULL,
+  adresse TEXT NOT NULL,
   mot_de_passe VARCHAR(255) NOT NULL
 );
 
@@ -61,6 +58,19 @@ CREATE TABLE panier (
   prix_unitaire NUMERIC(10, 2) NOT NULL
 );
 
+-- Table "product_combinations"
+CREATE TABLE combinaison (
+  id SERIAL PRIMARY KEY,
+  nom VARCHAR(100) NOT NULL
+);
+
+-- Table "combination_products"
+CREATE TABLE combinaison_produit (
+  id SERIAL PRIMARY KEY,
+  id_combinaison INT NOT NULL REFERENCES combinaison(id) ON DELETE CASCADE,
+  id_produit INT NOT NULL REFERENCES produits(id_produit) ON DELETE CASCADE
+);
+
 INSERT INTO produits VALUES
 (1,'Straight Regular Jeans','20.99','pantalon','https://lp2.hm.com/hmgoepprod?set=format%5Bwebp%5D%2Cquality%5B79%5D%2Csource%5B%2F35%2Fab%2F35ab68c1b85dddca60628313e019c1c2851e7a5f.jpg%5D%2Corigin%5Bdam%5D%2Ccategory%5B%5D%2Ctype%5BDESCRIPTIVESTILLLIFE%5D%2Cres%5Bm%5D%2Chmver%5B2%5D&call=url%5Bfile%3A%2Fproduct%2Fmain%5D'),
 (2,'Tapered Regular Jeans Blue denim clair','29.99','pantalon','https://lp2.hm.com/hmgoepprod?set=format%5Bwebp%5D%2Cquality%5B79%5D%2Csource%5B%2F9c%2Fa0%2F9ca0d5e9264dc0134140c974c6a468d0afc2fc90.jpg%5D%2Corigin%5Bdam%5D%2Ccategory%5B%5D%2Ctype%5BDESCRIPTIVESTILLLIFE%5D%2Cres%5Bm%5D%2Chmver%5B2%5D&call=url%5Bfile%3A%2Fproduct%2Fmain%5D'),
@@ -99,10 +109,11 @@ INSERT INTO produits VALUES
 (35,'Ceinture élastique en tissu Noir','14.99','accessoire','https://lp2.hm.com/hmgoepprod?set=format%5Bwebp%5D%2Cquality%5B79%5D%2Csource%5B%2F5e%2F74%2F5e7406075fe317b84cefdbe99086063b1f285c19.jpg%5D%2Corigin%5Bdam%5D%2Ccategory%5Bmen_accessories_beltsandbraces%5D%2Ctype%5BDESCRIPTIVESTILLLIFE%5D%2Cres%5Bm%5D%2Chmver%5B2%5D&call=url%5Bfile%3A%2Fproduct%2Fmain%5D'),
 (36,'Ceinture élastique en tissu Beige clair','14.99','accessoire','https://lp2.hm.com/hmgoepprod?set=format%5Bwebp%5D%2Cquality%5B79%5D%2Csource%5B%2F64%2F22%2F6422ea14b79615e5554797e06968d7ebeeb10bc4.jpg%5D%2Corigin%5Bdam%5D%2Ccategory%5Bmen_accessories_beltsandbraces%5D%2Ctype%5BDESCRIPTIVESTILLLIFE%5D%2Cres%5Bm%5D%2Chmver%5B2%5D&call=url%5Bfile%3A%2Fproduct%2Fmain%5D'),
 (37,'Ceinture en cuir Noir','19.99','accessoire','https://lp2.hm.com/hmgoepprod?set=format%5Bwebp%5D%2Cquality%5B79%5D%2Csource%5B%2F69%2F41%2F694188e9f849f89058776d3d3c79ab72a2f7809a.jpg%5D%2Corigin%5Bdam%5D%2Ccategory%5B%5D%2Ctype%5BDESCRIPTIVESTILLLIFE%5D%2Cres%5Bm%5D%2Chmver%5B2%5D&call=url%5Bfile%3A%2Fproduct%2Fmain%5D'),
-(38,'Ceinture en cuir Brun','19.99','accessoire','https://lp2.hm.com/hmgoepprod?set=format%5Bwebp%5D%2Cquality%5B79%5D%2Csource%5B%2F7e%2F68%2F7e686f1373ab16ead61efcc45408b0ce47c33584.jpg%5D%2Corigin%5Bdam%5D%2Ccategory%5B%5D%2Ctype%5BDESCRIPTIVESTILLLIFE%5D%2Cres%5Bm%5D%2Chmver%5B2%5D&call=url%5Bfile%3A%2Fproduct%2Fmain%5D');
+(38,'Ceinture en cuir Brun','19.99','accessoire','https://lp2.hm.com/hmgoepprod?set=format%5Bwebp%5D%2Cquality%5B79%5D%2Csource%5B%2F7e%2F68%2F7e686f1373ab16ead61efcc45408b0ce47c33584.jpg%5D%2Corigin%5Bdam%5D%2Ccategory%5B%5D%2Ctype%5BDESCRIPTIVESTILLLIFE%5D%2Cres%5Bm%5D%2Chmver%5B2%5D&call=url%5Bfile%3A%2Fproduct%2Fmain%5D'),
+(39,'Veste de costume', '69.99', 'veste', 'https://lp2.hm.com/hmgoepprod?set=format%5Bwebp%5D%2Cquality%5B79%5D%2Csource%5B%2F04%2Fb4%2F04b4192cac25c66a1081770bde079fa246c6a9d7.jpg%5D%2Corigin%5Bdam%5D%2Ccategory%5Bmen_blazerssuits_blazers%5D%2Ctype%5BDESCRIPTIVESTILLLIFE%5D%2Cres%5Bm%5D%2Chmver%5B2%5D&call=url%5Bfile%3A%2Fproduct%2Fmain%5D');
 
 
-INSERT INTO stock_products (id_stock_produit, id_produit, taille_s, taille_m, taille_l, taille_xl)
+INSERT INTO stock_products (id_stock_product, id_produit, taille_s, taille_m, taille_l, taille_xl)
 VALUES
   (1, 1, 8, 8, 3, 3),
   (2, 2, 8, 2, 9, 6),
@@ -142,3 +153,25 @@ VALUES
   (36, 36, 2, 10, 1, 8),
   (37, 37, 10, 4, 8, 5),
   (38, 38, 5, 5, 1, 6);
+
+INSERT INTO combinaison (id, nom)
+VALUES
+  (1, 'Combinaison de base'),
+  (2, 'Combinaison Business'),
+  (3, 'Combinaison de luxe');
+
+INSERT INTO combinaison_produit (id, id_combinaison, id_produit)
+VALUES
+  (1, 1, 2),
+  (2, 1, 13),
+  (3, 1, 25),
+  (4, 2, 10),
+  (5, 2, 33),
+  (6, 2, 12),
+  (7, 2, 31),
+  (8, 2, 39),
+  (9, 3, 9),
+  (10, 3, 37),
+  (11, 3, 12),
+  (12, 3, 11),
+  (13, 3, 32);

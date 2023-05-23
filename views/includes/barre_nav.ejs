@@ -34,10 +34,16 @@
                     <a href="gerant"><img id="admin" src="/img/admin_icon.png" alt=""></a>
                 <% } %>
                 <a id="cart" href="/panier"><img id="cart_pic" src="/img/shopping-cart_icon.png" width="40px" alt="" ></a>
+                    <p id="prix_permanent">
+                        <%if(total_price > 0){%>
+                            <%=total_price%>€
+                        <%} else {%>
+                            Panier Vide
+                        <%}%>
+                    </p>
                 <a id="se_deconnecter" href="deconnection">Se déconnecter</a>
             </div>
             <% } else { %>
-            <!-- <a id="profil" href="connection"><img id="profil_pic" src="/img/icon_profil.png" width="40px" alt=""></a> -->
             <a id="se_connecter" href="/connection">Se connecter</a>
             <% } %>
 
