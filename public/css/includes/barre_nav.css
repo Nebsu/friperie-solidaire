@@ -80,5 +80,54 @@
     cursor: pointer;
   
   }
+
+
+  #menu_smartphone{
+    position: absolute;
+    top: 50px;
+    left: 90%;
+    transform: translateX(-100%);
+  }
+
+  #menu_smartphone_icon{
+    display: none;
+  }
+
+  #menu_smartphone_content{
+    display: none;
+    background-color: rgb(230, 230, 230);
+    position: absolute;
+    top: 50px;
+    left: 100%;
+    transform: translateX(-100%);
+    padding: 20px;
+    font-size: 30px;
+    width: 220px;
+  }
+
   
+/* Si la fenetre fais moins de 1056px */
+@media screen and (max-width: 1056px) {
+  #menu {
+    display: none;
+  }
+  #se_connecter {
+    display: none;
+  }
+  #menu_smartphone{
+    display: block;
+  }
+  #menu_smartphone_icon{
+    display: block;
+  }
+  #se_deconnecter{
+    display: none;
+  }
+  #se_connecter{
+    display: none;
+  }
+  #cart{
+    display: none;
+  }
+}
   

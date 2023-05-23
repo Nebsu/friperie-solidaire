@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="http://code.jquery.com/jquery-3.3.1.js"></script>
     <link rel="stylesheet" href="/css/includes/barre_nav.css">
     <title>Document</title>
 </head>
@@ -50,5 +51,49 @@
             </script>
         <% } %>
     </nav>
+
+
+    <div id="menu_smartphone">
+        <div id="menu_smartphone_icon">
+            <img id="img_s" src="/img/menu_icon.png" alt="" width="40px">
+        </div>
+        <div id="menu_smartphone_content">
+            <li><a href="/connected">Accueil</a></li>
+            <li><a href="/produits">Produits</a></li>
+            <li><a href="contact">Contact</a></li>
+            <li>
+                <!-- si connected -->
+                <% if (connected) { %>
+                    <a id="cart_a" href="/panier">Panier</a> <br>
+                    <a id="se_deconnecter_a" href="deconnection">Se déconnecter</a>
+                <% } else { %>
+                    <a id="se_connecter_a" href="/connection">Se connecter</a>
+                <% } %>
+            </li>
+        </div>
+        
+        
+    </div>
+
+    <script>
+        // si on clique sur menu_smartphone_icon
+        $("#menu_smartphone_icon").click(function(){
+            // si le menu est caché
+            if ($("#menu_smartphone_content").css("display") == "none"){
+                // on l'affiche
+                $("#menu_smartphone_content").css("display", "block");
+            } else {
+                // sinon on le cache
+                $("#menu_smartphone_content").css("display", "none");
+            }
+            // changer l'icone en croix
+            if ($("#img_s").attr("src") == "/img/menu_icon.png"){
+                $("#img_s").attr("src", "/img/croix.png");
+                // avec une transition douce
+            } else {
+                $("#img_s").attr("src", "/img/menu_icon.png");
+            }
+        });
+    </script>
 </body>
 </html>

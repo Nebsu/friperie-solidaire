@@ -250,6 +250,20 @@ a {
   #type_produit_txt {
     display: none;
   }
+  #logo_cadre {
+    width: 400px;
+  }
+  #img_logo {
+    width: 100%;
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 130px;
+    margin-bottom: 130px;
+  }
+  #fly {
+    display: none;
+  }
 }
 
 @media screen and (max-width: 750px) {
