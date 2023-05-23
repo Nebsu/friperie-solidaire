@@ -187,3 +187,33 @@ h2{
     display: flex;
     justify-content: space-around;
 }
+
+/* si la fenetre fait moins de 1056px de large */
+@media screen and (max-width: 1056px) {
+    #produit_left{
+    padding: auto;
+    width: 200px;
+    height: 100%;
+    margin: auto;
+}
+
+#produit_left img{
+    width: 200px;
+}
+#produit_right{
+  padding-top : 0px;
+  width: 100%;
+  padding-left: 0px;
+}
+#produit{
+  width: 90%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+#accessoires{
+  display: block;
+  justify-content: space-around;
+  text-align: center;
+}
+}
