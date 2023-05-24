@@ -55,6 +55,7 @@ a {
   z-index: 2;
   margin: 0;
   padding: 0;
+  margin-top: 50px;
 }
   
 #log_window {

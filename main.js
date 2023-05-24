@@ -167,8 +167,13 @@ app.post("/produits/:id", async (req, res) => {
     await pool.query("SELECT * FROM produits WHERE id_produit = "+id);
   let rows = result.rows;
   let price = rows[0].prix;
-  functions.addToCart(currentUserId, id, quantity, price, size);
-  res.redirect("/produits");
+  if (quantity > 0) {
+    console.log("Ajout au panier");
+    functions.addToCart(currentUserId, id, quantity, price, size);
+    res.redirect("/produits");
+  } else {
+    res.redirect("/produits/" + id);
+  }
   return;
 });
 

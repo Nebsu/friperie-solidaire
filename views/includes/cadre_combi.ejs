@@ -37,8 +37,15 @@
                             <option value="L">L</option>
                             <option value="XL">XL</option>
                         </select>
-                    </div>   
-                    <input type="submit" id="buy" value="Ajouter au panier"></input>
+                    </div>
+                    <%if(user_id === 0){%>
+                        <input type="submit" id="buy" value="Ajouter au panier" disabled></input>
+                        <script>
+                            document.getElementById("buy").style.backgroundColor = "grey";
+                        </script>
+                    <%} else {%>
+                        <input type="submit" id="buy" value="Ajouter au panier"></input>
+                    <%}%>
                 </form>
             </div>
         <% } %>
