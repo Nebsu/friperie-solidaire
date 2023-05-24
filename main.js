@@ -316,9 +316,13 @@ app.get("/panier/commande", async (req, res) => {
   const result = await pool.query(
     "SELECT adresse FROM utilisateurs WHERE id_utilisateur = " + currentUserId);
   const adresse = result.rows[0].adresse;
-  await functions.addCartToCommand(String(adresse),currentUserId);
-  res.redirect("/produits");
-  return;
+  if (await functions.addCartToCommand(String(adresse),currentUserId) == false) {
+    res.redirect("/panier");
+    return;
+  } else {
+    res.redirect("/produits");
+    return;
+  }
 });
 
 //Page pantalon

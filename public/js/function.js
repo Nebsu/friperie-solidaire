@@ -113,7 +113,7 @@ async function addCartToCommand(address, currentUserId) {
   const val = [currentUserId];
   const res = await pool.query(request, val);
   const row = res.rows;
-  const id = parseInt(row[0].id_commande, 10);
+  const id = Number(row[0].id_commande);
   // Récupérer les produits du panier
   const text = "SELECT * FROM panier WHERE id_utilisateur = $1";
   const values = [currentUserId];
