@@ -8,8 +8,6 @@
     <title>Document</title>
 </head>
 <body>
-  
-
     <div id="contenu">
         <!-- BARRE DE NAVIGATION -->
         <%- include('includes/barre_nav.ejs'); %>
@@ -33,8 +31,8 @@
         <%- include('includes/footer.ejs'); %>
     </div>
 
-    <script src="https://unpkg.com/scrollreveal"></script>
     <% if(!connection && !inscription && !panier && !connected){ %>
+    <script src="https://unpkg.com/scrollreveal"></script>
         <script>
             const sr = ScrollReveal({
                 distance : '60px',

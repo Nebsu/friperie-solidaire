@@ -52,16 +52,12 @@
     <!-- selectionner des accesoires aleatoirement -->
     <h2>Accessoires possibles</h2><br>
     <div id="accessoires">
-        <%
-        let i = 0;
-        while(i < 4){
-            let j = Math.floor(Math.random() * products.length);%>
+        <% for(let i=0; i<4; i++) { %>
             <div class="accessoire">
-                <a href="<%=products[j].id_produit%>"><img src="<%=products[j].image%>" alt="" width="200px"></a>
-                <h3><%=products[j].nom%></h3>
-                <p><%=products[j].prix%>€</p>
+                <a href="<%=products[i].id_produit%>"><img src="<%=products[i].image%>" alt="" width="200px"></a>
+                <h3><%=products[i].nom%></h3>
+                <p><%=products[i].prix%>€</p>
             </div>
-            <%i++;%>
         <%}%>
 
     </div>
@@ -103,7 +99,5 @@
             document.getElementById('number').value = value;
         }
     </script>
-
-    
 </body>
 </html>

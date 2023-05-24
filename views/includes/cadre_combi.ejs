@@ -28,7 +28,16 @@
                         <% } %>
                     <% } %>
                 </div>
-                <form action="">
+                <form action="combinaisons/<%=combinaisons[i].id%>" method="post">
+                    <div class="select-box">
+                        <label for="select-box1" class="label select-box1"><span class="label-desc">Taille</span> </label>
+                        <select id="select-box1" class="select" name="size" required="">
+                            <option value="S">S</option>
+                            <option value="M">M</option>
+                            <option value="L">L</option>
+                            <option value="XL">XL</option>
+                        </select>
+                    </div>   
                     <input type="submit" id="buy" value="Ajouter au panier"></input>
                 </form>
             </div>

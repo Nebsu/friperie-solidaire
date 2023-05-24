@@ -71,7 +71,6 @@ async function deleteProductCart(id, currentUserId, size) {
   const values2 = [id, currentUserId, size];
   const result = await pool.query(text2, values2);
   const rows = result.rows;
-  console.log(rows);
   if (rows[0].quantite > 1) {
     const text3 =
       "UPDATE panier SET quantite = quantite - 1 WHERE id_produit = $1 AND id_utilisateur = $2 AND taille = $3";
@@ -158,8 +157,6 @@ async function addCartToCommand(address, currentUserId) {
       taille = "taille_xl";
     }
     const text3 = "UPDATE stock_products SET "+ taille +" = $1 WHERE id_produit = $2";
-    console.log(stock[i] - rows[i].quantite);
-    console.log(rows[i].id_produit);
     const res = stock[i] - rows[i].quantite;
     const values3 = [res, rows[i].id_produit];
     await pool.query(text3, values3);
@@ -270,13 +267,13 @@ async function getProductsCombi(idCombi) {
   return pool.query(text, values);
 }
 
-async function addCombiToCart(idCombi, currentUserId) {
-  const text = "SELECT * FROM combinaison_produit WHERE id_combinaison = $1";
+async function addCombiToCart(idCombi, currentUserId, taille) {
+  const text = "SELECT * FROM combinaison_produit C JOIN produits P ON C.id_produit = P.id_produit WHERE id_combinaison = $1";
   const values = [idCombi];
   const result = await pool.query(text, values);
   const rows = result.rows;
   for (let i = 0; i < rows.length; i++) {
-    await addToCart(currentUserId, rows[i].id_produit, 1, rows[i].prix, rows[i].taille);
+    await addToCart(currentUserId, rows[i].id_produit, 1, rows[i].prix, taille);
   }
 }
 

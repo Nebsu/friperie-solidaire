@@ -86,6 +86,7 @@ app.post("/inscription/", async (req, res) => {
   } else if (database.includes(email)) {
     // check if email is already in database
     console.log("Email déjà utilisé");
+    res.redirect("/inscription");
   } else if (password != confirm_password || password.length < 8) {
     // Verification mot de passe
     pop_up = true;
@@ -94,6 +95,7 @@ app.post("/inscription/", async (req, res) => {
     namefield = name;
     surnamefield = surname;
     console.log("Mot de passe invalide");
+    res.redirect("/inscription");
   } else {
     // Ajout des données dans la base de données
     bcrypt.hash(password, 10, function (err, hash) {
@@ -104,6 +106,7 @@ app.post("/inscription/", async (req, res) => {
     connection = true;
     pop_up = true;
     res.redirect("/connection");
+    return;
   }
   const data = {
     type_produit: "Catalogue",
@@ -126,17 +129,23 @@ app.post("/connection", async (req, res) => {
   let emailfield = "";
   let email = req.body.email;
   let password = req.body.password;
+  let error = "";
   console.log("Post Connection");
   const user = await functions.getUser(email);
   if (user.rows.length == 0) {
-    connection = true;
     console.log("Utilisateur non trouvé");
+    error = "Utilisateur non trouvé";
+    connection = true;
+    res.redirect("/connection");
+    return;
   }else{
     let hashedPassword = user.rows[0].mot_de_passe;
     const b = await bcrypt.compare(password, hashedPassword);
     if (b == false) {
       emailfield = email;
       console.log("Mot de passe incorrect");
+      res.redirect("/connection");
+      return;
     } else {
       console.log("Connection réussie");
       connectState = true;
@@ -147,19 +156,6 @@ app.post("/connection", async (req, res) => {
       return;
     }
   }
-  const data = {
-    type_produit: "Catalogue",
-    name: "",
-    surname: "",
-    email: emailfield,
-    prenom: currentName + " ",
-    connection: connection,
-    inscription: false,
-    connected: connectState,
-    panier: false,
-  };
-  res.render("index.ejs", data);
-  return;
 });
 
 //Gestion d'un ajout au panier
@@ -178,7 +174,8 @@ app.post("/produits/:id", async (req, res) => {
 
 app.get("/deconnection", function (req, res) {
   currentName = "";
-  currentUserId = "";
+  currentUserId = 0;
+  connectState = false;
   res.redirect("/");
   return;
 });
@@ -492,9 +489,6 @@ app.get("/produits", async (req, res) => {
 //Page d'accueil
 app.get("/", async (req, res) => {
   connectState = false;
-  const counter = await pool.query(
-    "SELECT COUNT(*) FROM produits WHERE category = 'veste'"
-  );
   const total_price = await functions.getTotalPrice(currentUserId);
   const data = {
     type_produit: "Catalogue",
@@ -637,6 +631,14 @@ app.get("/combinaisons", async (req, res) => {
   };
   res.render("combinaison.ejs", data);
   return;
+});
+
+app.post("/combinaisons/:id", async (req, res) => {
+  const id = req.params.id;
+  const taille = req.body.size;
+  console.log(id, taille);
+  await functions.addCombiToCart(id, currentUserId, taille);
+  res.redirect("/combinaisons");
 });
 
 
